@@ -44,6 +44,19 @@ tego do stanu używalności zajmie więcej czasu, niż jest to warte.
 W folderze install znajdziesz plik config.php, przenieś go do folderu includes. 
 Zmień dane dostępu do bazy danych, konto admina i adres gry. 
 
+Żeby zaktualizować zależności: 
+
+```
+composer update
+composer install
+rm -r adodb
+rm -r libs
+rm -r mailer
+cp vendor/adodb/adodb-php/ adodb
+cp vendor/smarty/smarty/libs/ libs
+cp vendor/phpmailer/phpmailer/ mailer
+```
+
 ## Znane Problemy:
 
 - Na niektórych serwerach użycie ADODB sesji, może spowodować biały ekran po zalogowaniu.
