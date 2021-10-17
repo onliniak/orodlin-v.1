@@ -51,7 +51,7 @@ function getAstralComponent(&$objWinner, &$objLoser, $blnComplete = true)
         {
             $objAstral = $db -> SelectLimit('SELECT `type`, `number`, `amount` FROM `astral` WHERE `owner`='.$objLoser -> fields['id'].' AND `location`=\'C\' AND (`type` LIKE \''.$arrNames[$i].'%\' OR `type` LIKE \''.$arrNames[$i+1].'%\' OR `type` LIKE \''.$arrNames[$i+2].'%\' OR `type` LIKE \''.$arrNames[$i+3].'%\')', 1, rand(1, $arrAmount['count(*)']) - 1);
 
-            $strName = $objAstral -> fields['type']{0};
+            $strName = $objAstral -> fields['type'][0];
             $intKey = array_search($strName, $arrNames);
             $intKey2 = (int)$objAstral -> fields['type']{1};
             $strCompname = $arrCompnames[$intKey][$intKey2];
@@ -117,7 +117,7 @@ $smarty -> assign(array("Link" => $arrlink,
  */
 if (!isset($_GET['step3']) && isset($_GET['atak']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['atak']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['atak']))
     {
         error(ERROR);
     }
@@ -134,7 +134,7 @@ if (!isset($_GET['step3']) && isset($_GET['atak']))
 }
 if (isset($_GET['atak']) && (isset($_GET['step3']) && $_GET['step3'] == 'confirm'))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['atak']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['atak']))
     {
         error(ERROR);
     }

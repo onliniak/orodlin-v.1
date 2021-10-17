@@ -326,7 +326,7 @@ if (isset ($_GET['kowal']) && $_GET['kowal'] == 'kuznia')
         {
             error (YOU_DEAD);
         }
-        if (!ereg("^[1-9][0-9]*$", $_GET['ko']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['ko']))
         {
             error (ERROR);
         }
@@ -344,7 +344,7 @@ if (isset ($_GET['kowal']) && $_GET['kowal'] == 'kuznia')
         {
             error (YOU_DEAD);
         }
-        if (!ereg("^[1-9][0-9]*$", $_GET['dalej']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['dalej']))
         {
             error (ERROR);
         }
@@ -366,7 +366,7 @@ if (isset ($_GET['kowal']) && $_GET['kowal'] == 'kuznia')
      */
     if (isset($_GET['konty']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['konty']) || !ereg("^[1-9][0-9]*$", $_POST['razy']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['konty']) || !preg_match("/^[1-9][0-9]*$/", $_POST['razy']))
         {
             error (ERROR);
         }
@@ -486,7 +486,7 @@ if (isset ($_GET['kowal']) && $_GET['kowal'] == 'kuznia')
      */
     if (isset($_GET['rob']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['rob']) || !isset($_POST['mineral']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['rob']) || !isset($_POST['mineral']))
         {
             error(ERROR);
         }
@@ -494,7 +494,7 @@ if (isset ($_GET['kowal']) && $_GET['kowal'] == 'kuznia')
         {
             error(HOW_MANY);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['razy']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['razy']))
         {
             error(ERROR);
         }

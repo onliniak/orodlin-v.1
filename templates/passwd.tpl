@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {include file="head.tpl"}
 
 <!-- <a href="index.php?lang=pl&amp;step=lostpasswd"><img src="" title="Polski" border="0" alt="img_polish" /></a> 
@@ -25,6 +26,6 @@
     <div id="content"><div class="center">{$Message}</div>
 {/if}
 </div>
-{include file=right.tpl}
+{include file="right.tpl"}
 {include file="foot.tpl"}
 {/strip}

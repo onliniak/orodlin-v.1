@@ -70,10 +70,10 @@ $arrStatsSumm = array($arrStats[$player -> race][0] + $arrClassStats[$player -> 
 
 $arrStatNames = array('strength', 'agility', 'szyb', 'wytrz', 'inteli', 'wisdom');
 
-$smarty -> assign_by_ref('StatSumm', $arrStatsSumm);
-$smarty -> assign_by_ref('StatDesc', $arrStatDesc);
-$smarty -> assign_by_ref('StatNames', $arrStatNames);
-$smarty -> assign_by_ref('Age', $player -> age);
+$smarty -> assignByRef('StatSumm', $arrStatsSumm);
+$smarty -> assignByRef('StatDesc', $arrStatDesc);
+$smarty -> assignByRef('StatNames', $arrStatNames);
+$smarty -> assignByRef('Age', $player -> age);
 
 unset($arrStats, $arrClassStats);
 
@@ -123,8 +123,8 @@ if (isset ($_GET['step']) && $_GET['step'] == 'add')
         }
     }
     $db -> Execute($strBase.$strMain.$strEnding);
-    $smarty -> assign_by_ref ('Amount', $arrpoints); 
-    $smarty -> assign_by_ref ('Name', $arrname);
+    $smarty -> assignByRef ('Amount', $arrpoints); 
+    $smarty -> assignByRef ('Name', $arrname);
 }
 
 if (isset($_GET['step']) && $_GET['step'] == 'reassign')
@@ -177,8 +177,8 @@ if (isset($_GET['step']) && $_GET['step'] == 'reassign')
         }
         $strDBQuery .= ' WHERE `id`='.$player -> id;
         $db -> Execute($strDBQuery);
-        $smarty -> assign_by_ref ('Diff', $intDiff);
-        $smarty -> assign_by_ref ('Amount', $intAP);
+        $smarty -> assignByRef ('Diff', $intDiff);
+        $smarty -> assignByRef ('Amount', $intAP);
     }
 }
 if (!isset($_GET['step'])) 
@@ -188,7 +188,7 @@ if (!isset($_GET['step']))
 /**
 * Assign variables and display page
 */
-$smarty -> assign_by_ref ('Ap', $player -> ap);
+$smarty -> assignByRef ('Ap', $player -> ap);
 $smarty -> display ('ap.tpl');
 
 unset($arrpoints, $arrStatNames, $arrname);

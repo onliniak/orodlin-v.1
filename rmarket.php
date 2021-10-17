@@ -222,11 +222,11 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
         {
             error(ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['cost'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['cost'])) 
         {
             error(ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['przedmiot']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['przedmiot']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error(ERROR);
         }
@@ -268,7 +268,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
 */
 if (isset($_GET['wyc'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['wyc'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['wyc'])) 
     {
         error (ERROR);
     }
@@ -311,7 +311,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'del')
 */
 if (isset($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error (ERROR);
     }
@@ -351,7 +351,7 @@ if (isset($_GET['buy']))
         {
             error(ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }

@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <b><u>{$Trest}</u></b><br /> <br />
 {$Restinfo} <b>{$Manainfo}</b>{$Restinfo1}<b>{$Manarest}</b> {$Restinfo2}<br /><br />
 <form method="post" action="rest.php?akcja=all">

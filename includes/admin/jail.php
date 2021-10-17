@@ -36,7 +36,7 @@ $smarty -> assign(array('Jailid' => JAIL_ID,
                         'Jailcost' => JAIL_COST,
                         'Aadd' => A_ADD));
                         
-if (isset($_POST['prisoner']) && !ereg('^[1-9][0-9]*$', $_POST['prisoner']))
+if (isset($_POST['prisoner']) && !preg_match('/^[1-9][0-9]*$/', $_POST['prisoner']))
 {
     error (ERROR);
 }

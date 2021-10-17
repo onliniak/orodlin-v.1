@@ -28,51 +28,49 @@
 //   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 // $Id: index.php 835 2006-11-22 17:40:22Z thindil $
+require_once('includes/config.php');
+//Include Composer's autoloader
+include 'vendor/autoload.php';
 
-require_once ('includes/config.php');
-if (!$gamename)
-{
+session_start();
+if (!$gamename) {
     $host = $_SERVER['HTTP_HOST'];
-    $path = str_replace("index.php","",$_SERVER['PHP_SELF']);
+    $path = str_replace("index.php", "", $_SERVER['PHP_SELF']);
     $address = "http://".$host.$path."install/install.php";
     $meta = "<META HTTP-EQUIV=\"REFRESH\" CONTENT=\"0; URL=".$address."\">";
     print "<html><head>".$meta."</head><body></body></html>";
     exit;
-}
-    else
-{
+} else {
+    require_once('includes/main/base.php');
 
-	require_once ('includes/main/base.php');
+    require_once('includes/getlang.php');
+    GetLang();
+    GetLoc('mainpage');
+    GetLoc('index');
 
-	require_once ('includes/getlang.php');
-	GetLang ();
-	GetLoc ('mainpage');
-	GetLoc ('index');
+    GameCloseRoutine();
 
-	GameCloseRoutine ();
-    
- 
-	require_once ('includes/main/counter.php');
-	require_once ('includes/main/record.php');
-	require_once ('includes/main/online.php');
-        require_once ('includes/main/usersever.php');
 
-	require_once ('includes/right.php');
+    require_once('includes/main/counter.php');
+    require_once('includes/main/record.php');
+    require_once('includes/main/online.php');
+    require_once('includes/main/usersever.php');
+
+    require_once('includes/right.php');
 
     /**
     * Main Page
     */
-    if (!isset ($_GET['step']))
-    {
+    if (!isset($_GET['step'])) {
         $uquery = $db -> SelectLimit("SELECT * FROM updates WHERE lang='".$strTranslation."' ORDER BY id DESC", 1);
-        $update = "<center><b>".$uquery -> fields['title']."</b> ".WRITE_BY." <b>".$uquery -> fields['starter']."</b>".$time."...</center>\"".$uquery -> fields['updates']."\"."; 
+        $update = "<center><b>".$uquery -> fields['title']."</b> ".WRITE_BY." <b>".$uquery -> fields['starter']."</b>".$time."...</center>\"".$uquery -> fields['updates']."\".";
         $uquery -> Close();
 
-        $adminmail1 = str_replace("@","[at]",$adminmail);
+        $adminmail1 = str_replace("@", "[at]", $adminmail);
 
         $objCodexdate = $db -> Execute("SELECT `date` FROM `court` WHERE `title`='".CODEX." ".$gamename."'");
 
-        $smarty->assign( array ("Update" => $update,
+        $smarty->assign(array("Update" => $update,
                                 "Adminname" => $adminname,
                                 "Adminmail" => $adminmail,
                                 "Adminmail1" => $adminmail1,
@@ -85,8 +83,7 @@ if (!$gamename)
     /**
     * Game rules
     */
-    if (isset ($_GET['step']) && $_GET['step'] == 'rules')
-    {
+    if (isset($_GET['step']) && $_GET['step'] == 'rules') {
         $objRules = $db -> Execute("SELECT body FROM court WHERE title='".CODEX." ".$gamename."'");
         $smarty -> assign(array("Rules2" => $objRules -> fields['body'],
                                 "Pagetitle" => RULES));
@@ -97,15 +94,12 @@ if (!$gamename)
     /**
     * Password reminder
     */
-    if (isset($_GET['step']) && $_GET['step'] == 'lostpasswd')
-    {
+    if (isset($_GET['step']) && $_GET['step'] == 'lostpasswd') {
         $strMessage = '';
-        if (isset($_GET['action']) && $_GET['action'] == 'haslo')
-        {
-            if (!$_POST['email'])
-            {
-                $smarty -> assign ("Error", ERROR_MAIL);
-                $smarty -> display ('error.tpl');
+        if (isset($_GET['action']) && $_GET['action'] == 'haslo') {
+            if (!$_POST['email']) {
+                $smarty -> assign("Error", ERROR_MAIL);
+                $smarty -> display('error.tpl');
                 exit;
             }
             $_POST['email'] =  strip_tags($_POST['email']);
@@ -113,47 +107,43 @@ if (!$gamename)
             $intId = $query -> fields['id'];
             $query -> Close();
 
-            if (!$intId)
-            {
-                $smarty -> assign ("Error", ERROR_NOEMAIL);
-                $smarty -> display ('error.tpl');
+            if (!$intId) {
+                $smarty -> assign("Error", ERROR_NOEMAIL);
+                $smarty -> display('error.tpl');
                 exit;
             }
-            $new_pass = substr(md5(uniqid(rand(), true)), 3, 9);
+            $lenght = rand(12, 21);
+            $new_pass = openssl_random_pseudo_bytes($lenght);
             $intNumber = substr(md5(uniqid(rand(), true)), 3, 9);
             $strLink = $gameadress."/index.php?step=lostpasswd&code=".$intNumber."&email=".$_POST['email'];
             $adress = $_POST['email'];
             $message = MESSAGE_PART1." ".$gamename.".".MESSAGE_PART2." \n".$new_pass."\n ".MESSAGE_PART3."\n ".$strLink."\n".MESSAGE_PART4." ".$gamename."\n".$adminname;
             $subject = MESSAGE_SUBJECT." ".$gamename;
             require_once('mailer/mailerconfig.php');
-            if (!$mail -> Send())
-            {
-                $smarty -> assign ("Error", MESSAGE_NOT_SEND." ".$mail -> ErrorInfo);
-                $smarty -> display ('error.tpl');
+            if (!$mail -> Send()) {
+                $smarty -> assign("Error", MESSAGE_NOT_SEND." ".$mail -> ErrorInfo);
+                $smarty -> display('error.tpl');
                 exit;
             }
-            $strPass = md5($new_pass);
+            $strPass = password_hash($new_pass, PASSWORD_DEFAULT);
             $db -> Execute("INSERT INTO `lost_pass` (`number`, `email`, `newpass`, `id`) VALUES('".$intNumber."', '".$_POST['email']."', '".$strPass."', ".$intId.")") or $db -> ErrorMsg();
         }
 
         /**
          * Write new password to database
          */
-        if (isset($_GET['code']) && isset($_GET['email']))
-        {
+        if (isset($_GET['code']) && isset($_GET['email'])) {
             $strEmail =  strip_tags($_GET['email']);
             $strCode =  strip_tags($_GET['code']);
-            if (empty($strCode) || empty($strEmail))
-            {
-                $smarty -> assign ("Error", ERROR);
-                $smarty -> display ('error.tpl');
+            if (empty($strCode) || empty($strEmail)) {
+                $smarty -> assign("Error", ERROR);
+                $smarty -> display('error.tpl');
                 exit;
             }
             $objTest = $db -> Execute("SELECT `newpass`, `id` FROM `lost_pass` WHERE `number`='".$strCode."' AND `email`='".$strEmail."'");
-            if (!$objTest -> fields['newpass'])
-            {
-                $smarty -> assign ("Error", ERROR);
-                $smarty -> display ('error.tpl');
+            if (!$objTest -> fields['newpass']) {
+                $smarty -> assign("Error", ERROR);
+                $smarty -> display('error.tpl');
                 exit;
             }
             $db -> Execute("UPDATE `players` SET `pass`='".$objTest -> fields['newpass']."' WHERE `email`='".$strEmail."' AND `id`=".$objTest -> fields['id']);
@@ -165,34 +155,30 @@ if (!$gamename)
         /**
         * Initializantion of variable
         */
-        if (!isset($_GET['action']))
-        {
+        if (!isset($_GET['action'])) {
             $_GET['action'] = '';
         }
         $smarty -> assign(array("Action" => $_GET['action'],
                                 "Message" => $strMessage,
                                 "Pagetitle" => LOST_PASSWORD));
-        $smarty -> display ('passwd.tpl');
+        $smarty -> display('passwd.tpl');
     }
 
     /**
      * Write new email to database
      */
-    if (isset($_GET['code']) && isset($_GET['email']) && (isset($_GET['step']) && $_GET['step'] == 'newemail'))
-    {
+    if (isset($_GET['code']) && isset($_GET['email']) && (isset($_GET['step']) && $_GET['step'] == 'newemail')) {
         $strEmail =  strip_tags($_GET['email']);
         $strCode =  strip_tags($_GET['code']);
-        if (empty($strCode) || empty($strEmail))
-        {
-            $smarty -> assign ("Error", ERROR);
-            $smarty -> display ('error.tpl');
+        if (empty($strCode) || empty($strEmail)) {
+            $smarty -> assign("Error", ERROR);
+            $smarty -> display('error.tpl');
             exit;
         }
         $objTest = $db -> Execute("SELECT `email`, `id` FROM `lost_pass` WHERE `number`='".$strCode."' AND `newemail`='".$strEmail."'");
-        if (!$objTest -> fields['email'])
-        {
-            $smarty -> assign ("Error", ERROR);
-            $smarty -> display ('error.tpl');
+        if (!$objTest -> fields['email']) {
+            $smarty -> assign("Error", ERROR);
+            $smarty -> display('error.tpl');
             exit;
         }
         $db -> Execute("UPDATE `players` SET `email`='".$strEmail."' WHERE `email`='".$objTest -> fields['email']."' AND `id`=".$objTest -> fields['id']);
@@ -205,4 +191,7 @@ if (!$gamename)
 
     $db -> Close();
 }
-?>
+
+// Jeśli wybrałem opcję
+#if (isset($_REQUEST["provider"])) {
+#}

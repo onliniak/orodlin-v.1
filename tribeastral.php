@@ -228,7 +228,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'add')
     if (isset($_GET['step']) && ($_GET['step'] == 'piece' || $_GET['step'] == 'component'))
     {
         integercheck($_POST['amount']);
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[0-9]*$", $_POST['name']) || !ereg("^[1-9][0-9]*$", $_POST['number']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[0-9]*$/", $_POST['name']) || !preg_match("/^[1-9][0-9]*$/", $_POST['number']))
         {
             error(ERROR);
         }
@@ -349,7 +349,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'give')
     if (isset($_GET['step']) && ($_GET['step'] == 'piece' || $_GET['step'] == 'component'))
     {
         integercheck($_POST['amount']);
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[0-9]*$", $_POST['name']) || !ereg("^[0-9]*$", $_POST['pid']) || !ereg("^[1-9][0-9]*$", $_POST['number']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[0-9]*$/", $_POST['name']) || !preg_match("/^[0-9]*$/", $_POST['pid']) || !preg_match("/^[1-9][0-9]*$/", $_POST['number']))
         {
             error(ERROR);
         }
@@ -461,7 +461,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'give')
     if (isset($_GET['step']) && $_GET['step'] == 'all')
     {
         integercheck($_POST['amount']);
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[0-9]*$", $_POST['name']) || !ereg("^[0-9]*$", $_POST['pid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[0-9]*$/", $_POST['name']) || !preg_match("/^[0-9]*$/", $_POST['pid']))
         {
             error(ERROR);
         }

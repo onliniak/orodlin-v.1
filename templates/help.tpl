@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if !isset($Page) || empty($Page)}
 <p>{$smarty.const.INFO}</p>
 {else}

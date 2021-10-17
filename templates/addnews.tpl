@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <form method="post" action="addnews.php?action=add">
 <table>
 <tr>

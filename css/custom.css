@@ -1,0 +1,83 @@
+/* Ramki */
+.column,
+.columns,
+.background_me {
+border-image-slice: 27 27 27 27;
+border-image-width: 20px 20px 20px 20px;
+border-image-outset: 0px 0px 0px 0px;
+border-image-repeat: stretch stretch;
+border-image-source: url(https://cdn.pixabay.com/photo/2014/09/04/08/00/document-435350_960_720.jpg);
+    padding: 1cm;
+    background-image: url(https://cdn.inspirationhut.net/wp-content/uploads/2014/09/rice-paper-texture.jpg)
+
+}
+img.u-max-full-width {
+    border: 6px double black
+}
+/* Tło */
+.container {
+    background-image: url(https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg?auto=compress);
+    background-size: cover;
+	background-position: top
+}
+
+a {
+color:black
+}
+/* Bootstrap-style badges */
+.badge {
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+
+/* Ikonki */
+.mdi::before {
+    font-size: 24px;
+    line-height: 14px;
+}
+.mdi::before {
+    position: relative;
+    top: 4px;
+}
+
+.background_image {
+	padding: 1cm;
+    background-image: url(https://cdn.inspirationhut.net/wp-content/uploads/2014/09/rice-paper-texture.jpg)
+}
+
+/* Lista online */
+#podstawowy_opis:hover + #po_najechaniu {
+    display: block;
+}
+a#po_najechaniu: hover {
+    background: #ffffff;
+    text-decoration: none;
+}
+
+a#po_najechaniu span {
+    display: none;
+}
+a#po_najechaniu:hover span{
+    display: block;
+    position: absolute;
+    color: #000000;
+	padding: 30px;
+	margin: -124px; /*Przenieś do góry i w lewo*/
+	background-image: url(https://cdn.inspirationhut.net/wp-content/uploads/2014/09/rice-paper-texture.jpg);
+	opacity:.80;
+	text-align: center;
+}
+#opis_ukryj {
+	position: absolute;
+	width: 202px;
+	color: #4d4e4f;
+	font-weight: bolder;
+	text-align: center;
+	padding: 5px;
+}

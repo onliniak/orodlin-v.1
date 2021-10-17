@@ -125,7 +125,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'zobacz')
     }
     if (isset($_GET['levels']) && $_GET['levels'] == 'yes')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['min']) || !ereg("^[1-9][0-9]*$", $_POST['max']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['min']) || !preg_match("/^[1-9][0-9]*$/", $_POST['max']))
         {
             error(ERROR);
         }
@@ -233,7 +233,7 @@ if (isset ($_GET['daj']))
     if (isset ($_GET['step3']) && $_GET['step3'] == 'add') 
     {
         integercheck($_POST['amount']);
-        if (!ereg("^[1-9][0-9]*$", $_POST['did']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['did']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }
@@ -304,7 +304,7 @@ if (isset ($_GET['step']) && $_GET['step'] == 'daj')
             error(SELECT_ITEM);
         }
         integercheck($_POST['amount']);
-        if (!ereg("^[1-9][0-9]*$", $_POST['przedmiot']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['przedmiot']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }

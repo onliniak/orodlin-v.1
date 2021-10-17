@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <p>{$Tinfo}</p><br />
 
 {section name=i loop=$arrText}

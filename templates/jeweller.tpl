@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Step == ""}
     {$Jewellerinfo}<br /><br />
     <ul{if $Graphstyle == "Y"} class="sword"{/if}>

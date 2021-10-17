@@ -31,34 +31,19 @@
 //
 // $Id$
 
+//Include Composer's autoloader
+include 'vendor/autoload.php';
+
+//Dołączone biblioteki
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 /**
 * GZIP compression
 */
 
-date_default_timezone_set ("Europe/Warsaw");
-$do_gzip_compress = FALSE;
-$compress = FALSE;
-$phpver = phpversion();
-$useragent = (isset($_SERVER["HTTP_USER_AGENT"]) ) ? $_SERVER["HTTP_USER_AGENT"] : $HTTP_USER_AGENT;
-if ($phpver >= '4.0.4pl1' && (strstr($useragent,'compatible') || strstr($useragent,'Gecko') || strstr ($useragent, 'Opera')))
-{
-    if (extension_loaded('zlib'))
-    {
-        $compress = TRUE;
-        ob_start('ob_gzhandler');
-    }
-}
-    elseif ($phpver > '4.0')
-{
-    if (strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip'))
-        if (extension_loaded('zlib'))
-        {
-            $do_gzip_compress = $compress = TRUE;
-            ob_start();
-            ob_implicit_flush(0);
-            header('Content-Encoding: gzip');
-        }
-}
+ob_start("ob_gzhandler");
+ob_implicit_flush(0);
 
 $start_time = microtime();
 /**
@@ -68,9 +53,11 @@ $path = 'languages/';
 $dir = opendir($path);
 $arrLanguage = array();
 $i = 0;
-while ($file = readdir($dir))
-    if (!ereg("(.htm*)|(\.)$", $file))
+while ($file = readdir($dir)) {
+    if (!preg_match("/(.htm*)|(\.)$/", $file)) {
         $arrLanguage[$i++] = $file;
+    }
+}
 closedir($dir);
 
 /**
@@ -79,33 +66,41 @@ closedir($dir);
 $strTranslation = in_array($_SERVER['HTTP_ACCEPT_LANGUAGE'], $arrLanguage) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'pl';
 require_once('languages/'.$strTranslation.'/head.php');
 require_once('includes/sessions.php');
-require_once 'libs/Smarty.class.php';
-require_once ('includes/config.php');
+#require_once('libs/Smarty.class.php');
+require_once('includes/config.php');
 require_once('class/player_class.php');
 
 $smarty = new Smarty;
 $smarty-> compile_check = true;
-$db -> LogSQL();
+#$smarty->caching = 1;
 $smarty -> template_dir = './templates/';
-$smarty -> compile_dir = './templates_c/';
+#$smarty -> compile_dir = './templates_c/';
 $smarty -> assign(array('Gamename' => $gamename, 'Meta' => '', 'GameAddress' => $gameadress));
 // obsługa tagów :)
-require_once ('tags.php');
+require_once('tags.php');
 
+// /*
+//  * MySQL Perfomance
+// */
+// $db -> LogSQL();
+// $perf = newPerfMonitor($db);
+// $SQL = "SELECT * FROM act where actno > 200";
+// $db->execute($SQL);
+// $perf->expensiveSql(); //Nie jestem pewny, czy to poprawna komenda …
 
 /**
 *Name of requested file. (Needed in help.php)
 */
 
-$FileName = explode('.', basename ($_SERVER['REQUEST_URI']));
+$FileName = explode('.', basename($_SERVER['REQUEST_URI']));
 $FileName = $FileName[0];
-$smarty->assign ('FileName', $FileName);
+$smarty->assign('FileName', $FileName);
 
 
 /**
 * Errors reporting level
 */
-error_reporting(E_ALL);
+#error_reporting(E_ALL);
 
 /**
 * function to catch errors and write it to bugtrack
@@ -117,22 +112,22 @@ function catcherror($errortype, $errorinfo, $errorfile, $errorline)
     preg_match('/([^\/]+)$/', $errorfile, $arrMatch);
     $file = addslashes($arrMatch[1]);
     $info = addslashes($errorinfo);
-    if (isset($_SERVER['HTTP_REFERER']))
-    {
+    if (isset($_SERVER['HTTP_REFERER'])) {
         preg_match('/([^\/]+)$/', $_SERVER['HTTP_REFERER'], $arrMatch);
         $referer = (isset($arrMatch[1])) ? addslashes($arrMatch[1]) : '';
+    } else {
+        $referer = '';
     }
-	else $referer = '';
 
-	$oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
+    $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
     $arrTest = $db -> GetRow('SELECT `id` FROM `bugtrack` WHERE `file`=\''.$file.'\' AND `line`='.$errorline.' AND `info`=\''.$info.'\' AND `type`='.$errortype.' AND `referer`=\''.$referer.'\'');
-    if (!empty($arrTest))
+    if (!empty($arrTest)) {
         $db -> Execute('UPDATE `bugtrack` SET `amount`=`amount`+1 WHERE `id`='.$arrTest[0]);
-    else
+    } else {
         $db -> Execute('INSERT INTO `bugtrack` (`type`, `info`, `file`, `line`, `referer`) VALUES('.$errortype.', \''.$info.'\', \''.$file.'\', '.$errorline.', \''.$referer.'\')');
+    }
     $db -> SetFetchMode($oldFetchMode);
-    if ($errortype == E_USER_ERROR || $errortype == E_ERROR)
-    {
+    if ($errortype == E_USER_ERROR || $errortype == E_ERROR) {
         $smarty -> assign('Message', E_ERRORS);
         $smarty -> display('error1.tpl');
         exit;
@@ -148,25 +143,41 @@ $smarty -> assign('Charset', CHARSET);
 
 /**
 * Login to game and set session variables
+https://akrabat.com/migrating-to-password_verify/
 */
-if (isset ($_POST['pass']) && $title == 'Wieści')
-{
-    logIn($_POST['email'], md5($_POST['pass']), $_SERVER['REMOTE_ADDR'], strip_tags($title), $pllimit);
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['pass'] = md5($_POST['pass']);
+
+#$lenght = rand(8, 15);
+#$token = openssl_random_pseudo_bytes($lenght);
+
+if (isset($_POST['pass']) && $title == 'Wieści') {
+    logIn($_POST['email'], $_SERVER['REMOTE_ADDR'], strip_tags($title), $pllimit);
+
+    // Dobra, to teraz na poważnie → w tym miejscu przekazuję zmienne do klasy player_class
+
+    $strEmail = $_POST['email'];
+    $haslo = $db -> Execute("SELECT pass FROM players WHERE email='$strEmail'");
+    $hash = $haslo -> fields['pass'];
+
+    $validPassword = password_verify($_POST['pass'], $hash);
+    if ($validPassword) {
+        // valid user
+        $_SESSION['email'] = $_POST['email'];
+        //$_SESSION['pass'] = true;
+    };
+
     /**
     * Total visits counter
     */
     include('counter/licznik.php');
-    $plik=fopen("counter/licznik.php","w+");
-    fputs($plik,'<?php $ilosc='.(++$ilosc).' ?>');
+    $plik=fopen("counter/licznik.php", "w+");
+    fputs($plik, '<?php $ilosc='.(++$ilosc).' ?>');
     fclose($plik);
     /**
     * Count today visits
     */
     include("counter/d_licznik.php");
-    $plik=fopen("counter/d_licznik.php","w+");
-    fputs($plik,'<?php $ilosc='.(++$ilosc).' ?>');
+    $plik=fopen("counter/d_licznik.php", "w+");
+    fputs($plik, '<?php $ilosc='.(++$ilosc).' ?>');
     fclose($plik);
 
     /**
@@ -181,21 +192,25 @@ if (isset ($_POST['pass']) && $title == 'Wieści')
     $date1 = date('Y-m-d');
     $date2 = date('H:i:s');
     include("counter/record.php");
-    if ($record <= $intNumo2)
-    {
-        $plik=fopen("counter/record.php","w+");
-        fputs($plik,'<?php $record="'.$intNumo2.'"; $when1="'.$date1.'"; $when2="'.$date2.'"; ?>');
+    if ($record <= $intNumo2) {
+        $plik=fopen("counter/record.php", "w+");
+        fputs($plik, '<?php $record="'.$intNumo2.'"; $when1="'.$date1.'"; $when2="'.$date2.'"; ?>');
         fclose($plik);
     }
 }
 
+$numlog = $db -> GetRow('SELECT count(*) FROM `log` WHERE `owner`='.$player -> id.' AND `unread`=\'F\'');
+$smarty -> assign('Unreadlog', $numlog[0] ? $numlog[0] : 0);
+
+$unread = $db -> GetRow('SELECT count(*) FROM `mail` WHERE `owner`='.$player -> id.' AND `zapis`=\'N\' AND `unread`=\'F\' AND `send`=0');
+$smarty -> assign('Unreadmail', $unread[0] ? $unread[0] : 0);
+
 /**
 * End session
 */
-if (empty($_SESSION['email']) || empty($_SESSION['pass']))
-{
-    $smarty -> assign ('Error', E_SESSIONS);
-    $smarty -> display ('error.tpl');
+if (empty($_SESSION['email'])) {
+    $smarty -> assign('Error', E_SESSIONS);
+    $smarty -> display('error.tpl');
     exit;
 }
 
@@ -205,34 +220,40 @@ $newdate = $data.' '.$time;
 
 $player = new Player($_SESSION['email'], strip_tags($title));
 
-$arrURI = explode('.',basename($_SERVER['REQUEST_URI']));
-if (in_array($arrURI[0], array('alchemik', 'grid', 'jeweller', 'kowal', 'lumbermill')))
+$arrURI = explode('.', basename($_SERVER['REQUEST_URI']));
+if (in_array($arrURI[0], array('alchemik', 'grid', 'jeweller', 'kowal', 'lumbermill'))) {
     $player -> artisandata();
-if (in_array($arrURI[0], array('amarket', 'armor', 'bows', 'czary', 'equip', 'jeweller', 'klasa', 'kowal', 'lumbermill', 'portal', 'rasa', 'tribes', 'wieza', 'view')))
+}
+if (in_array($arrURI[0], array('amarket', 'armor', 'bows', 'czary', 'equip', 'jeweller', 'klasa', 'kowal', 'lumbermill', 'portal', 'rasa', 'tribes', 'wieza', 'view'))) {
     $player -> thiefdata();
-if ($arrURI[0] == 'deity' || $arrURI[0]== 'temple')
+}
+if ($arrURI[0] == 'deity' || $arrURI[0]== 'temple') {
     $player -> templedata();
-if (in_array($arrURI[0], array('admin', 'city', 'court', 'forums', 'library', 'news', 'newspaper', 'polls', 'updates', 'staff')))
+}
+if (in_array($arrURI[0], array('admin', 'city', 'court', 'forums', 'library', 'news', 'newspaper', 'polls', 'updates', 'staff'))) {
     $player -> languagedata();
-if (in_array($arrURI[0], array('bank', 'core', 'explore', 'farm', 'house', 'kopalnia', 'lumberjack','market', 'maze', 'mines', 'outposts', 'pmarket', 'travel', 'warehouse', 'zloto')))
+}
+if (in_array($arrURI[0], array('bank', 'core', 'explore', 'farm', 'house', 'kopalnia', 'lumberjack','market', 'maze', 'mines', 'outposts', 'pmarket', 'travel', 'warehouse', 'zloto'))) {
     $player -> raredata();
-if ($arrURI[0] == 'ap' || $arrURI[0] == 'stats')
+}
+if ($arrURI[0] == 'ap' || $arrURI[0] == 'stats') {
     $player -> statistics();
-if ($arrURI[0] == 'battle' || $arrURI[0] == 'train')
+}
+if ($arrURI[0] == 'battle' || $arrURI[0] == 'train') {
     $player -> battledata();
-if ($arrURI[0] == 'account')
+}
+if ($arrURI[0] == 'account') {
     $player -> accountdata();
+}
 
 // Check if game isn't closed for "reset" reasons - only near every odd hour (0,2,4,6,8 etc.).
 $intTime = time() % 7200;
-if ($intTime < 60 || $intTime > 7140)
-{
+if ($intTime < 60 || $intTime > 7140) {
     $arrOpen = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'open\'');
-    if ($arrOpen['value'] == 'N' && $player -> rank != 'Admin')
-    {
+    if ($arrOpen['value'] == 'N' && $player -> rank != 'Admin') {
         $arrReason = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'close_reason\'');
-        $smarty -> assign ('Error', REASON.'<br />'.$arrReason['value']);
-        $smarty -> display ('error.tpl');
+        $smarty -> assign('Error', REASON.'<br />'.$arrReason['value']);
+        $smarty -> display('error.tpl');
         exit;
     }
 }
@@ -241,20 +262,20 @@ if ($intTime < 60 || $intTime > 7140)
 * Get the localization for game
 */
 require_once('languages/'.$player -> lang.'/head1.php');
-$expn = round(pow($player -> level,2)*log(exp(1)+($player -> level-1)/100)*50);
+$expn = round(pow($player -> level, 2)*log(exp(1)+($player -> level-1)/100)*50);
 $pct = round($player -> exp / $expn * 100);
 
 /**
  * Graph bars and magicians.
  */
-if ($player -> graphbar == 'Y')
-{
+if ($player -> graphbar == 'Y') {
     $intExpperc = min($pct, 100);
     $intPerhealth = min(round($player -> hp / $player -> max_hp * 100), 100);
-    if ($player -> clas == 'Mag')
-    {
+    if ($player -> clas == 'Mag') {
         $cape = $db -> GetRow('SELECT `power` FROM `equipment` WHERE `owner`='.$player -> id.' AND `type`=\'C\' AND `status`=\'E\'');
-	if (!isset($cape['power'])) $cape['power'] = 0;
+        if (!isset($cape['power'])) {
+            $cape['power'] = 0;
+        }
         $maxmana = ($player -> inteli + $player -> wisdom) * (1 + $cape['power'] / 100);
         $intPermana = min(round(($player -> mana / $maxmana) * 100), 100);
         $smarty -> assign(array('Manaper' => $intPermana,
@@ -274,22 +295,19 @@ if ($player -> graphbar == 'Y')
 $smarty -> assign(array('Avatar' => ''));
 
 $plik = 'avatars/'.$player -> avatar;
-if (is_file($plik))
-{
+if (is_file($plik)) {
     require_once('includes/avatars.php');
     $arrImage = scaleavatar($plik);
     $smarty -> assign(array("Avatar" => $plik,
-							"A_width" => $arrImage[0],
-							"A_height" => $arrImage[1]));
+                            "A_width" => $arrImage[0],
+                            "A_height" => $arrImage[1]));
 }
 
 /**
  * Style rotation depending on location.
  */
-if ($player -> style == 'orodlin.css')
-{
-    switch ($player -> location)
-    {
+if ($player -> style == 'orodlin.css') {
+    switch ($player -> location) {
         case 'Altara': $player -> style = 'default/orodlin.m.css';
             break;
         case 'Ardulith': $player -> style = 'default/orodlin.a.css';
@@ -301,10 +319,8 @@ if ($player -> style == 'orodlin.css')
     }
 }
 
-if ($player -> graphic == 'default')
-{
-    switch ($player -> location)
-    {
+if ($player -> graphic == 'default') {
+    switch ($player -> location) {
         default: $LocStyle = 'default.css';
             break;
         case 'Altara': $LocStyle = 'meredith.css';
@@ -323,7 +339,7 @@ if ($player -> graphic == 'default')
 
 $smarty -> assign(array('Time' => $time,
                         'Title' => $title1,
-                        'Name' =>  getTaggedPlayerName ($player -> user, $player -> tribe, $player -> tribe_rank),
+                        'Name' =>  getTaggedPlayerName($player -> user, $player -> tribe, $player -> tribe_rank),
                         'Id' => $player -> id,
                         'Level' => $player -> level,
                         'Exp' => $player -> exp,
@@ -351,76 +367,68 @@ $smarty -> assign(array('Time' => $time,
                         'Spells' => $player -> clas == 'Mag' ? '<li><a href="czary.php">'.SPELLS_BOOK.'</a></li>' : '',
                         'Stephead' => ''));
 
-if (strpos($_SERVER['PHP_SELF'], 'newspaper.php') && isset($_GET['step']))
+if (strpos($_SERVER['PHP_SELF'], 'newspaper.php') && isset($_GET['step'])) {
     $smarty -> assign('Stephead', $_GET['step']);
-else
-{
+} else {
     $arrLinks = $db -> GetAll('SELECT `file`, `text` FROM `links` WHERE `owner`='.$player -> id.' ORDER BY `id` ASC');
-    $smarty -> assign_by_ref('ArrLinks', $arrLinks);
+    $smarty -> assignByRef('ArrLinks', $arrLinks);
 }
 
-switch($player -> location)
-{
+switch ($player -> location) {
     case 'Altara':
     case 'Ardulith':
 $smarty -> assign('QLocation', CITY);
-        if ($player -> hp > 0)
-        {
+        if ($player -> hp > 0) {
             $arrHospass = $db -> GetRow('SELECT `hospass` FROM `tribes` WHERE `id`='.$player -> tribe.' AND `hospass`=\'Y\'');
             $healneed = max(($player -> max_hp - $player -> hp) * 3, 0);
-            if (!empty($arrHospass))
+            if (!empty($arrHospass)) {
                 $healneed = ceil($healneed / 2);
-        }
-        else
+            }
+        } else {
             $healneed = 75 * $player -> level;
+        }
         $smarty -> assign(array('Location' => '<li><a href="city.php">'.CITY.'</a></li>',
                                 'Battle' => '<li><a href="battle.php">'.B_ARENA.'</a></li>',
                                 'Hospital' => '<li><a href="hospital.php">'.HOSPITAL.'</a> ['.$healneed.' sz]</li>',
                                 'Lbank' => '<li><a href="bank.php">'.BANK.'</a></li>'));
-        if ($player -> tribe)
-		{
-			$smarty -> assign('Tribe','<li><a href="tribes.php?view=my">'.MY_TRIBE.'</a></li>');
-			$smarty -> assign('Tforum','<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
-		}
+        if ($player -> tribe) {
+            $smarty -> assign('Tribe', '<li><a href="tribes.php?view=my">'.MY_TRIBE.'</a></li>');
+            $smarty -> assign('Tforum', '<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
+        }
         break;
     case 'Podróż':
         $smarty -> assign('QLocation', RETURN_TO);
         $test = $db -> GetRow('SELECT `quest` FROM `questaction` WHERE `player`='.$player -> id.' AND `action`!=\'end\'');
-        if ($test['quest'] != 0)
-        {
+        if ($test['quest'] != 0) {
             $qlocation = $db -> GetRow('SELECT `location` FROM `quests` WHERE `qid`='.$test['quest']);
             $smarty -> assign('Location', '<li><a href="'.$qlocation['location'].'?step=quest">'.RETURN_TO.'</a></li>');
-        }
-            else
-        {
-            if (!isset($_GET['step']))
+        } else {
+            if (!isset($_GET['step'])) {
                 $_GET['step'] = 'caravan';
+            }
             $smarty -> assign('Location', '<li><a href="travel.php?akcja='.$_GET['akcja'].'&amp;step='.$_GET['step'].'">'.RETURN_TO2.'</a></li>');
         }
         break;
     case 'Góry':
         $smarty -> assign(array('QLocation' => MOUNTAINS,
                                 'Location' => '<li><a href="'.($player -> fight == 0 ? 'gory.php' : 'explore.php?akcja=gory').'">'.MOUNTAINS.'</a></li>'));
-        if ($player -> tribe)
-		{
-			$smarty -> assign('Tforum','<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
-		}
+        if ($player -> tribe) {
+            $smarty -> assign('Tforum', '<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
+        }
         break;
     case 'Las':
         $smarty -> assign(array('QLocation' => FOREST,
                                 'Location' => '<li><a href="'.($player -> fight == 0 ? 'las.php' : 'explore.php?akcja=las').'">'.FOREST.'</a></li>'));
-        if ($player -> tribe)
-		{
-			$smarty -> assign('Tforum','<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
-		}
+        if ($player -> tribe) {
+            $smarty -> assign('Tforum', '<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
+        }
         break;
     case 'Lochy':
         $smarty -> assign(array('QLocation' => JAIL,
                                 'Location' => '<li><a href="jail.php">'.JAIL.'</a></li>'));
-        if ($player -> tribe)
-		{
-			$smarty -> assign('Tforum','<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
-		}
+        if ($player -> tribe) {
+            $smarty -> assign('Tforum', '<li><a href="tforums.php?view=topics">'.T_FORUM.'</a></li>');
+        }
         break;
     case 'Portal':
         $smarty -> assign(array('QLocation' => PORTAL,
@@ -433,21 +441,25 @@ $smarty -> assign('QLocation', CITY);
 }
 
 $arrQuery = $db -> GetRow('SELECT count(*) FROM `chat_users` WHERE `room`=\'izba\' AND `time`>='.(time() - 30));
-$smarty -> assign ('PlayersI', $arrQuery['count(*)']);
+$smarty -> assign('PlayersI', $arrQuery['count(*)']);
 $arrQuery = $db -> GetRow('SELECT count(*) FROM `chat_users` WHERE `room`=\'piwnica\' AND `time`>='.(time() - 30));
-$smarty -> assign ('PlayersP', $arrQuery['count(*)']);
+$smarty -> assign('PlayersP', $arrQuery['count(*)']);
 
-if ($player -> rank == 'Admin')
-    $smarty -> assign ('Special', '<ul><li><a href="admin.php">'.KING.'</a></li></ul>');
-if ($player -> rank == 'Staff')
-    $smarty -> assign ('Special', '<ul><li><a href="staff.php">'.PRINCE.'</a></li></ul>');
-if ($player -> rank == 'Sędzia')
-    $smarty -> assign ('Special', '<ul><li><a href="sedzia.php">'.JUDGE.'</a></li></ul>');
-if ($player -> rank == 'Techniczny')
-    $smarty -> assign ('Special', '<ul><li><a href="tech.php">'.TECH_PANEL.'</a></li></ul>');
-
-
-$smarty -> display ('header.tpl');
+if ($player -> rank == 'Admin') {
+    $smarty -> assign('Special', '<ul><li><a href="admin.php">'.KING.'</a></li></ul>');
+}
+if ($player -> rank == 'Staff') {
+    $smarty -> assign('Special', '<ul><li><a href="staff.php">'.PRINCE.'</a></li></ul>');
+}
+if ($player -> rank == 'Sędzia') {
+    $smarty -> assign('Special', '<ul><li><a href="sedzia.php">'.JUDGE.'</a></li></ul>');
+}
+if ($player -> rank == 'Techniczny') {
+    $smarty -> assign('Special', '<ul><li><a href="tech.php">'.TECH_PANEL.'</a></li></ul>');
+}
+$smarty->assign('dziennik', $dziennik);
+        $smarty->assign('wiadomości', $wiadomości);
+$smarty -> display('header.tpl');
 
 /**
  * GetLocHref() - Returns pure uri for current location.
@@ -455,8 +467,7 @@ $smarty -> display ('header.tpl');
 function GetLocHref()
 {
     global $player;
-    switch ($player->location)
-    {
+    switch ($player->location) {
         case 'Altara':
         case 'Ardulith':
             return 'city.php';
@@ -490,17 +501,17 @@ function error($text, $ref = '', $href = '')
     global $phptime;
     global $gamename;
 
-    if (strpos($text, '<a href') === false)
-    {
-        if ($ref == '' || $ref == RET_SELF)
+    if (strpos($text, '<a href') === false) {
+        if ($ref == '' || $ref == RET_SELF) {
             $text .= ' (<a href="'.$_SERVER['PHP_SELF'].'">'.BACK.'</a>)';
-        elseif ($ref == RET_LOC)
+        } elseif ($ref == RET_LOC) {
             $text .= ' (<a href="'.GetLocHref().'">'.BACK.'</a>)';
-            else //$ref == RET_ARG
+        } else { //$ref == RET_ARG
             $text .= ' (<a href="'.$href.'">'.BACK.'</a>)';
+        }
     }
     $smarty -> assign('Message', $text);
-    $smarty -> display ('error1.tpl');
+    $smarty -> display('error1.tpl');
     require_once('includes/foot.php');
     exit;
 }
@@ -510,8 +521,9 @@ function error($text, $ref = '', $href = '')
  */
 function integercheck($strField)
 {
-    if (strlen($strField) > 11)
+    if (strlen($strField) > 11) {
         error(ERROR);
+    }
 }
 
 /**
@@ -519,53 +531,62 @@ function integercheck($strField)
 */
 $arrTitle = array('Arena Walk', 'Labirynt', 'Portal', 'Astralny plan', 'Opuszczony szyb', 'Poszukiwania');
 $arrLocations = array('Altara', 'Ardulith', 'Portal', 'Astralny plan', 'Góry', 'Las');
-if ($player -> fight != 0 && (!in_array($title, $arrTitle)) && (in_array($player -> location, $arrLocations)))
-{
+if ($player -> fight != 0 && (!in_array($title, $arrTitle)) && (in_array($player -> location, $arrLocations))) {
     $db -> Execute('UPDATE `players` SET `hp`=0, `fight`=0, `bless`=\'\', `blessval`=0 WHERE `id`='.$player -> id) or die($db -> ErrorMsg());
-    if (!isset($_SESSION['amount']))
+    if (!isset($_SESSION['amount'])) {
         $_SESSION['amount'] = 1;
-    for ($k = 0; $k < $_SESSION['amount']; $k++)
+    }
+    for ($k = 0; $k < $_SESSION['amount']; $k++) {
         unset($_SESSION['mon'.$k]['id'],$_SESSION['mon'.$k]['user'],$_SESSION['mon'.$k]['hp']);
+    }
     unset($_SESSION['exhaust'], $_SESSION['round'], $_SESSION['points'], $_SESSION['amount'], $_SESSION['gainmiss'], $_SESSION['gainattack'], $_SESSION['gainshoot'], $_SESSION['gainmagic']);
 
-	error(ESCAPE);
+    error(ESCAPE);
 }
 
 /**
 * Delete sessions variables when player exit forums
 */
-if (isset($_SESSION['forums']) && !ereg('forums.php', $_SERVER['PHP_SELF']))
+if (isset($_SESSION['forums']) && !preg_match('/forums.php/', $_SERVER['PHP_SELF'])) {
     unset($_SESSION['forums']);
-if (isset($_SESSION['tforums']) && !ereg('tforums.php', $_SERVER['PHP_SELF']))
+}
+if (isset($_SESSION['tforums']) && !preg_match('/tforums.php/', $_SERVER['PHP_SELF'])) {
     unset($_SESSION['tforums']);
+}
 
 /**
 * Display some informations when player race, class, gender is not set
 */
-if (($FileName != 'card' && $FileName != 'updates' && $FileName != 'stats' && $FileName != 'view' && $FileName != 'bugtrack' && $FileName != 'admin') && ($player -> race == '' || $player -> clas == '' || $player -> gender == '') && $player -> rank != 'Admin')
+if (($FileName != 'card' && $FileName != 'updates' && $FileName != 'stats' && $FileName != 'view' && $FileName != 'bugtrack' && $FileName != 'admin') && ($player -> race == '' || $player -> clas == '' || $player -> gender == '') && $player -> rank != 'Admin') {
     error(UNFINISHED);
+}
 
 //searching a bug logs
 if (1) {
-	$logFile = fopen('ourlogs.txt','a');
-	$logString = '';
-	foreach ($_GET as $foo) {
-		if (preg_match("#update#i",$foo)) $logString =  'ERROR ';
-	}
-	foreach ($_POST as $foo) {
-		if (preg_match("#update#i",$foo)) $logString =  'ERROR ';
-	}
-	if (isset($_POST['pass'])) $_POST['pass'] = 'XXX';
-	if (isset($_POST['profile'])) {
-		$tmpProfile = $_POST['profile'];
-		$_POST['profile'] = 'PROFIL';
-	}
-	$logString .= Date ("y/m/d H:i:s", time()) . ' id:'. $player -> id . ' :: ' . ($_SERVER['REQUEST_URI']) . ' ' . str_replace('\n',' ' ,print_r($_POST, 1));
-	fwrite($logFile, $logString);
-	fclose($logFile);
-	if (isset($tmpProfile)) {
-		$_POST['profile'] = $tmpProfile;
-		unset($_POST['profile']);
-	}
+    $logFile = fopen('ourlogs.txt', 'a');
+    $logString = '';
+    foreach ($_GET as $foo) {
+        if (preg_match("#update#i", $foo)) {
+            $logString =  'ERROR ';
+        }
+    }
+    foreach ($_POST as $foo) {
+        if (preg_match("#update#i", $foo)) {
+            $logString =  'ERROR ';
+        }
+    }
+    if (isset($_POST['pass'])) {
+        $_POST['pass'] = 'XXX';
+    }
+    if (isset($_POST['profile'])) {
+        $tmpProfile = $_POST['profile'];
+        $_POST['profile'] = 'PROFIL';
+    }
+    $logString .= Date("y/m/d H:i:s", time()) . ' id:'. $player -> id . ' :: ' . ($_SERVER['REQUEST_URI']) . ' ' . str_replace('\n', ' ', print_r($_POST, 1));
+    fwrite($logFile, $logString);
+    fclose($logFile);
+    if (isset($tmpProfile)) {
+        $_POST['profile'] = $tmpProfile;
+        unset($_POST['profile']);
+    }
 }
-?>

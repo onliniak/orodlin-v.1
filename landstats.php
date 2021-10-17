@@ -72,10 +72,10 @@ for ($i = 0; $i < 4; $i++)
 	}
 }
 
-$smarty -> assign_by_ref('Desc', $arrDesc);
-$smarty -> assign_by_ref('Tables', $arrTableNames);
-$smarty -> assign_by_ref('Players', $arrPlayersAmount[0]);
-$smarty -> assign_by_ref('Stats', $arrAll);
+$smarty -> assignByRef('Desc', $arrDesc);
+$smarty -> assignByRef('Tables', $arrTableNames);
+$smarty -> assignByRef('Players', $arrPlayersAmount[0]);
+$smarty -> assignByRef('Stats', $arrAll);
 
 $db -> SetFetchMode($oldFetchMode);
 

@@ -21,7 +21,7 @@ global $player;
 */
 require_once("languages/".$player -> lang."/fightlogs.php");
 
-if (!isset($_GET['view']) ||!ereg("^[1-9][0-9]*$", $_GET['view']))
+if (!isset($_GET['view']) ||!preg_match("/^[1-9][0-9]*$/", $_GET['view']))
 {
     $_GET['view'] = $player -> id;
 }

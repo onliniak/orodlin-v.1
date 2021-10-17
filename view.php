@@ -40,7 +40,7 @@ if (!isset($_GET['view']))
     error("<a href=\"\"></a>");
 }
 
-if (!ereg("^[1-9][0-9]*$", $_GET['view']))
+if (!preg_match("/^[1-9][0-9]*$/", $_GET['view']))
 {
     error('<a href=""></a>');
 }
@@ -245,7 +245,7 @@ if ($player -> rank == 'Admin' || $player -> rank == 'Staff')
 */
 if (isset ($_GET['steal']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['steal']) || $player -> clas != 'Złodziej')
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['steal']) || $player -> clas != 'Złodziej')
     {
         error(ERROR.' (<a href="view.php?view='.$_GET['view'].'">'.BACK.'</a>)');
     }
@@ -417,7 +417,7 @@ if (isset ($_GET['steal']))
  */
 if (isset($_GET['steal_astral']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['steal_astral']) || $player -> clas != 'Złodziej' || $player -> location == 'Lochy')
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['steal_astral']) || $player -> clas != 'Złodziej' || $player -> location == 'Lochy')
     {
         error (ERROR.' (<a href="view.php?view='.$_GET['view'].'">'.BACK.'</a>)');
     }

@@ -37,12 +37,13 @@ function censorship($text)
     global $db;
     $arrBadWords = $db -> GetCol('SELECT `bword` FROM `bad_words`');
     $k = (empty($arrBadWords)) ? 0 : count($arrBadWords);
-    for ($i = 0; $i < $k; $i++)
-    {
+    for ($i = 0; $i < $k; $i++) {
         $arrBwords[$i] = "#[^ ]*".$arrBadWords[$i]."[^ ]*#si";
     }
     $text = str_replace("\n", " \n ", $text);
-    if (!empty($arrBwords)) $text = preg_replace($arrBwords, '[kwiatek]', $text);
+    if (!empty($arrBwords)) {
+        $text = preg_replace($arrBwords, '[kwiatek]', $text);
+    }
     $text = str_replace(" \n ", "\n", $text);
     return $text;
 }
@@ -52,7 +53,7 @@ function censorship($text)
 */
 function bbcodetohtml($text)
 {
-	/**
+    /**
     * Delete HTML tags from text
     */
     $text = htmlspecialchars($text);
@@ -65,14 +66,11 @@ function bbcodetohtml($text)
     $arrHtmlon = array("<b>", "<i>", "<u>", "<center>", "<br />Cytat:<br /><i>");
     $arrHtmloff = array("</b>", "</i>", "</u>", "</center>", "&nbsp;</i>");
     $arrRegex = array("#\[b\](.*?)\[\/b\]#si", "#\[i\](.*?)\[\/i\]#si", "#\[u\](.*?)\[\/u\]#si", "#\[center\]([^\*]*?)\[\/center\]#si", "#\[quote\](.*?)\[\/quote\]#si");
-    for ($j = 0; $j < 5; $j++)
-    {
+    for ($j = 0; $j < 5; $j++) {
         $intTest = preg_match_all($arrRegex[$j], $text, $arrText, PREG_PATTERN_ORDER);
-        if ($intTest)
-        {
+        if ($intTest) {
             $i = 0;
-            foreach($arrText[1] as $strText)
-            {
+            foreach ($arrText[1] as $strText) {
                 $text = str_replace($arrText[0][$i], $arrHtmlon[$j].$strText.$arrHtmloff[$j], $text);
                 $i ++;
             }
@@ -87,76 +85,75 @@ function bbcodetohtml($text)
     /**
     * Add smiles
     */
-    $text = str_replace(":)","<img src=\"images/smileys/blue/smile.png\" title=\"uśmiech\" />", $text);
-    $text = str_replace(":-)","<img src=\"images/smileys/blue/smile.png\" title=\"uśmiech\" />", $text);
+    $text = str_replace(":)", "&#128516;", $text);
+    $text = str_replace(":-)", "&#128516;", $text);
 
-    $text = str_replace(":D","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":d",'<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />', $text);
-    $text = str_replace(":-D","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":-d","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":>","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":->","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":&gt;","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
-    $text = str_replace(":-&gt;","<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />", $text);
+    $text = str_replace(":D", "&#128513;", $text);
+    $text = str_replace(":d", '&#128513;', $text);
+    $text = str_replace(":-D", "&#128513;", $text);
+    $text = str_replace(":-d", "&#128513;", $text);
+    $text = str_replace(":>", "&#128513;", $text);
+    $text = str_replace(":->", "&#128513;", $text);
+    $text = str_replace(":&gt;", "&#128513;", $text);
+    $text = str_replace(":-&gt;", "&#128513;", $text);
 
-    $text = str_replace(":]","<img src=\"images/smileys/blue/cheesy.png\" title=\"kontent\" />", $text);
-    $text = str_replace(":-]","<img src=\"images/smileys/blue/cheesy.png\" title=\"kontent\" />", $text);
+    $text = str_replace(":]", "&#128522;", $text);
+    $text = str_replace(":-]", "&#128522;", $text);
 
-    $text = str_replace(";)","<img src=\"images/smileys/blue/wink.png\" title=\"żart\" />", $text);
-    $text = str_replace(";-)","<img src=\"images/smileys/blue/wink.png\" title=\"żart\" />", $text);
+    $text = str_replace(";)", "&#128521;", $text);
+    $text = str_replace(";-)", "&#128521;", $text);
 
-    $text = str_replace(":p","<img src=\"images/smileys/blue/razz.png\" title=\"jęzor\" />", $text);
-    $text = str_replace(":P","<img src=\"images/smileys/blue/razz.png\" title=\"jęzor\" />", $text);
-    $text = str_replace(":-p","<img src=\"images/smileys/blue/razz.png\" title=\"jęzor\" />", $text);
-    $text = str_replace(":-P","<img src=\"images/smileys/blue/razz.png\" title=\"jęzor\" />", $text);
+    $text = str_replace(":p", "&#128540;", $text);
+    $text = str_replace(":P", "&#128540;", $text);
+    $text = str_replace(":-p", "&#128540;", $text);
+    $text = str_replace(":-P", "&#128540;", $text);
 
-    $text = str_replace(":(","<img src=\"images/smileys/blue/sad.png\" title=\"smutny\" />", $text);
-    $text = str_replace(":-(","<img src=\"images/smileys/blue/sad.png\" title=\"smutny\" />", $text);
+    $text = str_replace(":(", "&#9785;", $text);
+    $text = str_replace(":-(", "&#9785;", $text);
 
-    $text = str_replace(":\'-(","<img src=\"images/smileys/blue/cry.png\" title=\"płacz\" />", $text);
-    $text = str_replace(":\'(","<img src=\"images/smileys/blue/cry.png\" title=\"płacz\" />", $text);
-    $text = str_replace(";-(","<img src=\"images/smileys/blue/cry.png\" title=\"płacz\" />", $text);
-    $text = str_replace(";(","<img src=\"images/smileys/blue/cry.png\" title=\"płacz\" />", $text);
+    $text = str_replace(":\'-(", "&#128546;", $text);
+    $text = str_replace(":\'(", "&#128546;", $text);
+    $text = str_replace(";-(", "&#128546;", $text);
+    $text = str_replace(";(", "&#128546;", $text);
 
-    $text = str_replace(":o)","<img src=\"images/smileys/blue/clown.png\" title=\"klaun\" />", $text);
-    $text = str_replace(":*)","<img src=\"images/smileys/blue/clown.png\" title=\"klaun\" />", $text);
+    $text = str_replace(":o)", "&#129313;", $text);
+    $text = str_replace(":*)", "&#129313;", $text);
 
-    $text = str_replace(":-/","<img src=\"images/smileys/blue/slash.png\" title=\"yyy?\" />", $text);
-    $text = preg_replace("/:\/([^\/])/","<img src=\"images/smileys/blue/slash.png\" title=\"yyy?\" />\\1", $text);
+    $text = str_replace(":-/", "&#129300;", $text);
 
-    $text = str_replace(":-|","<img src=\"images/smileys/blue/slash2.png\" title=\"sceptyczny\" />", $text);
-    $text = str_replace(":|","<img src=\"images/smileys/blue/slash2.png\" title=\"sceptyczny\" />", $text);
+    $text = str_replace(":-|", "&#128528;", $text);
+    $text = str_replace(":|", "&#128528;", $text);
 
-    $text = str_replace(":o","<img src=\"images/smileys/blue/shocked.png\" title=\"zdziwiony\" />", $text);
-    $text = str_replace("8-(","<img src=\"images/smileys/blue/shocked.png\" title=\"zdziwiony\" />", $text);
-    $text = str_replace("8(","<img src=\"images/smileys/blue/shocked.png\" title=\"zdziwiony\" />", $text);
+    $text = str_replace(":o", "&#128561;", $text);
+    $text = str_replace("8-(", "&#128561;", $text);
+    $text = str_replace("8(", "&#128561;", $text);
 
-    $text = str_replace("B-)","<img src=\"images/smileys/blue/cool.png\" title=\"cool\" />", $text);
-    $text = str_replace("B)","<img src=\"images/smileys/blue/cool.png\" title=\"cool\" />", $text);
-    $text = str_replace("8-)","<img src=\"images/smileys/blue/cool.png\" title=\"cool\" />", $text);
-    $text = str_replace("8)","<img src=\"images/smileys/blue/cool.png\" title=\"cool\" />", $text);
+    $text = str_replace("B-)", "&#128526;", $text);
+    $text = str_replace("B)", "&#128526;", $text);
+    $text = str_replace("8-)", "&#128526;", $text);
+    $text = str_replace("8)", "&#128526;", $text);
 
-    $text = str_replace(":m","<img src=\"images/smileys/blue/mad.png\" title=\"wściekły\" />", $text);
+    $text = str_replace(":m", "&#128545;", $text);
 
-    $text = str_replace(";>","<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />", $text);
-    $text = str_replace(";&gt;","<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />", $text);
+    $text = str_replace(";>", "<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />", $text);
+    $text = str_replace(";&gt;", "<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />", $text);
 
-    $text = str_replace(":%","<img src=\"images/smileys/blue/shame.png\" title=\"wstyd\" />", $text);
+    $text = str_replace(":%", "&#128563;", $text);
 
-    $text = str_replace("<piwo>","<img src=\"images/smileys/blue/scoop.png\" title=\"kufel\" />", $text);
-    $text = str_replace("&lt;piwo&gt;","<img src=\"images/smileys/blue/scoop.png\" title=\"kufel\" />", $text);
+    $text = str_replace("<piwo>", "&#127866;", $text);
+    $text = str_replace("&lt;piwo&gt;", "&#127866;", $text);
 
-    $text = str_replace(":[","<img src=\"images/smileys/blue/mad2.png\" title=\"zły\" />", $text);
+    $text = str_replace(":[", "&#128545;", $text);
 
-    $text = str_replace(">;p","<img src=\"images/smileys/blue/squirrel.png\" title=\"wiewiór\" />", $text);
-    $text = str_replace("&gt;;p","<img src=\"images/smileys/blue/squirrel.png\" title=\"wiewiór\" />", $text);
+    $text = str_replace(">;p", "&#128063;", $text);
+    $text = str_replace("&gt;;p", "&#128063;", $text);
 
-    $text = str_replace(":*","<img src=\"images/smileys/blue/cmok.png\" title=\"cmok\" />", $text);
+    $text = str_replace(":*", "&#128536;", $text);
 
-    $text = str_replace(":E","<img src=\"images/smileys/blue/oldschool.png\" title=\"oldschool\" />", $text);
+    $text = str_replace(":E", "<img src=\"images/smileys/blue/oldschool.png\" title=\"oldschool\" />", $text);
 
-    $text = str_replace("<3","<img src=\"images/smileys/blue/heart2.png\" title=\"serduszko\" />", $text);
-    $text = str_replace("&lt;3","<img src=\"images/smileys/blue/heart2.png\" title=\"serduszko\" />", $text);
+    $text = str_replace("<3", "&#128150;", $text);
+    $text = str_replace("&lt;3", "&#128150;", $text);
 
     $linkpatterns = array('#(http|https|ftp):\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]+(:[0-9]{1,5})?(\/[^<\n\s]*)?#',
                           '#([^\/]{2})(www\.[a-zA-Z0-9\-.]+\.[a-zA-Z]{1,4}(:[0-9]{1,5})?(\/[^<\n\s]*)?)#');
@@ -186,42 +183,42 @@ function htmltobbcode($text)
     /**
     * Bold font
     */
-    $text = str_replace("<b>","[b]",$text);
-    $text = str_replace("</b>","[/b]",$text);
+    $text = str_replace("<b>", "[b]", $text);
+    $text = str_replace("</b>", "[/b]", $text);
     /**
     * Italic font
     */
-    $text = str_replace("<i>","[i]",$text);
-    $text = str_replace("</i>","[/i]",$text);
+    $text = str_replace("<i>", "[i]", $text);
+    $text = str_replace("</i>", "[/i]", $text);
     /**
     * Underline
     */
-    $text = str_replace("<u>","[u]",$text);
-    $text = str_replace("</u>","[/u]",$text);
+    $text = str_replace("<u>", "[u]", $text);
+    $text = str_replace("</u>", "[/u]", $text);
     /**
     * Replace smiles
     */
-    $text = str_replace("<img src=\"images/smileys/blue/smile.png\" title=\"uśmiech\" />",":)", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/grins.png\" title=\"śmiech\" />",":D", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/cheesy.png\" title=\"kontent\" />",":]", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/wink.png\" title=\"żart\" />",";)", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/razz.png\" title=\"jęzor\" />",":P", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/sad.png\" title=\"smutny\" />",":(", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/cry.png\" title=\"płacz\" />",";(", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/clown.png\" title=\"klaun\" />",":o)", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/slash.png\" title=\"yyy?\" />",":/", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/slash2.png\" title=\"sceptyczny\" />",":|", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/shocked.png\" title=\"zdziwiony\" />",":o", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/cool.png\" title=\"cool\" />","8)", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/mad.png\" title=\"wściekły\" />",":m", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />",";>", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/shame.png\" title=\"wstyd\" />",":%", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/scoop.png\" title=\"kufel\" />","c[]", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/mad2.png\" title=\"zły\" />",":[", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/squirrel.png\" title=\"wiewiór\" />",">;p", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/cmok.png\" title=\"cmok\" />",":*", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/oldschool.png\" title=\"oldschool\" />",":E", $text);
-    $text = str_replace("<img src=\"images/smileys/blue/heart2.png\" title=\"serduszko\" />","<3", $text);
+    $text = str_replace("<img src=\"images/smileys/blue/smile.png\" title=\"uśmiech\" />", ":)", $text);
+    $text = str_replace("&#128513;", ":D", $text);
+    $text = str_replace("&#128522;", ":]", $text);
+    $text = str_replace("&#128521;", ";)", $text);
+    $text = str_replace("&#128540;", ":P", $text);
+    $text = str_replace("&#9785;", ":(", $text);
+    $text = str_replace("&#128546;", ";(", $text);
+    $text = str_replace("&#129313;", ":o)", $text);
+    $text = str_replace("&#129300;", ":/", $text);
+    $text = str_replace("&#128528;", ":|", $text);
+    $text = str_replace("&#128561;", ":o", $text);
+    $text = str_replace("&#128526;", "8)", $text);
+    $text = str_replace("&#128545;", ":m", $text);
+    $text = str_replace("<img src=\"images/smileys/blue/smartass.png\" title=\"mądrala\" />", ";>", $text);
+    $text = str_replace("&#128563;", ":%", $text);
+    $text = str_replace("&#127866;", "c[]", $text);
+    $text = str_replace("&#128545;", ":[", $text);
+    $text = str_replace("&#128063;", ">;p", $text);
+    $text = str_replace("&#128536;", ":*", $text);
+    $text = str_replace("<img src=\"images/smileys/blue/oldschool.png\" title=\"oldschool\" />", ":E", $text);
+    $text = str_replace("&#128150;", "<3", $text);
     /**
      * Center text
      */
@@ -245,5 +242,3 @@ function htmltobbcode($text)
     */
     return $text;
 }
-
-?>

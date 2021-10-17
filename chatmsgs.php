@@ -149,19 +149,19 @@ function breakLongWords($str, $maxLength, $char){
     $newStr = "";
     $openTag = false;
     for($i=0; $i<strlen($str); $i++){
-        $newStr .= $str{$i};   
+        $newStr .= $str[$i];   
        
-        if($str{$i} == "<"){
+        if($str[$i] == "<"){
             $openTag = true;
             continue;
         }
-        if(($openTag) && ($str{$i} == ">")){
+        if(($openTag) && ($str[$i] == ">")){
             $openTag = false;
             continue;
         }
        
         if(!$openTag){
-            if(!in_array($str{$i}, $wordEndChars)){//If not word ending char
+            if(!in_array($str[$i], $wordEndChars)){//If not word ending char
                 $count++;
                 if($count==$maxLength){//if current word max length is reached
                     $newStr .= $char;//insert word break char

@@ -39,9 +39,8 @@ require_once('includes/artisan.php');
 */
 require_once('languages/'.$player -> lang.'/alchemik.php');
 
-if ($player -> location != 'Altara' && $player -> location != 'Ardulith')
-{
-    error (ERROR);
+if ($player -> location != 'Altara' && $player -> location != 'Ardulith') {
+    error(ERROR);
 }
 
 /**
@@ -52,8 +51,7 @@ $herb = $db -> Execute('SELECT `illani`, `illanias`, `nutari`, `dynallca` FROM `
 /**
 * Assign variables to template
 */
-if (!isset($_GET['alchemik']))
-{
+if (!isset($_GET['alchemik'])) {
     $smarty -> assign(array('Awelcome' => WELCOME,
                             'Arecipes' => A_RECIPES,
                             'Amake' => A_MAKE,
@@ -63,26 +61,20 @@ if (!isset($_GET['alchemik']))
 /**
 * Buy receptures
 */
-if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'przepisy')
-{
-    $smarty -> assign ('Recipesinfo', RECIPES_INFO);
-    if (!isset($_GET['buy']))
-    {
-        showplans ('alchemy_mill', 0, $player -> lang);
-    }
-    else
-    {
-        buyplan ('alchemy_mill', $_GET['buy'], $player -> id, $player -> credits);
+if (isset($_GET['alchemik']) && $_GET['alchemik'] == 'przepisy') {
+    $smarty -> assign('Recipesinfo', RECIPES_INFO);
+    if (!isset($_GET['buy'])) {
+        showplans('alchemy_mill', 0, $player -> lang);
+    } else {
+        buyplan('alchemy_mill', $_GET['buy'], $player -> id, $player -> credits);
     }
 }
 
 /**
 * Making potions
 */
-if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
-{
-    if (!isset($_GET['rob']))
-    {
+if (isset($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia') {
+    if (!isset($_GET['rob'])) {
         $arrname = array();
         $arrlevel = array();
         $arrid = array();
@@ -92,8 +84,7 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
         $arrdynallca = array();
         $i = 0;
         $kuznia = $db -> Execute('SELECT * FROM `alchemy_mill` WHERE `status`=\'N\' AND `owner`='.$player -> id.' ORDER BY `level` ASC');
-        while (!$kuznia -> EOF)
-        {
+        while (!$kuznia -> EOF) {
             $arrname[$i] = $kuznia -> fields['name'];
             $arrlevel[$i] = $kuznia -> fields['level'];
             $arrid[$i] = $kuznia -> fields['id'];
@@ -105,7 +96,7 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
             $kuznia -> MoveNext();
         }
         $kuznia -> Close();
-        $smarty -> assign (array('Name' => $arrname,
+        $smarty -> assign(array('Name' => $arrname,
                                  'Level' => $arrlevel,
                                  'Id' => $arrid,
                                  'Illani' => $arrillani,
@@ -120,51 +111,42 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
                                  'Rnutari' => R_NUTARI,
                                  'Rdynallca' => R_DYNALLCA));
     }
-    if (isset($_GET['dalej']))
-    {
-        if ($player -> hp == 0)
-        {
-            error (DEAD_PLAYER);
+    if (isset($_GET['dalej'])) {
+        if ($player -> hp == 0) {
+            error(DEAD_PLAYER);
         }
-        if (!ereg("^[1-9][0-9]*$", $_GET['dalej']))
-        {
-            error (ERROR);
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['dalej'])) {
+            error(ERROR);
         }
         $kuznia = $db -> Execute('SELECT `name` FROM `alchemy_mill` WHERE `id`='.$_GET['dalej']);
-        $smarty -> assign (array ('Name1' => $kuznia -> fields['name'],
+        $smarty -> assign(array('Name1' => $kuznia -> fields['name'],
                                   'Id1' => $_GET['dalej'],
                                   'Pstart' => P_START,
                                   'Pamount' => P_AMOUNT,
                                   'Amake' => A_MAKE));
         $kuznia -> Close();
     }
-    if (isset($_GET['rob']))
-    {
-        if (!isset($_POST['razy']) || !ereg("^[1-9][0-9]*$", $_GET['rob']) || !ereg("^[1-9][0-9]*$", $_POST['razy']))
-        {
-            error (ERROR);
+    if (isset($_GET['rob'])) {
+        if (!isset($_POST['razy']) || !preg_match("/^[1-9][0-9]*$/", $_GET['rob']) || !preg_match("/^[1-9][0-9]*$/", $_POST['razy'])) {
+            error(ERROR);
         }
         $kuznia = $db -> Execute('SELECT * FROM `alchemy_mill` WHERE `id`='.$_GET['rob']);
         $rillani = ($_POST['razy'] * $kuznia -> fields['illani']);
         $rillanias = ($_POST['razy'] * $kuznia -> fields['illanias']);
         $rnutari = ($_POST['razy'] * $kuznia -> fields['nutari']);
         $rdynallca = ($_POST['razy'] * $kuznia -> fields['dynallca']);
-        if ($herb -> fields['illani'] < $rillani || $herb -> fields['illanias'] < $rillanias || $herb -> fields['nutari'] < $rnutari || $herb -> fields['dynallca'] < $rdynallca)
-        {
-            error (NO_HERBS);
+        if ($herb -> fields['illani'] < $rillani || $herb -> fields['illanias'] < $rillanias || $herb -> fields['nutari'] < $rnutari || $herb -> fields['dynallca'] < $rdynallca) {
+            error(NO_HERBS);
         }
         $fltEnergy = $_POST['razy'];
-        if ($kuznia -> fields['level'] > 1)
-        {
+        if ($kuznia -> fields['level'] > 1) {
             $fltEnergy = $fltEnergy + (($kuznia -> fields['level'] * 0.2) * $_POST['razy']);
         }
-        if ($player -> energy < $fltEnergy)
-        {
-            error (NO_ENERGY);
+        if ($player -> energy < $fltEnergy) {
+            error(NO_ENERGY);
         }
-        if ($kuznia -> fields['owner'] != $player -> id)
-        {
-            error (NO_RECIPE);
+        if ($kuznia -> fields['owner'] != $player -> id) {
+            error(NO_RECIPE);
         }
 
         /**
@@ -177,91 +159,69 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
         $rpd = 0;
         $rum = 0;
         $objItem = $db -> Execute('SELECT `efect`, `type`, `power` FROM `potions` WHERE `name`=\''.$kuznia -> fields['name'].'\' AND `owner`=0');
-        $objItem2 = $db -> Execute ('SELECT `level` FROM `alchemy_mill` WHERE `name`=\''.$kuznia -> fields['name'].'\' AND `owner`=0');
+        $objItem2 = $db -> Execute('SELECT `level` FROM `alchemy_mill` WHERE `name`=\''.$kuznia -> fields['name'].'\' AND `owner`=0');
 
         /**
          * Start making potions
          */
-        for ($i = 1; $i <= $_POST['razy']; $i++)
-        {
-            if ($objItem -> fields['type'] == 'M')
-            {
+        for ($i = 1; $i <= $_POST['razy']; $i++) {
+            if ($objItem -> fields['type'] == 'M') {
                 $fltStat = $player -> wisdom/10;
             }
-            if ($objItem -> fields['type'] == 'H')
-            {
+            if ($objItem -> fields['type'] == 'H') {
                 $fltStat = $player -> inteli/10;
             }
-            if ($objItem -> fields['type'] == 'P')
-            {
+            if ($objItem -> fields['type'] == 'P') {
                 $fltStat = (min($player -> wisdom, $player -> inteli) + $player -> agility) / 10;
             }
-            if ($objItem -> fields['type'] == 'A')
-            {
+            if ($objItem -> fields['type'] == 'A') {
                 $fltStat = (min($player -> wisdom, $player -> inteli) + $player -> speed) / 10;
             }
             $intChance = (($player -> level - $objItem2 -> fields['level'])* 5) + ($player -> alchemy / 3) + $fltStat;
-            if ( $intChance < 0)
-            {
+            if ($intChance < 0) {
                 $intChance = 0;
             }
             $intRoll = rand(1, 100);
             $intTmpamount = 0;
-            while ($intRoll < $intChance)
-            {
+            while ($intRoll < $intChance) {
                 $rprzedmiot ++;
                 $intTmpamount ++;
                 $intChance = $intChance - 50;
             }
-            if ($intTmpamount)
-            {
-                $intRoll2 = rand(1,100);
+            if ($intTmpamount) {
+                $intRoll2 = rand(1, 100);
                 $strName = $kuznia -> fields['name'];
                 $intPower = $objItem -> fields['power'];
                 $intMaxpower = $intPower;
-                if ($player -> clas == 'Rzemieślnik' && $intRoll2 > 89 && $objItem -> fields['type'] != 'A')
-                {
-                    if ($objItem -> fields['type'] != 'P')
-                    {
+                if ($player -> clas == 'Rzemieślnik' && $intRoll2 > 89 && $objItem -> fields['type'] != 'A') {
+                    if ($objItem -> fields['type'] != 'P') {
                         $intMaxpower = $objItem -> fields['power'] * 2;
                         $intPower = ceil($objItem -> fields['power'] + $player -> alchemy);
-                    }
-                        else
-                    {
+                    } else {
                         $intMaxpower = $kuznia -> fields['level'] * 4;
                         $intPower = ceil($player -> alchemy / 2);
                     }
                     $strName = $kuznia -> fields['name']." (S)";
                     $rpd = ($rpd + ($kuznia -> fields['level'] * 10));
-                    if ($intTmpamount > 1)
-                    {
+                    if ($intTmpamount > 1) {
                         $rpd = ($rpd + ((($kuznia -> fields['level'] * 10) / 100) * (10 * ($intTmpamount - 1))));
                     }
-                }
-                    else
-                {
+                } else {
                     $rpd = ($rpd + $kuznia -> fields['level']);
-                    if ($intTmpamount > 1)
-                    {
+                    if ($intTmpamount > 1) {
                         $rpd = ($rpd + (($kuznia -> fields['level'] / 100) * (10 * ($intTmpamount - 1))));
                     }
-                    if ($objItem -> fields['type'] == 'P')
-                    {
+                    if ($objItem -> fields['type'] == 'P') {
                         $intMaxpower = $kuznia -> fields['level'] * 2;
                         $intPower = ceil($player -> alchemy / 2);
                     }
                 }
-            }
-                else
-            {
+            } else {
                 $rpd ++;
-                if ($objItem -> fields['type'] != 'P')
-                {
+                if ($objItem -> fields['type'] != 'P') {
                     $intMaxpower = $objItem -> fields['power'];
                     $intPower = ceil($player -> alchemy);
-                }
-                    else
-                {
+                } else {
                     $intMaxpower = $kuznia -> fields['level'];
                     $intPower = ceil($player -> alchemy / 2);
                 }
@@ -269,29 +229,24 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
                 $intTmpamount = 1;
                 $rprzedmiot ++;
             }
-            if ($intPower > $intMaxpower)
-            {
+            if ($intPower > $intMaxpower) {
                 $intPower = $intMaxpower;
             }
             $test = $db -> Execute('SELECT `id` FROM `potions` WHERE `name`=\''.$strName.'\' AND `owner`='.$player -> id.' AND `status`=\'K\' AND `power`='.$intPower) or die('błąd');
-            if (!$test -> fields['id'])
-            {
+            if (!$test -> fields['id']) {
                 $db -> Execute('INSERT INTO potions (`owner`, `name`, `efect`, `power`, `amount`, `status`, `type`) VALUES('.$player -> id.', \''.$strName.'\', \''.$objItem -> fields['efect'].'\', '.$intPower.', '.$intTmpamount.', \'K\', \''.$objItem -> fields['type'].'\')');
-            }
-                else
-            {
+            } else {
                 $db -> Execute('UPDATE `potions` SET `amount`=`amount`+'.$intTmpamount.' WHERE `id`='.$test -> fields['id']);
             }
             $test -> Close();
             $intTmpamount = 0;
         }
         $rum = ($fltEnergy * 0.01);
-        if ($player -> clas == 'Rzemieślnik')
-        {
+        if ($player -> clas == 'Rzemieślnik') {
             $rpd = $rpd * 2;
             $rum = $rum * 2;
         }
-        $smarty -> assign(array ('Name' => $kuznia -> fields['name'],
+        $smarty -> assign(array('Name' => $kuznia -> fields['name'],
                                  'Amount' => $rprzedmiot,
                                  'Exp' => $rpd,
                                  'Ability' => $rum,
@@ -309,14 +264,10 @@ if (isset ($_GET['alchemik']) && $_GET['alchemik'] == 'pracownia')
 /**
  * Make astral potions
  */
-if (isset($_GET['alchemik']) && $_GET['alchemik'] == 'astral')
-{
-    if( !isset($_GET['potion'] ))
-    {
+if (isset($_GET['alchemik']) && $_GET['alchemik'] == 'astral') {
+    if (!isset($_GET['potion'])) {
         makeastral2();
-    }
-    else
-    {
+    } else {
         makeastral2($_GET['potion']);
     }
 }
@@ -326,32 +277,27 @@ $herb -> Close();
 /**
 * Initialization of variables
 */
-if (!isset($_GET['alchemik']))
-{
+if (!isset($_GET['alchemik'])) {
     $_GET['alchemik'] = '';
 }
-if (!isset($_GET['buy']))
-{
+if (!isset($_GET['buy'])) {
     $_GET['buy'] = '';
 }
-if (!isset($_GET['rob']))
-{
+if (!isset($_GET['rob'])) {
     $_GET['rob'] = '';
 }
-if (!isset($_GET['dalej']))
-{
+if (!isset($_GET['dalej'])) {
     $_GET['dalej'] = '';
 }
 
 /**
 * Assing variables and display page
 */
-$smarty -> assign (array ('Alchemist' => $_GET['alchemik'],
+$smarty -> assign(array('Alchemist' => $_GET['alchemik'],
     'Buy' => $_GET['buy'],
     'Make' => $_GET['rob'],
     'Back' => BACK,
     'Next' => $_GET['dalej']));
-$smarty -> display ('alchemist.tpl');
+$smarty -> display('alchemist.tpl');
 
 require_once('includes/foot.php');
-?>

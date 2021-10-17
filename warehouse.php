@@ -94,8 +94,8 @@ if (!isset($_GET['action']))
             $arrItems[] = getWarehouseData($i);
         /// Info about caravan.
         $arrCaravan = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'caravan\'');
-        $smarty -> assign_by_ref('Items', $arrItems);
-        $smarty -> assign_by_ref('ItemNames', $arrItemNames);
+        $smarty -> assignByRef('Items', $arrItems);
+        $smarty -> assignByRef('ItemNames', $arrItemNames);
         $smarty -> assign('Caravaninfo', $arrCaravan[0] == 'Y' ? CARAVAN_VISIT : '<br /><br />');
     }
     $smarty -> display('warehouse.tpl', $player -> location);
@@ -199,8 +199,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'history' && isset($_GET['item'
         $arrMaximums = $db -> GetRow('SELECT MAX(`buy`), MAX(`sell`) FROM `warehouse` WHERE `mineral`=\''.$arrSQLNames[$_GET['item']].'\'');
         // Get data for each day.
         $arrData = $db -> GetAll('SELECT `sell`, `buy`, `amount`, `cost` FROM `warehouse` WHERE `mineral`=\''.$arrSQLNames[$_GET['item']].'\' ORDER BY `reset` DESC');
-        $smarty -> assign_by_ref('Data', $arrData);
-        $smarty -> assign_by_ref('Headers', $arrHeaders);
+        $smarty -> assignByRef('Data', $arrData);
+        $smarty -> assignByRef('Headers', $arrHeaders);
         $smarty -> assign(array('Name' => $arrItemNames[$_GET['item']],
                                 'Max' => max($arrMaximums[0], $arrMaximums[1], 1)));
     }

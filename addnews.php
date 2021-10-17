@@ -51,9 +51,9 @@ $arrLanguage = array();
 $i = 0;
 while ($file = readdir($dir))
 {
-    if (!ereg(".htm*$", $file))
+    if (!preg_match("/.htm*$/", $file))
     {
-        if (!ereg("\.$", $file))
+        if (!preg_match("/\.$/", $file))
         {
             $arrLanguage[$i] = $file;
             $i = $i + 1;

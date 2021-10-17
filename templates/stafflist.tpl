@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Listinfo}<br /><br />
 
 <fieldset style="width:90%">

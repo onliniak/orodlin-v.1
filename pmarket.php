@@ -189,7 +189,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
                             "Addofert" => 0));
     if (isset ($_GET['step']) && $_GET['step'] == 'add') 
     {
-        if (!isset($_POST['mineral']) || !ereg("^[0-9]*$", $_POST['mineral'])) 
+        if (!isset($_POST['mineral']) || !preg_match("/^[0-9]*$/", $_POST['mineral'])) 
         {
             error(ERROR);
         }
@@ -207,7 +207,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
         {
             error(NO_AMOUNT.$strName);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['cost'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['cost'])) 
         {
             error (ERROR);
         }
@@ -235,7 +235,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
                                     "Mineralcost" => $_POST['cost']));
             if (isset($_POST['ofert']))
             {
-                if (!ereg("^[1-9][0-9]*$", $_POST['ofert'])) 
+                if (!preg_match("/^[1-9][0-9]*$/", $_POST['ofert'])) 
                 {
                     error(ERROR);
                 }
@@ -263,7 +263,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'del')
  */
 if (isset($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error (ERROR);
     }
@@ -297,7 +297,7 @@ if (isset($_GET['buy']))
         {
             error(ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }
@@ -350,7 +350,7 @@ if (isset($_GET['buy']))
  */
 if (isset($_GET['wyc'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['wyc'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['wyc'])) 
     {
         error (ERROR);
     }

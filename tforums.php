@@ -145,7 +145,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'topics')
 */
 if (isset($_GET['topic'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['topic'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['topic'])) 
     {
         error (ERROR);
     }
@@ -260,7 +260,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'addtopic')
 */
 if (isset($_GET['reply'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['reply'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['reply'])) 
     {
         error (ERROR);
     }

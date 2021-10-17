@@ -69,7 +69,7 @@ else
 		$arrComments = $db -> GetRow('SELECT count(*) FROM `news_comments` WHERE `newsid`='.$upd[$i][0]);
 		$upd[$i][] = $arrComments[0];
 	}
-	$smarty -> assign_by_ref('LastNews', $upd);
+	$smarty -> assignByRef('LastNews', $upd);
 }
 
 /**
@@ -119,7 +119,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'add')
 	$arrLanguage = array();
 	while ($file = readdir($dir))
 	{
-		if (!ereg(".htm*$", $file) && !ereg("\.$", $file))
+		if (!preg_match("/.htm*$/", $file) && !preg_match("/\.$/", $file))
 		{
 			$arrLanguage[] = $file;
 		}

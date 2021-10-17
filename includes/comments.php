@@ -39,7 +39,7 @@ function displaycomments($intItemid, $strItemtable, $strCommentstable, $strComme
     
     $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
 
-    if (!ereg("^[1-9][0-9]*$", $intItemid))
+    if (!preg_match("/^[1-9][0-9]*$/", $intItemid))
     {
         error(ERROR);
     }
@@ -76,7 +76,7 @@ function addcomments($intItemid, $strCommentstable, $strCommentsid)
     {
         error(EMPTY_FIELDS);
     }
-    if (!ereg("^[1-9][0-9]*$", $intItemid))
+    if (!preg_match("/^[1-9][0-9]*$/", $intItemid))
     {
         error(ERROR);
     }
@@ -100,7 +100,7 @@ function deletecomments($strCommentstable)
 {
     global $db;
     global $player;
-    if (!ereg("^[1-9][0-9]*$", $_GET['cid']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['cid']))
     {
         error(ERROR);
     }

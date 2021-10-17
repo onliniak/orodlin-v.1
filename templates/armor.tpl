@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Buy == 0}
    <br />{$Armorinfo}
     <ul>

@@ -44,7 +44,7 @@ if (!isset($_GET['limit']))
     $_GET['limit'] = 0;
 }
 
-if (!ereg("^[0-9]*$", $_GET['limit']))
+if (!preg_match("/^[0-9]*$/", $_GET['limit']))
 {
     error(ERROR);
 }
@@ -111,11 +111,11 @@ if (isset($_GET['send']))
                             "Asend" => A_SEND));
     if (isset ($_GET['step']) && $_GET['step'] == 'send') 
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['staff'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['staff'])) 
         {
             error (ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['lid'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['lid'])) 
         {
             error (ERROR);
         }

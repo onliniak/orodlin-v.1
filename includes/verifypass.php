@@ -3,7 +3,7 @@
  *   File functions:
  *   Password verification - lenght and etc
  *
- *   @name                 : verifypass.php                            
+ *   @name                 : verifypass.php
  *   @copyright            : (C) 2004,2005,2006 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.2
@@ -32,21 +32,17 @@
 /**
 * Get the localization for game
 */
-if (!isset($player -> lang))
-{
+if (!isset($player -> lang)) {
     /**
      * Check avaible languages
-     */    
+     */
     $path = 'languages/';
     $dir = opendir($path);
     $arrTranslations = array();
     $i = 0;
-    while ($file = readdir($dir))
-    {
-        if (!ereg(".htm*$", $file))
-        {
-            if (!ereg("\.$", $file))
-            {
+    while ($file = readdir($dir)) {
+        if (!preg_match("/.htm*$/", $file)) {
+            if (!preg_match("/\.$/", $file)) {
                 $arrTranslations[$i] = $file;
                 $i ++;
             }
@@ -55,83 +51,65 @@ if (!isset($player -> lang))
     closedir($dir);
 
     $strLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-    foreach ($arrTranslations as $strTrans)
-    {
-        $strSearch = "^".$strTrans;
-        if (eregi($strSearch, $strLanguage))
-        {
+    foreach ($arrTranslations as $strTrans) {
+        #$strSearch = "^".$strTrans;
+        if (strpos($strSearch, $strLanguage)) {
             $strTranslation = $strTrans;
             break;
         }
     }
-    if (!isset($strTranslation))
-    {
+    if (!isset($strTranslation)) {
         $strTranslation = 'pl';
     }
-}
-    else
-{
-    $strTranslation = $player -> lang;
-}
+} else {
+        $strTranslation = $player -> lang;
+    }
 
 require_once("languages/".$strTranslation."/verifypass.php");
 
-function verifypass($string,$action) 
+function verifypass($string, $action)
 {
     global $smarty;
 
-	/**
-	 * Check password length
-	 */
+    /**
+     * Check password length
+     */
     $test = strlen($string);
-    if ($test < 5) 
-	{
-        if ($action == 'register') 
-		{
-            $smarty -> assign ("Error", TOO_SHORT);
-            $smarty -> display ('error.tpl');
+    if ($test < 5) {
+        if ($action == 'register') {
+            $smarty -> assign("Error", TOO_SHORT);
+            $smarty -> display('error.tpl');
             exit;
-        } 
-		    else 
-		{
+        } else {
             error(TOO_SHORT);
         }
     }
 
-	/**
-	 * Check for letters and numbers
-	 */
-    $test = eregi(".[a-z]", $string);
-    $test1 = ereg(".[0-9]", $string);
-    if (empty($test) || empty($test1)) 
-	{
-        if ($action == 'register') 
-		{
-            $smarty -> assign ("Error", NO_NUMBER);
-            $smarty -> display ('error.tpl');
+    /**
+     * Check for letters and numbers
+     */
+    $test = preg_match("/.[a-z]/", $string);
+    $test1 = preg_match("/.[0-9]/", $string);
+    if (empty($test) || empty($test1)) {
+        if ($action == 'register') {
+            $smarty -> assign("Error", NO_NUMBER);
+            $smarty -> display('error.tpl');
             exit;
-        } 
-		    else 
-		{
+        } else {
             error(NO_NUMBER);
         }
     }
 
-	/**
-	 * Check for upper letters
-	 */
-    if (!ereg("[[:upper:]]", $string)) 
-	{
-        if ($action == 'register') 
-		{
-            $smarty -> assign ("Error", NO_BIG);
-            $smarty -> display ('error.tpl');
+    /**
+     * Check for upper letters
+     */
+    if (!preg_match("/[[:upper:]]/", $string)) {
+        if ($action == 'register') {
+            $smarty -> assign("Error", NO_BIG);
+            $smarty -> display('error.tpl');
             exit;
-        } 
-		    else 
-		{
+        } else {
             error(NO_BIG);
         }
     }
-}                   
-?>
+}

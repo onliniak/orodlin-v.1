@@ -3,7 +3,7 @@
  *   File functions:
  *   Page source
  *
- *   @name                 : source.php                            
+ *   @name                 : source.php
  *   @copyright            : (C) 2004-2005 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.0 rc1
@@ -27,56 +27,44 @@
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// 
+//
 
 /**
 * Some security tests
 */
-if ($_GET['file'] == 'includes/config.php' || $_GET['file'] == 'includes/sessions.php')
-{
+if ($_GET['file'] == 'includes/config.php' || $_GET['file'] == 'includes/sessions.php') {
     exit;
 }
 
 $arrTest = explode('/', $_GET['file']);
 $intAmount = count($arrTest);
-if ($intAmount > 2)
-{
+if ($intAmount > 2) {
     exit;
-}
-    elseif ($intAmount == 2)
-{
-    if ($arrTest[0] != 'includes' && $arrTest[0] != 'class')
-    {
+} elseif ($intAmount == 2) {
+    if ($arrTest[0] != 'includes' && $arrTest[0] != 'class') {
         exit;
     }
 }
 $arrTest2 = explode('.', $_GET['file']);
 $intAmount = (count($arrTest2) - 1);
-if ($arrTest2[$intAmount] != 'php')
-{
+if ($arrTest2[$intAmount] != 'php') {
     exit;
 }
 
-$do_gzip_compress = FALSE;
-$compress = FALSE;
+$do_gzip_compress = false;
+$compress = false;
 $phpver = phpversion();
-$useragent = (isset($_SERVER["HTTP_USER_AGENT"]) ) ? $_SERVER["HTTP_USER_AGENT"] : $HTTP_USER_AGENT;
-if ( $phpver >= '4.0.4pl1' && ( strstr($useragent,'compatible') || strstr($useragent,'Gecko') ) ) 
-{
-    if ( extension_loaded('zlib') ) 
-    {
-        $compress = TRUE;
+$useragent = (isset($_SERVER["HTTP_USER_AGENT"])) ? $_SERVER["HTTP_USER_AGENT"] : $HTTP_USER_AGENT;
+if ($phpver >= '4.0.4pl1' && (strstr($useragent, 'compatible') || strstr($useragent, 'Gecko'))) {
+    if (extension_loaded('zlib')) {
+        $compress = true;
         ob_start('ob_gzhandler');
     }
-} 
-    elseif ( $phpver > '4.0' ) 
-{
-    if ( strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip') ) 
-    {
-        if ( extension_loaded('zlib') ) 
-        {
-            $do_gzip_compress = TRUE;
-            $compress = TRUE;
+} elseif ($phpver > '4.0') {
+    if (strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+        if (extension_loaded('zlib')) {
+            $do_gzip_compress = true;
+            $compress = true;
             ob_start();
             ob_implicit_flush(0);
             header('Content-Encoding: gzip');
@@ -88,23 +76,18 @@ if ( $phpver >= '4.0.4pl1' && ( strstr($useragent,'compatible') || strstr($usera
 * Display source
 */
 
-require_once 'libs/Smarty.class.php';
+#require_once 'libs/Smarty.class.php';
 $smarty = new Smarty;
 
 $smarty -> compile_check = false;
 $smarty -> caching = true;
 
 
-if ($_GET['file'] == 'includes/head.php')
-{
+if ($_GET['file'] == 'includes/head.php') {
     $strSource = show_source('includes/head.php', true);
-}
-    elseif ($_GET['file'] == 'includes/foot.php')
-{
+} elseif ($_GET['file'] == 'includes/foot.php') {
     $strSource = show_source('includes/foot.php', true);
-}
-    else
-{
+} else {
     $strSource2 = "<a href=\"source.php?file=includes/head.php\" target=\"_blank\">head.php</a><br /><br />";
     $strSource = show_source($_GET['file'], true);
     $strSource3 = "<br /><a href=\"source.php?file=includes/foot.php\" target=\"_blank\">foot.php</a><br />";
@@ -114,18 +97,16 @@ if ($_GET['file'] == 'includes/head.php')
 $strCacheid = $_GET['file'];
 
 $smarty -> assign(array("Source" => $strSource,
-	"File" => $_GET['file']));
+    "File" => $_GET['file']));
 
 $smarty -> display('source.tpl', $strCacheid);
 exit;
 
-if (!isset($do_gzip_compress)) 
-{
+if (!isset($do_gzip_compress)) {
     $do_gzip_compress = $compress;
 }
 
-if ( $do_gzip_compress )
-{
+if ($do_gzip_compress) {
     //
     // Borrowed from php.net!
     //
@@ -143,4 +124,3 @@ if ( $do_gzip_compress )
     echo pack('V', $gzip_crc);
     echo pack('V', $gzip_size);
 }
-?>

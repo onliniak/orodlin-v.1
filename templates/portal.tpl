@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == "" && $Health > "0"}
     {$Portaltext}<br />
     <ul>

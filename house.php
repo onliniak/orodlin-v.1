@@ -359,7 +359,7 @@ if(isset ($_GET['action']) && $_GET['action'] == 'build')
             "Awork" => A_WORK));
         if (isset ($_GET['step2']) && $_GET['step2'] == 'make') 
         {
-            if (!ereg("^[1-9][0-9]*$", $_POST['points'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['points'])) 
             {
                 error (ERROR);
             }
@@ -509,7 +509,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'rent')
         "Aback" => A_BACK));
     if (isset($_GET['buy'])) 
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
         {
             error (ERROR);
         }
@@ -540,7 +540,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'rent')
     }
     if (isset($_GET['back']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['back'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['back'])) 
         {
             error (ERROR);
         }
@@ -683,7 +683,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'my')
         }
         if (isset($_GET['step2']) && $_GET['step2'] == 'sell') 
         {
-            if (!ereg("^[1-9][0-9]*$", $_POST['cost'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['cost'])) 
             {
                 error (ERROR);
             }
@@ -708,7 +708,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'my')
             "Amake" => A_MAKE));
         if (isset($_GET['step2']) && $_GET['step2'] == 'change') 
         {
-            if (!ereg("^[1-9][0-9]*$", $_POST['lid'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['lid'])) 
             {
                 error (ERROR);
             }
@@ -959,7 +959,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'my')
             if (isset($_GET['step3']) && $_GET['step3'] == 'add') 
             {
                 integercheck($_POST['amount']);
-                if (!isset($_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+                if (!isset($_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
                 {
                     error (ERROR);
                 }
@@ -1029,7 +1029,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'my')
                     error(NO_ITEM);
                 }
                 integercheck($_POST['amount']);
-                if (!ereg("^[1-9][0-9]*$", $_POST['przedmiot']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+                if (!preg_match("/^[1-9][0-9]*$/", $_POST['przedmiot']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
                 {
                     error (ERROR);
                 }

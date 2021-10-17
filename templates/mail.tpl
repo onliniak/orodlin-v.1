@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == "" && $Read == "" && $Write == "" && $Delete == "" && $Send == "" && $Step == "" && $Block == ""}
     <p>{$smarty.const.MAIL_INFO}</p>
     <ul{if $Graphstyle == "Y"} class="sword"{/if}>

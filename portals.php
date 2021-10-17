@@ -37,7 +37,7 @@ require_once("includes/head.php");
 */
 require_once("languages/".$player -> lang."/portals.php");
 
-if (!isset($_GET['step']) || !ereg("^[0-6]*$", $_GET['step']))
+if (!isset($_GET['step']) || !preg_match("/^[0-6]*$/", $_GET['step']))
 {
     error(ERROR." (<a href=\"city.php\">".BACK."</a>)");
 }

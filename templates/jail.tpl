@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if ($Location == "Altara" || $Location == "Ardulith") && $Prisoner == ""}
     {$Jailinfo}<br /><br /><br />
     {if $Number > "0"}

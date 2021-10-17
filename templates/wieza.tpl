@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Buy == ""}
     {$Towerinfo}<br /><br />
     <ul>

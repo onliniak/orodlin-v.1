@@ -103,7 +103,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'house')
      */
     if (isset($_GET['action']) && $_GET['action'] == 'dry')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error(ERROR);
         }
@@ -407,7 +407,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'plantation')
             {
                 error(ERROR);
             }
-            if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
             {
                 error(ERROR);
             }
@@ -526,7 +526,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'plantation')
          */
         if (isset($_GET['id']))
         {
-            if (!ereg("^[1-9][0-9]*$", $_GET['id'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_GET['id'])) 
             {
                 error(ERROR);
             }
@@ -545,7 +545,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'plantation')
              */
             if (isset($_GET['step2']) && $_GET['step2'] == 'next')
             {
-                if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+                if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
                 {
                     error(ERROR);
                 }

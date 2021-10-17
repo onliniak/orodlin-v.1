@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == "" && $Join == ""}
     {$Claninfo}
     <ul>

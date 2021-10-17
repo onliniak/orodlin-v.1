@@ -38,49 +38,46 @@ require_once('includes/head.php');
 */
 require_once('languages/'.$player -> lang.'/las.php');
 
-if($player -> location != 'Las')
-{
-    error (NOT_IN, RET_LOC);
+if ($player -> location != 'Las') {
+    error(NOT_IN, RET_LOC);
 }
 
 $smarty -> assign('Message', '');
 
-if ($player -> hp < 1)
-{
-    if (isset($_GET['action']) && $_GET['action'] == 'back')
-    {
+if ($player -> hp < 1) {
+    if (isset($_GET['action']) && $_GET['action'] == 'back') {
         $db -> Execute('UPDATE `players` SET `miejsce`=\'Altara\' WHERE `id`='.$player -> id);
-        error (PL_DEAD.'<a href="hospital.php">'.A_HERE.'</a>.');
+        error(PL_DEAD.'<a href="hospital.php">'.A_HERE.'</a>.');
     }
-    if (isset($_GET['action']) && $_GET['action'] == 'hermit')
-    {
+    if (isset($_GET['action']) && $_GET['action'] == 'hermit') {
         $crneed = (75 * $player -> level);
         require_once('includes/counttime.php');
         $arrTime = counttime();
         $strTime = $arrTime[0].$arrTime[1];
         $smarty -> assign(array('Goldneed' => $crneed,
                                 'Waittime' => $strTime));
-        if (isset($_GET['action2']) && $_GET['action2'] == 'resurect')
-        {
+        if (isset($_GET['action2']) && $_GET['action2'] == 'resurect') {
             require_once('includes/resurect.php');
             $smarty -> assign('Message', YOU_RES.$pdpr.LOST_EXP);
         }
-        if (isset($_GET['action2']) && $_GET['action2'] == 'wait')
-        {
+        if (isset($_GET['action2']) && $_GET['action2'] == 'wait') {
             $smarty -> assign('Message', WAIT_INFO);
         }
     }
 }
 
+if (isset($_GET['action2']) && $_GET['action2'] == 'city') {
+    $db -> Execute("UPDATE `players` SET `miejsce`='Altara' WHERE `id`=".$player -> id);
+    $smarty -> assign("Message", GO_CITY);
+}
+
 /**
 * Initialization of variables
 */
-if (!isset($_GET['action']))
-{
+if (!isset($_GET['action'])) {
     $_GET['action'] = '';
 }
-if (!isset($_GET['action2']))
-{
+if (!isset($_GET['action2'])) {
     $_GET['action2'] = '';
 }
 
@@ -88,7 +85,6 @@ if (!isset($_GET['action2']))
 * Assign variables to template and display page
 */
 $smarty -> assign('Health', $player -> hp);
-$smarty -> display ('las.tpl');
+$smarty -> display('las.tpl');
 
 require_once('includes/foot.php');
-?>

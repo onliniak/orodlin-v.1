@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Buginfo}
 <form method="post" action="bugtrack.php?action=delete">
 <table width="100%">

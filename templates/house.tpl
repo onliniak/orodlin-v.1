@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == ""}
     <p>{$Houseinfo}</p>
     <ul{if $Graphstyle == "Y"} class="sword"{/if}>

@@ -3,7 +3,7 @@ header('Content-Type: text/json; charset=utf-8');
 
 require_once('includes/sessions.php');
 require_once('includes/config.php');
-require_once('libs/Smarty.class.php');
+#require_once('libs/Smarty.class.php');
 require_once('class/player_class.php');
 
 $smarty = new Smarty;

@@ -184,7 +184,7 @@ if (isset($_GET['step']) && ($_GET['step'] == 'rules' || $_GET['step'] == 'cases
     }
     if (isset($_GET['step2']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['step2']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['step2']))
         {
             error(ERROR);
         }
@@ -234,9 +234,9 @@ if (isset($_GET['step']) && $_GET['step'] == 'admin')
         $i = 0;
         while ($file = readdir($dir))
         {
-            if (!ereg(".htm*$", $file))
+            if (!preg_match("/.htm*$/", $file))
             {
-                if (!ereg("\.$", $file))
+                if (!preg_match("/\.$/", $file))
                 {
                     $arrLanguage[$i] = $file;
                     $i = $i + 1;
@@ -284,7 +284,7 @@ if (isset($_GET['modify']))
     {
         error(ERROR);
     }
-    if (!ereg("^[1-9][0-9]*$", $_GET['modify']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['modify']))
     {
         error(ERROR);
     }
@@ -305,7 +305,7 @@ if (isset($_GET['modify']))
         {
             error(EMPTY_FIELDS);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['tid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['tid']))
         {
             error(ERROR);
         }
@@ -336,7 +336,7 @@ if (isset($_GET['step2']) && $_GET['step2'] == 'comments')
     */
     if (!isset($_GET['action']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['text']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['text']))
         {
             error(ERROR);
         }
@@ -385,7 +385,7 @@ if (isset($_GET['step2']) && $_GET['step2'] == 'comments')
         {
             error(EMPTY_FIELDS);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['tid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['tid']))
         {
             error(ERROR);
         }
@@ -404,7 +404,7 @@ if (isset($_GET['step2']) && $_GET['step2'] == 'comments')
         {
             error(NO_PERM);
         }
-        if (!ereg("^[1-9][0-9]*$", $_GET['cid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['cid']))
         {
             error(ERROR);
         }

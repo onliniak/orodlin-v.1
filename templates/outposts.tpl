@@ -235,7 +235,7 @@
 			<div id="debug"></div>
 			<div id="track1" class="slider"><div class="handle"></div><div class="handle handlestop"></div></div>
 			<script type="text/javascript" language="javascript">
-			{literal}$('#track1').Slider({accept:'.handle', onSlide:levels, onChange:levels});{/literal}
+			$('#track1').Slider({accept:'.handle', onSlide:levels, onChange:levels});
 			$('#searchFromTo').ajaxForm({ldelim}target:'.formupdate'{rdelim});
 			</script><br />
 			<form id="searchPlayer" method="post" action="outposts.php?view=listing">
@@ -275,7 +275,7 @@
 			{/section}
 			</table>
 			<script type="text/javascript">
-			{literal}
+			
 				var clicked = 0;
 				$('.attack').click(function()
 				{
@@ -283,7 +283,7 @@
 					$.post('outposts.php?view=battle',{ oid: $(this).attr('id'), amount: 1}, function(msg){$('.formupdate').html(msg);});
 					return false;
 				});
-			{/literal}
+			
 			</script>
 		{/if}
 		</div>
@@ -299,7 +299,7 @@
 		{if $Freelairs > 0}
 			{$smarty.const.YOU_HAVE}<span id="freelairs">{$Freelairs}</span>
 			<script type="text/javascript">
-			{literal}
+			
 			$('.dropzone').Droppable({accept : 'draggable',tolerance: 'pointer', ondrop:
 				function (drag)
 				{
@@ -308,7 +308,7 @@
 					$.post('outposts.php?view=beasts',{ id: coreid}, function(msg){$('.formupdate').html(msg);});
 				}
 			});
-			{/literal}
+			
 			</script>
 		{else}
 			{$smarty.const.YOU_DONT_HAVE}
@@ -434,7 +434,7 @@
 		</form>
 
 		<script type="text/javascript">
-		{literal}
+		
 			$('#sidearm').Droppable({accept : 'sidearm',tolerance: 'pointer', ondrop: dropEquipment});
 			$('#bow').Droppable({accept : 'bow',tolerance: 'pointer', ondrop: dropEquipment});
 			$('#armor').Droppable({accept : 'armor',tolerance: 'pointer', ondrop: dropEquipment});
@@ -449,7 +449,7 @@
 			$('.veteran').Draggable();
 
 			$('#equipForm').ajaxForm({target:'.formupdate', beforeSubmit: testRings});
-		{/literal}
+		
 		</script>
 
 	   <ul id="equipment">
@@ -462,7 +462,7 @@
 			<li><a href="outposts.php?view=equip&amp;type=I"><span>{$smarty.const.RINGS}</span></a></li>
 		</ul>
 		<div id="equipWindow"></div>
-		<script type="text/javascript">{literal}
+		<script type="text/javascript">
 			$('#equipment li a').click(function(){
 				var a = $(this).attr('href');
 				$.get(a, function(data){
@@ -470,7 +470,7 @@
 				});
 				return false;
 			});
-			{/literal}</script>
+			</script>
 		</div>
 	{/if}
 

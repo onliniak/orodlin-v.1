@@ -99,7 +99,7 @@ while (!$arm -> EOF)
 */
 if (isset($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error (ERROR);
     }

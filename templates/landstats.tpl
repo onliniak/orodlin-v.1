@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <p>{$smarty.const.LNEXT} <b>{$smarty.now+3600|date_format:"%H:%M"}</b></p>
 <p>{$smarty.const.LPOPULATION} {$Players}</p>
 <p>{$smarty.const.LDISTRIBUTION}</p>

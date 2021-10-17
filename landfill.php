@@ -64,7 +64,7 @@ if (!isset($_GET['action']))
         error(NO_AMOUNT);
     }
     integercheck($_POST['amount']);
-    if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
     {
         error(ERROR);
     }

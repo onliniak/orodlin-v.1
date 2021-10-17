@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Welcome}
 <ul {if $Graphstyle=="Y"}class="sword"{/if}>
     {section name=menu loop=$Steps}

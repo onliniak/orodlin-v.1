@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Corepass != "Y"}
     {$smarty.const.COREPASS_INFO}
     {if $Gold >= "500"}

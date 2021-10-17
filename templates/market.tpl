@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == ""}
     <br />{if $Location == "Altara"}
         {$Marketinfo}<br /><br />

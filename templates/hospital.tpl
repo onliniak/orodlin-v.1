@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == ""}
     {if $Health > "0"}
         {if $Maxpoints >= $hpneeded}

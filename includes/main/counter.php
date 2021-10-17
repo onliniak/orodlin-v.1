@@ -1,5 +1,11 @@
 <?php
 
+if(!is_file("counter/licznik.php")){
+    mkdir("counter");
+    chdir("counter");
+    touch("licznik.php");
+    touch("d_licznik.php");
+}
 
 /*licznik*/
     include("counter/licznik.php");

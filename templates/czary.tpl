@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <u>{$Usedspells}</u>:<br />
 {$Battle}
 {$Defence}

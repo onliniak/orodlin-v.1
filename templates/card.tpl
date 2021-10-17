@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if !$Action}
 	{$smarty.const.C_WELCOME}
 	{if $Gender == '' && $Race == '' && $Class == ''}

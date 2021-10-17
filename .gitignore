@@ -1,5 +1,7 @@
-# Temp files
-*.pyc
-*~
-*.swp
+includes/config.php
+counter/
+images/
+cache/
+templates_c/
 ourlogs.txt
+vendor/

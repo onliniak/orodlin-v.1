@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <p>{$smarty.const.RNEXT} <b>{$smarty.now+3600|date_format:"%H:%M"}</b></p>
 <br />
 <table style="border: 1px solid #636f6b;" cellspacing="0" cellpadding="2">

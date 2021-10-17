@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <br /><br /><br />{$Fround}: {$Round}{$Roundlimit}<br />
 {$Actionpts}: {$Points}<br />
 {$Manapts}: {$Mana}<br />

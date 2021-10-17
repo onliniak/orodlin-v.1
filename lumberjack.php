@@ -53,8 +53,8 @@ if (empty($arrLevel))
 {
     error(NO_LICENSE);
 }
-$smarty -> assign_by_ref ('LumberKinds', $arrLumberKinds);
-$smarty -> assign_by_ref ('Limit', $arrLevel[0]);
+$smarty -> assignByRef ('LumberKinds', $arrLumberKinds);
+$smarty -> assignByRef ('Limit', $arrLevel[0]);
 /**
  * Chop down trees
  */
@@ -164,7 +164,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'chop')
         $strMessage .= $fltAmountAbility.T_ABILITY.$intGainExp.T_GAIN_EXP;
     }
     $strMessage .= $strInfo;
-    $smarty -> assign_by_ref ('Message', $strMessage);
+    $smarty -> assignByRef ('Message', $strMessage);
 	$strBless = isset($arrBless) && $arrBless[0] == 'hp' ? ', `bless`=\'\', `blessval`=0' : '';
 	$db -> Execute('UPDATE `players` SET `energy`=`energy`-'.$i.', `exp`=`exp`+'.$intGainExp.', `credits`=`credits`+'.$intAmountGold.', `hp`=`hp`-'.$intLostHPSum.$strBless.' WHERE `id`='.$player -> id);
     checkexp ($player -> exp, $intGainExp, $player -> level, $player -> race, $player -> user, $player -> id, 0, 0, $player -> id, 'lumberjack', $fltAmountAbility);

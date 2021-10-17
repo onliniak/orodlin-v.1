@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {* Copyright notice: Code for smart display of odd/even number of monuments is based on http://smarty.php.net/contribs/examples/dynamic_table_columns/table.tpl.txt *}
 
 {* Display "Table of Contents". "ToC" links to monument groups, and the titles of groups link back to "ToC" *}

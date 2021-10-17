@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Health != "0" && $Action == ""}
 {if $Graphstyle == "Y"}<div class="center">
 	<a><img id="mountainspicture" src="images/locations/mountains.jpg" alt="img_{$smarty.const.SHOW_IMAGE}" onclick="showHideImage('mountainspicture','images/locations/mountains.jpg')" /></a>

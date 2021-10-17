@@ -239,7 +239,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'dig')
                             "Message" => ''));
     if (isset($_GET['dig']) && $_GET['dig'] == 'Y')
     {
-        if (!isset($_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['amount']))
+        if (!isset($_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
         {
             error(ERROR);
         }

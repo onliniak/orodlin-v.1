@@ -68,10 +68,10 @@ if (!$smarty -> is_cached('monuments.tpl'))
     // Restore old mode.
     $db -> SetFetchMode($oldFetchMode);
     // Assign by reference - less copying, less memory used.
-    $smarty -> assign_by_ref('Groups', $arrGroups);
-    $smarty -> assign_by_ref('Titles', $arrTitles);
-    $smarty -> assign_by_ref('Descriptions', $arrDescriptions);
-    $smarty -> assign_by_ref('Monuments', $arrResult);
+    $smarty -> assignByRef('Groups', $arrGroups);
+    $smarty -> assignByRef('Titles', $arrTitles);
+    $smarty -> assignByRef('Descriptions', $arrDescriptions);
+    $smarty -> assignByRef('Monuments', $arrResult);
     $smarty -> display ('monuments.tpl');
     // After this point, arrays aren't used and can be safely destroyed. Free memory!
     unset($arrGroups, $arrTitles, $arrDescriptions, $arrMonuments, $arrResult);

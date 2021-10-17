@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Mine == ""}
     {$Minesinfo}<ul{if $Graphstyle == "Y"} class="sword"{/if}>
     <li> <a href="mines.php?mine=copper">{$Acopper}{$Minamount[0]}</a></li>

@@ -53,7 +53,7 @@ function steal ($itemid)
     {
         error(ERROR);
     }
-    if (!ereg("^[1-9][0-9]*$", $itemid)) 
+    if (!preg_match("/^[1-9][0-9]*$/", $itemid)) 
     {
         error (ERROR);
     }

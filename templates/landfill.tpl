@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == ""}
    <p>{$Landinfo} <b>{$Gold}</b> {$Landinfo2}</p>
     <form method="post" action="landfill.php?action=work">

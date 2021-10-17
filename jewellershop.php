@@ -64,7 +64,7 @@ $objRings -> Close();
  */
 if (isset($_GET['buy']))
 {
-    if (!ereg("^[1-6]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-6]*$/", $_GET['buy'])) 
     {
         error(ERROR);
     }

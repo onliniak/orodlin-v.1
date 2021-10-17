@@ -50,7 +50,7 @@ require_once('languages/'.$player -> lang.'/forums.php');
 */
 if (isset ($_GET['view']) && $_GET['view'] == 'categories')
 {
-    if (isset($_GET['sweep']) && ereg('^[1-9][0-9]*$', $_GET['sweep']))
+    if (isset($_GET['sweep']) && preg_match('/^[1-9][0-9]*$/', $_GET['sweep']))
     {
         if (!isset($_GET['step']))
         {
@@ -138,7 +138,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'categories')
 */
 if (isset($_GET['topics']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['topics']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['topics']))
     {
         error(ERROR);
     }
@@ -297,13 +297,13 @@ if (isset($_GET['topics']))
 */
 if (isset($_GET['topic']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['topic']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['topic']))
     {
         error(ERROR);
     }
     if (isset($_GET['quote']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['quote']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['quote']))
         {
             error(ERROR);
         }
@@ -505,7 +505,7 @@ if (isset($_GET['reply']))
  */
 if (isset($_GET['sticky']))
 {
-    if ($player -> rank != 'Admin' && $player -> rank != 'Staff' || !ereg("^[1-9][0-9]*$", $_GET['sticky'] || $_GET['action'] != 'Y' && $_GET['action'] != 'N'))
+    if ($player -> rank != 'Admin' && $player -> rank != 'Staff' || !preg_match("/^[1-9][0-9]*$/", $_GET['sticky'] || $_GET['action'] != 'Y' && $_GET['action'] != 'N'))
     {
         error(ERROR);
     }
@@ -522,7 +522,7 @@ if (isset($_GET['kasuj']))
     {
         error(ERROR);
     }
-    if (!ereg("^[1-9][0-9]*$", $_GET['kasuj']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['kasuj']))
     {
         error(ERROR);
     }
@@ -540,7 +540,7 @@ if (isset($_GET['kasuj1']))
     {
         error(ERROR);
     }
-    if (!ereg("^[1-9][0-9]*$", $_GET['kasuj1']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['kasuj1']))
     {
         error(ERROR);
     }
@@ -559,7 +559,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'search')
     {
         error(EMPTY_FIELDS);
     }
-    if (!ereg("^[1-9][0-9]*$", $_POST['catid']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_POST['catid']))
     {
         error(ERROR);
     }

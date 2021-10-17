@@ -34,6 +34,7 @@ require_once("includes/head.php");
 require_once("includes/funkcje.php");
 require_once("includes/turnfight.php");
 require_once("includes/battle.php");
+$teren = $player -> location;
 
 /**
 * Get the localization for game
@@ -82,7 +83,7 @@ function battle($type,$adress)
     {
         if (!isset ($_POST['action'])) 
         {
-//prepare session variables for monsters and player
+//prepare session variables for monsters and playerF
 		$monster = new Monster($player -> fight,1,0);
 		$attacker = new Fighter($player -> id);
 		$_SESSION['amount'] = 1;
@@ -297,7 +298,7 @@ if ($player -> hp > 0 && !isset($_GET['action']) && $player -> location == 'Gór
 */
 if (isset($_GET['action']) && $_GET['action'] == 'moutains' && $player -> location == 'Góry' && !isset($_GET['step'])) 
 {
-    if (!isset($_POST['amount']) || !ereg("^[0-9][0-9\.]*$", $_POST['amount'])) 
+    if (!isset($_POST['amount']) || !preg_match("/^[0-9][0-9\.]*$/", $_POST['amount'])) 
     {
         error(ERROR);
     }
@@ -389,7 +390,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'moutains' && $player -> locati
             	$arrMonsters = array(88, 92, 99, 114);
                 $intRoll3 = rand(0, 3);
             }
-            $enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `id`=".$arrMonsters[$intRoll3]);
+	    $enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `location`= '$teren' ORDER BY RAND() LIMIT 1 ");
+            //$enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `id`=".$arrMonsters[$intRoll3]);
             $db -> Execute("UPDATE `players` SET `fight`=".$enemy -> fields['id']." WHERE `id`=".$player -> id);
             $strEnemy = YOU_MEET." ".$enemy -> fields['name'].FIGHT2."<br />
                <a href=\"explore.php?step=battle\">".YES."</a><br />
@@ -637,7 +639,7 @@ if ($player -> hp > 0 && !isset ($_GET['action']) && $player -> location == 'Las
 */
 if (isset($_GET['action']) && $_GET['action'] == 'forest' && $player -> location == 'Las')
 {
-    if (!isset($_POST['amount']) || !ereg("^[0-9][0-9\.]*$", $_POST['amount'])) 
+    if (!isset($_POST['amount']) || !preg_match("/^[0-9][0-9\.]*$/", $_POST['amount'])) 
     {
         error(ERROR);
     }
@@ -727,7 +729,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'forest' && $player -> location
             	$arrMonsters = array(35, 40, 46, 55);
                 $intRoll3 = rand(0, 3);
             }
-            $enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `id`=".$arrMonsters[$intRoll3]);
+	    $enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `location`= '$teren' ORDER BY RAND() LIMIT 1 ");
+            //$enemy = $db -> Execute("SELECT `name`, `id` FROM `monsters` WHERE `id`=".$arrMonsters[$intRoll3]);
             $db -> Execute("UPDATE `players` SET `fight`=".$enemy -> fields['id']." WHERE `id`=".$player -> id);
             $strEnemy = YOU_MEET." ".$enemy -> fields['name'].FIGHT2."<br /><br />
                &raquo; <a href=\"explore.php?step=battle\">".YES."</a><br />

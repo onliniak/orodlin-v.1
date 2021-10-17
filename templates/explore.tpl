@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Link}
 
 {if $Step == "run"}

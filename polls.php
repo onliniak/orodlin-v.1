@@ -165,7 +165,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'vote')
     {
         error(ERROR);
     }
-    if (!ereg("^[1-9][0-9]*$", $_GET['poll']) || $_GET['poll'] != $objPollid -> fields['id'])
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['poll']) || $_GET['poll'] != $objPollid -> fields['id'])
     {
         error(ERROR);
     }
@@ -369,7 +369,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit'){
         {
             error(EMPTY_FIELDS);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['days']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['days']))
         {
             error(ERROR);
         }

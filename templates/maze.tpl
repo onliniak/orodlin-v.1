@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == "" && $Step == ""}
     <br />{$Mazeinfo}<br />
     <a href="maze.php?action=explore">{$Ayes}</a>

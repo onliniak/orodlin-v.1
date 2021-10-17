@@ -47,7 +47,7 @@ if (isset ($_GET['akcja']) && $_GET['akcja'] == 'addday')
                 {
                 error(D_EMPTY);
                 }
-                if (!ereg("^[0-9]*$", $_POST['amount']))
+                if (!preg_match("/^[0-9]*$/", $_POST['amount']))
                 {
                 error(D_EMPTYMONEY);
                 }
@@ -80,7 +80,7 @@ if (isset ($_GET['akcja']) && $_GET['akcja'] == 'addweek')
                 {
                 error(W_EMPTY);
                 }
-                if (!ereg("^[0-9]*$", $_POST['amount']))
+                if (!preg_match("/^[0-9]*$/", $_POST['amount']))
                 {
                 error(W_EMPTYMONEY);
                 }

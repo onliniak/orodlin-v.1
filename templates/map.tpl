@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <map name="map">
 <!-- #$-:Image map file created by GIMP Image Map plug-in -->
 <!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
@@ -25,7 +26,7 @@
 <area shape="poly" coords="438,481,456,465,486,469,527,473,525,491,476,493,447,487" alt="{$Aridge}" title="{$Aridge}" href="#" />
 <area shape="poly" coords="384,478,404,423,409,402,405,383,438,355,458,371,489,376,501,385,467,380,453,400,467,406,499,410,538,413,535,428,484,413,453,407,436,439,447,460,535,457,540,472,454,463,434,482,472,496,533,492,538,492,527,491,529,475,538,474,541,511,538,543,522,531,515,515,473,513,425,509,390,492" alt="{$Amountains}" title="{$Amountains}" href="travel.php?action=gory" />
 </map>
-{literal}
+
 <script type="text/javascript">
 function changemap() {
 	src = document.getElementById("mapa").src;
@@ -42,7 +43,7 @@ function changemap() {
 	document.getElementById("mapa").useMap = umap;
 	}
 </script>
-{/literal}
+
 <div class="center" style="width=560px;height:560px;overflow:auto"><img id="mapa" src="" useMap="#map_small" border="0" onclick="changemap()" alt="img_map" /></div>
 
 {/strip}

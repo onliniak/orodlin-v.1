@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Buy == 0 && $Step == ""}
     {if $Location == "Altara"}
         <br />{$Shopinfo} {$Archername} {$Shopinfo2}<br /><br />

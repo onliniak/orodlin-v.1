@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Shopinfo}<br /><br />
 
 <table align="center" width="75%">

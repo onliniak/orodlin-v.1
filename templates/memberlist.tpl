@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if isset($Data)}
 <p>{$smarty.const.INFO}</p>
 <table cellpadding="4px">

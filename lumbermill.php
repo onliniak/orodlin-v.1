@@ -252,7 +252,7 @@ if (isset ($_GET['mill']) && $_GET['mill'] == 'mill')
             error (YOU_DEAD);
         }
         $intItemId = isset($_GET['ko']) ? $_GET['ko'] : $_GET['dalej'];
-        if (!ereg("^[1-9][0-9]*$", $intItemId))
+        if (!preg_match("/^[1-9][0-9]*$/", $intItemId))
         {
             error (ERROR);
         }
@@ -290,13 +290,13 @@ if (isset ($_GET['mill']) && $_GET['mill'] == 'mill')
     */
     if (isset($_GET['konty']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['konty']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['konty']))
         {
             error (ERROR);
         }
         $objWork = $db -> Execute('SELECT * FROM `mill_work` WHERE `id`='.$_GET['konty']);
         $objLumber = $db -> Execute('SELECT `name`, `type`, `cost`, `amount`, `level`, `twohand` FROM `mill` WHERE owner='.$player -> id.' AND name=\''.$objWork -> fields['name'].'\'');
-        if (!ereg("^[1-9][0-9]*$", $_POST['razy']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['razy']))
         {
             error(ERROR);
         }
@@ -400,7 +400,7 @@ if (isset ($_GET['mill']) && $_GET['mill'] == 'mill')
     */
     if (isset($_GET['rob']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['rob']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['rob']))
         {
             error(ERROR);
         }
@@ -408,7 +408,7 @@ if (isset ($_GET['mill']) && $_GET['mill'] == 'mill')
         {
             error(HOW_MANY);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['razy']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['razy']))
         {
             error(ERROR);
         }

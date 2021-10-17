@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <form method=post action="sedzia.php?step=add">
 	{$Adda} <input type="text" name="aid" /> {$Asa}
 	<select name="rank">

@@ -13,48 +13,48 @@
 // TODO: Inheritance?
 class ViewPlayer
 {
-    var $user;
-    var $id;
-    var $level;
-    var $lang;
-    var $seclang;
-    var $avatar;
-    var $gg;
-	var $jabber;
-	var $tlen;
-	var $skype;
-    var $rank;
-    var $gender;
-    var $immunited;
-    var $age;
-    var $race;
-    var $class;
-    var $max_hp;
-    var $hp;
-    var $wins;
-    var $losses;
-    var $lastkilled;
-    var $lastkilledby;
-    var $profile;
-    var $deity;
-    var $tribe;
-    var $tribe_rank;
-    var $refs;
-    var $page;
+    public $user;
+    public $id;
+    public $level;
+    public $lang;
+    public $seclang;
+    public $avatar;
+    public $gg;
+    public $jabber;
+    public $tlen;
+    public $skype;
+    public $rank;
+    public $gender;
+    public $immunited;
+    public $age;
+    public $race;
+    public $class;
+    public $max_hp;
+    public $hp;
+    public $wins;
+    public $losses;
+    public $lastkilled;
+    public $lastkilledby;
+    public $profile;
+    public $deity;
+    public $tribe;
+    public $tribe_rank;
+    public $refs;
+    public $page;
 
-    var $credits;
-    var $location;
-    var $agility;
-    var $inteli;
-    var $maps;
-    var $rest;
+    public $credits;
+    public $location;
+    public $agility;
+    public $inteli;
+    public $maps;
+    public $rest;
 
-    var $ip;        /// TODO!
-    var $lpv;
-/**
-* Class constructor - get data from database and write it to variables
-*/
-    function ViewPlayer($pid)
+    public $ip;        /// TODO!
+    public $lpv;
+    /**
+    * Class constructor - get data from database and write it to variables
+    */
+    public function __construct($pid)
     {
         global $db;
         $stats = $db -> Execute('SELECT `id`, `user`, `level`, `lang`, `seclang`, `avatar`, `gg`,`jabber`,`tlen`,`skype`, `rank`, `gender`, `immu`, `age`, `rasa`, `klasa`, `hp`, `max_hp`, `wins`, `losses`, `lastkilled`, `lastkilledby`, `profile`, `deity`, `tribe`, `tribe_rank`, `refs`, `page`, `credits`, `miejsce`, `ip`, `lpv` FROM `players` WHERE `id`='.$pid);
@@ -65,9 +65,9 @@ class ViewPlayer
         $this -> seclang = $stats -> fields['seclang'];
         $this -> avatar = $stats -> fields['avatar'];
         $this -> gg = $stats -> fields['gg'];
-		$this -> jabber = $stats -> fields['jabber'];
-		$this -> tlen = $stats -> fields['tlen'];
-		$this -> skype = $stats -> fields['skype'];
+        $this -> jabber = $stats -> fields['jabber'];
+        $this -> tlen = $stats -> fields['tlen'];
+        $this -> skype = $stats -> fields['skype'];
         $this -> rank = $stats -> fields['rank'];
         $this -> gender = $stats -> fields['gender'];
         $this -> immunited = $stats -> fields['immu'];

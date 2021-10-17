@@ -73,7 +73,7 @@ if (!isset($_GET['comments']) && !isset($_GET['step']) && !isset($_GET['read']))
 */
 if ((isset($_GET['step']) && $_GET['step'] == 'new') || (isset($_GET['read']) || (isset($_GET['step3']) && $_GET['step3'] == 'S')))
 {
-    if (isset($_GET['read']) && !ereg("^[1-9][0-9]*$", $_GET['read']))
+    if (isset($_GET['read']) && !preg_match("/^[1-9][0-9]*$/", $_GET['read']))
     {
         error(ERROR);
     }
@@ -271,7 +271,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'redaction')
     */
     if (isset($_GET['step3']) && ($_GET['step3'] == 'edit' || $_GET['step3'] == 'R'))
     {
-        if (isset($_GET['edit']) && !ereg("^[1-9][0-9]*$", $_GET['edit']))
+        if (isset($_GET['edit']) && !preg_match("/^[1-9][0-9]*$/", $_GET['edit']))
         {
             error(ERROR);
         }
@@ -450,7 +450,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'mail')
  */
 if (isset($_GET['article']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['article']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['article']))
     {
         error(ERROR);
     }

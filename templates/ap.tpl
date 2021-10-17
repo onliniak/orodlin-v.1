@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $smarty.get.step == ''}
    {$smarty.const.AP_INFO} <b>{$Ap}</b> {$smarty.const.AP}.<br /><br />
     <form method="post" action="ap.php?step=add">

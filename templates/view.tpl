@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <center><b><u>{$User}</u></b> ({$Id})</center><br />
 <center><img src="{$ViewerAvatar}" alt="" /></center><br />
 {if $ViewerRank == 'Admin' || $ViewerRank == 'Staff'}

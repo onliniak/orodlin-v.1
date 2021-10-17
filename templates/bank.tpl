@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Bankinfo}
 <ul {if $Graphstyle=="Y"}class="sword"{/if}>
 <li><a href="bank.php?action=astral&amp;type=p">{$Aastral}</a></li>

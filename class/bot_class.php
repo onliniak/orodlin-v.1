@@ -35,38 +35,38 @@ class Bot
      * Text which write player to bot
      * @var string
      */
-    var $strPlayertext;
+    public $strPlayertext;
     /**
      * Name of bot
      * @var string
      */
-    var $strBotname;
+    public $strBotname;
     /**
      * Array of player texts on which bot create answer
      * @var array
      */
-    var $arrPatsreg;
+    public $arrPatsreg;
     /**
      * Array of arrays of possibly answers on player text
      * @var array
      */
-    var $arrPatsansw;
+    public $arrPatsansw;
     /**
      * Array of personal pronouns to convert
      * @var array
      */
-    var $arrReflorg;
+    public $arrReflorg;
     /**
      * Array of converted personal pronouns
      * @var array
      */
-    var $arrReflans;
+    public $arrReflans;
     /**
      * Class constructor - get text and bot name
      * @param string $strText Player text
      * @param string $strName Bot name
      */
-    function Bot($strText, $strName)
+    public function __construct($strText, $strName)
     {
         global $player;
         $this -> strPlayertext = $strText;
@@ -81,15 +81,12 @@ class Bot
      * Check - text go to bot?
      * @return boolean <b>true</b> when text is direct to bot otherwise <b>false</b>
      */
-    function Checkbot()
+    public function Checkbot()
     {
-        $strText = "^".$this -> strBotname;
-        if (eregi($strText, $this -> strPlayertext))
-        {
+        #$strText = "^".$this -> strBotname;
+        if (strpos($this -> strBotname, $this -> strPlayertext)) {
             return true;
-        }
-            else
-        {
+        } else {
             return false;
         }
     }
@@ -97,96 +94,82 @@ class Bot
      * Create answer from bot
      * @return string Answer of bot
      */
-    function Botanswer()
+    public function Botanswer()
     {
         global $player;
         global $db;
         $intKey = 0;
-        foreach ($this -> arrPatsreg as $strPatsreg)
-        {
-            if (eregi($strPatsreg, $this -> strPlayertext))
-            {
+        foreach ($this -> arrPatsreg as $strPatsreg) {
+            if (strpos($strPatsreg, $this -> strPlayertext)) {
                 break;
             }
             $intKey++;
         }
-        switch ($intKey)
-        {
-            case 0 :
+        switch ($intKey) {
+            case 0:
                 $arrText = explode(" ", $this -> strPlayertext);
                 $strAnswer = $this -> arrPatsans[0][0];
                 $objUser = $db -> Execute("SELECT user FROM players WHERE id=".end($arrText));
-                if (empty($objUser -> fields['user']))
-                {
+                if (empty($objUser -> fields['user'])) {
                     $objUser -> fields['user'] = $player['user'];
                 }
-                $strAnswer = str_replace("%3", str_replace("&#39;","'",$objUser -> fields['user']), $strAnswer);
-                $strAnswer = str_replace("%2", str_replace("&#39;","'",$player['user']), $strAnswer);
+                $strAnswer = str_replace("%3", str_replace("&#39;", "'", $objUser -> fields['user']), $strAnswer);
+                $strAnswer = str_replace("%2", str_replace("&#39;", "'", $player['user']), $strAnswer);
                 $intValues = count($arrText) - 2;
                 $strItem = ' ';
-                for ($i = 1; $i < $intValues; $i++)
-                {
+                for ($i = 1; $i < $intValues; $i++) {
                     $strItem = $strItem.$arrText[$i]." ";
                 }
                 $strAnswer = str_replace("%1", $strItem, $strAnswer);
                 $objUser -> Close();
                 break;
-            case 1 :
+            case 1:
                 $arrText = explode(" ", $this -> strPlayertext);
                 $strAnswer = $this -> arrPatsans[1][0];
                 $strAnswer = str_replace("%2", $player['user'], $strAnswer);
                 $intValues = count($arrText) - 2;
                 $strItem = ' ';
-                for ($i = 1; $i < $intValues; $i++)
-                {
+                for ($i = 1; $i < $intValues; $i++) {
                     $strItem = $strItem.$arrText[$i]." ";
                 }
                 $strAnswer = str_replace("%1", $strItem, $strAnswer);
                 break;
-            case 2 :
+            case 2:
                 $objQuery = $db -> Execute("SELECT id FROM events");
                 $intNumber = $objQuery -> RecordCount();
                 $objQuery -> Close();
-                if ($intNumber > 0)
-                {
-                    $intRoll = rand (1, $intNumber);
+                if ($intNumber > 0) {
+                    $intRoll = rand(1, $intNumber);
                     $objEvent = $db -> Execute("SELECT text FROM events WHERE id=".$intRoll);
                     $strAnswer = $this -> arrPatsans[2][0];
                     $strAnswer = str_replace("%1", $objEvent -> fields['text'], $strAnswer);
                     $objEvent -> Close();
-                }
-                    else
-                {
+                } else {
                     $strAnswer = $this -> arrPatsans[2][1];
                 }
                 break;
         }
         $intValues = count($this -> arrPatsreg);
-        if ($intKey > 2 && $intKey < $intValues)
-        {
+        if ($intKey > 2 && $intKey < $intValues) {
             $strReg = $this -> arrPatsreg[$intKey];
             $strReg = str_replace('.', '', $strReg);
             $strReg = str_replace('*', '', $strReg);
             $strReg = strtolower($strReg);
             $this -> strPlayertext = strtolower($this -> strPlayertext);
             $strItem = str_replace($strReg, '', $this -> strPlayertext);
-            if (in_array($strItem, $this -> arrReflorg))
-            {
+            if (in_array($strItem, $this -> arrReflorg)) {
                 $intKey2 = array_search($strItem, $this -> arrReflorg);
                 $strItem = $this -> arrReflans[$intKey2];
             }
             $intAnswers = count($this -> arrPatsans[$intKey]) - 1;
             $intElement = rand(0, $intAnswers);
             $strAnswer = str_replace("%1", $strItem, $this -> arrPatsans[$intKey][$intElement]);
-        }
-            elseif ($intKey > 2)
-        {
+        } elseif ($intKey > 2) {
             $arrText = end($this -> arrPatsans);
             $intElements = count($arrText) - 1;
-            $intAnswer = rand (0, $intElements);
+            $intAnswer = rand(0, $intElements);
             $strAnswer = $arrText[$intAnswer];
         }
         return $strAnswer;
     }
 }
-?>

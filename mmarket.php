@@ -53,7 +53,7 @@ $smarty -> assign(array("Message" => '',
 $arrSortBy = array('name', 'efect', 'amount', 'cost', 'owner', 'id');
 if(isset($_GET['lista']) && ! in_array($_GET['lista'], $arrSortBy))
 {
-	$db -> Execute('INSERT INTO `mail` (`sender`, `senderid`, `owner`, `subject`, `body`, `date`) VALUES(\''.$player -> user.'\','.$player -> id.',2, \'Jestem g³upim chujem\' ,\'Jestem g³upim bucem i w³aœnie siê chcia³em w³amaæ wpisuj¹c '.$_SERVER["REQUEST_URI"].' .\', '.($db -> DBDate($newdate)).')');
+	$db -> Execute('INSERT INTO `mail` (`sender`, `senderid`, `owner`, `subject`, `body`, `date`) VALUES(\''.$player -> user.'\','.$player -> id.',2, \'Jestem gï¿½upim chujem\' ,\'Jestem gï¿½upim bucem i wï¿½aï¿½nie siï¿½ chciaï¿½em wï¿½amaï¿½ wpisujï¿½c '.$_SERVER["REQUEST_URI"].' .\', '.($db -> DBDate($newdate)).')');
     error('wyjazd, chakierze');
 }    
 /**
@@ -189,11 +189,11 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
         "Pcost" => P_COST));
     if (isset ($_GET['step']) && $_GET['step'] == 'add') 
     {
-        if (!$_POST['cost'] || !ereg("^[1-9][0-9]*$", $_POST['cost'])) 
+        if (!$_POST['cost'] || !preg_match("/^[1-9][0-9]*$/", $_POST['cost'])) 
         {
             error (ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['przedmiot']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['przedmiot']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }
@@ -218,7 +218,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
 
 if (isset($_GET['wyc'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['wyc'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['wyc'])) 
     {
         error (ERROR);
     }
@@ -247,7 +247,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'del')
 */
 if (isset($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error (ERROR);
     }
@@ -281,7 +281,7 @@ if (isset($_GET['buy']))
     $seller -> Close();
     if (isset($_GET['step']) && $_GET['step'] == 'buy') 
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }

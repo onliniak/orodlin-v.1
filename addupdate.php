@@ -51,9 +51,9 @@ $arrLanguage = array();
 $i = 0;
 while ($file = readdir($dir))
 {
-    if (!ereg(".htm*$", $file))
+    if (!preg_match("/.htm*$/", $file))
     {
-        if (!ereg("\.$", $file))
+        if (!preg_match("/\.$/", $file))
         {
             $arrLanguage[$i] = $file;
             $i = $i + 1;
@@ -93,7 +93,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'add')
 */
 if (isset ($_GET['modify'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['modify'])) {
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['modify'])) {
         error (ERROR);
     }
     $update = $db -> Execute("SELECT * FROM updates WHERE id=".$_GET['modify']);
@@ -114,7 +114,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'modify')
     {
         error (EMPTY_FIELDS);
     }
-    if (!ereg("^[1-9][0-9]*$", $_GET['updid'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['updid'])) 
     {
         error (ERROR);
     }

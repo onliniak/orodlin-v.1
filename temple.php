@@ -100,8 +100,8 @@ if (isset ($_GET['view']))
             unset($arrText);
             break;
         case 'pantheon':    ///View game pantheon.
-            $smarty -> assign_by_ref('Godnames', $arrNames);
-            $smarty -> assign_by_ref('Goddesc', $arrDesc);
+            $smarty -> assignByRef('Godnames', $arrNames);
+            $smarty -> assignByRef('Goddesc', $arrDesc);
             break;
         case 'prayer':      ///Pray to god.
             if ($player -> race =='')
@@ -142,8 +142,8 @@ if (isset ($_GET['view']))
 			{
 				$arrBlessings[] = array($arrBlessNames[$Key], $arrFaithCosts[$intRaceKey][$Key]);
 			}
-			$smarty -> assign_by_ref('Blessings', $arrBlessings);
-			$smarty -> assign_by_ref('Indices', $arrPossibleBlessings[$intGodKey]);
+			$smarty -> assignByRef('Blessings', $arrBlessings);
+			$smarty -> assignByRef('Indices', $arrPossibleBlessings[$intGodKey]);
 			if (isset($_POST['pray']))
 			{
 				$intNumber = uint32($_POST['pray']);

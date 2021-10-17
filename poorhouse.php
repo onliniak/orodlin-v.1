@@ -17,90 +17,95 @@ $title = 'Schronisko';
 /**
 * Logout with rest
 */
-if(isset($_GET['did']) && preg_match('/[1-9][0-9]*/', $_GET['did'])) {
+if (isset($_GET['did']) && preg_match('/[1-9][0-9]*/', $_GET['did'])) {
+    require_once 'includes/sessions.php';
+    require_once 'includes/config.php';
 
-	require_once 'includes/sessions.php';
-	require_once 'includes/config.php';
+    // End session
+    if (empty($_SESSION['email'])) {
+        date_default_timezone_set('Europe/Warsaw');
+        /**
+        * Check avaible languages
+        */
+        $dir = opendir('languages/');
+        $arrLanguage = array();
+        $i = 0;
+        while ($file = readdir($dir)) {
+            if (!preg_match("/.htm*$/i", $file) && !preg_match("/\.$/i", $file)) {
+                $arrLanguage[$i] = $file;
+                ++$i;
+            }
+        }
+        closedir($dir);
+        /**
+        * Get the localization for game
+        */
+        $strLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        foreach ($arrLanguage as $strTrans) {
+            if (preg_match('/^'.$strTrans.'/i', $strLanguage)) {
+                $strTranslation = $strTrans;
+                break;
+            }
+        }
+        if (!isset($strTranslation)) {
+            $strTranslation = 'pl';
+        }
+        require_once("languages/".$strTranslation."/poorhouse.php");
+        #require_once('libs/Smarty.class.php');
+        $smarty = new Smarty;
+        $smarty -> compile_check = true;
+        $smarty -> assign("Error", E_SESSIONS);
+        $smarty -> display('error.tpl');
+        exit;
+    }
 
-	// End session
-	if(empty($_SESSION['email']))
-	{
-		date_default_timezone_set('Europe/Warsaw');
-		/**
-		* Check avaible languages
-		*/
-		$dir = opendir('languages/');
-		$arrLanguage = array();
-		$i = 0;
-		while ($file = readdir($dir))
-		{
-			if (!preg_match("/.htm*$/i", $file) && !preg_match("/\.$/i", $file))
-			{
-				$arrLanguage[$i] = $file;
-				++$i;
-			}
-		}
-		closedir($dir);
-		/**
-		* Get the localization for game
-		*/
-		$strLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-		foreach ($arrLanguage as $strTrans)
-		{
-			if (preg_match('/^'.$strTrans.'/i', $strLanguage))
-			{
-				$strTranslation = $strTrans;
-				break;
-			}
-		}
-		if (!isset($strTranslation))
-		{
-			$strTranslation = 'pl';
-		}
-		require_once("languages/".$strTranslation."/poorhouse.php");
-		require_once('libs/Smarty.class.php');
-		$smarty = new Smarty;
-		$smarty -> compile_check = true;
-		$smarty -> assign ("Error", E_SESSIONS);
-		$smarty -> display ('error.tpl');
-		exit;
-	}
-
-	$stat = $db -> GetRow("SELECT `id`, `level`, `credits`, `lang` FROM `players` WHERE `email`='".$_SESSION['email']."'");
-	// Id's don't match
-	if ($stat['id'] != $_GET['did'])
-	{
-		require_once 'includes/head.php';
-		require_once 'languages/'.$player -> lang.'/poorhouse.php';
-		error(ERROR);
-	}
-	// Player hasn't enough cash
-	if ($stat['credits'] < $stat['level']*50)
-	{
-		require_once 'includes/head.php';
-		require_once 'languages/'.$player -> lang.'/poorhouse.php';
-		error(NO_CASH);
-	}
-	// All ok, destroy session, set rest, display logout.tpl
-	$db -> Execute('UPDATE `players` SET `rest`=\'Y\', `lpv`=`lpv`-180, `credits`=`credits`-'.(50*$stat['level']).' WHERE `id`='.$stat['id']);
-	session_unset();
-	session_destroy();
-	date_default_timezone_set('Europe/Warsaw');
-	require_once "languages/".$stat['lang']."/logout.php";
-	require_once('libs/Smarty.class.php');
-	$smarty = new Smarty;
-	$smarty -> compile_check = true;
-	$smarty -> assign("Gamename", $gamename);
-	$smarty -> display ('logout.tpl');
+    $stat = $db -> GetRow("SELECT `id`, `level`, `credits`, `lang` FROM `players` WHERE `email`='".$_SESSION['email']."'");
+    // Id's don't match
+    if ($stat['id'] != $_GET['did']) {
+        require_once 'includes/head.php';
+        require_once 'languages/'.$player -> lang.'/poorhouse.php';
+        error(ERROR);
+    }
+    // Player hasn't enough cash
+    if ($stat['credits'] < $stat['level']*50) {
+        require_once 'includes/head.php';
+        require_once 'languages/'.$player -> lang.'/poorhouse.php';
+        error(NO_CASH);
+    }
+    // All ok, destroy session, set rest, display logout.tpl
+    $db -> Execute('UPDATE `players` SET `rest`=\'Y\', `lpv`=`lpv`-180, `credits`=`credits`-'.(50*$stat['level']).' WHERE `id`='.$stat['id']);
+    session_unset();
+    session_destroy();
+    date_default_timezone_set('Europe/Warsaw');
+    require_once "languages/".$stat['lang']."/logout.php";
+    #require_once('libs/Smarty.class.php');
+    $smarty = new Smarty;
+    $smarty -> compile_check = true;
+    $smarty -> assign("Gamename", $gamename);
+    $smarty -> display('logout.tpl');
+};
+if (isset($_GET['eat'])) {
+    require_once 'includes/head.php';
+    $objTest = $db -> Execute("SELECT `papurest` FROM `players` WHERE `id`=".$player -> id);
+    if ($objTest -> fields['papurest'] == 'Y') {
+        error("<br /><br />".ONLY_ONCE);
+        $objTest -> Close();
+    } elseif ($objTest -> fields['papurest'] == 'N') {
+        $kaktus = $player -> id;
+        $schabowy = $player -> level * 0.75;
+        echo '<p class="six columns">Spożywasz ciepły posiłek i odzyskujesz ';
+        echo $schabowy;
+        echo ' punktów energii. <a href="poorhouse.php">Wróć</a>';
+        $db -> Execute("UPDATE `players` SET `energy` = (`energy`+'$schabowy') WHERE `players`.`id` = '$kaktus'");
+        $db -> Execute("UPDATE `players` SET `papurest`='Y' WHERE id=".$player -> id);
+    };
 }
 /**
 * View main page
 */
-	else
-{
-	require_once 'includes/head.php';
-	require_once 'languages/'.$player -> lang.'/poorhouse.php';
-	$smarty -> display('poorhouse.tpl');
-	require_once 'includes/foot.php';
-}
-?>
+    else {
+        require_once 'includes/head.php';
+        require_once 'languages/'.$player -> lang.'/poorhouse.php';
+        $smarty -> display('poorhouse.tpl');
+        require_once 'includes/foot.php';
+    }

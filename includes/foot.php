@@ -57,18 +57,55 @@ $time = date("H:i:s");
 /**
 * Last registered
 */
-require_once ('last.php');
+require_once('last.php');
 $last = eyeLastRegistered();
+
+
+# Nie chce mi się dłużej myśleć, jak napisać swój skrypt w javascripcie,
+# więc użyję "brudnej" wersji → na początek ściągnę sobie listę zalogowanych jsonem.
+
+// create a new cURL resource
+$ch = curl_init();
+
+$onlinelist = "http://";
+$onlinelist.= $gameadress;
+$onlinelist.= "/onlinelist.php";
+
+// set URL and other appropriate options
+curl_setopt($ch, CURLOPT_URL, $onlinelist);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //Nie outputuj wyniku
+
+// grab URL and pass it to the browser
+$json = curl_exec($ch);
+
+// close cURL resource, and free up system resources
+curl_close($ch);
+
+#Tutaj liczem plejersuf
+$data = json_decode($json, true);
+$graczki = $data['info']; //wczytaj graczy
+$tela = $data['Online'][0]; //ile zalogowanych graczy ?
+
+    # To tak na przyszłość, dane ściągam z onlinelist.php,
+    # a trzymam w includes/head
+    #foreach ($data['players'] as $key=>$val) {
+    #    echo $val['rasa'];
+    #}
+
+    #$rasa = $graczki['rasa']; //przykładowe użycie
+
+    $smarty->assign('tela', $tela);
+    $smarty->assign('foo', $graczki);
 
 /**
 * Last poll
 */
 $lastPoll = $db->GetRow('SELECT `poll`, `days` FROM `polls` WHERE `votes` < 0 ORDER BY `id` DESC LIMIT 1');
-if ($player -> poll == 'Y' OR $lastPoll[1] <= 0) // czy gracz już głosował, czy ankieta jest aktywna
-        {
+if ($player -> poll == 'Y' or $lastPoll[1] <= 0) { // czy gracz już głosował, czy ankieta jest aktywna
             $lastPoll= ''; //nie ma ankiety do głosowania
-        }
+}
 
+$CPU =  $perf->cpuLoad();
 $db -> LogSQL(false);
 list($a_dec, $a_sec) = explode(' ', $start_time);
 list($b_dec, $b_sec) = explode(' ', microtime());
@@ -78,15 +115,9 @@ $duration = round($b_sec - $a_sec + $b_dec - $a_dec, 3);
 $db -> Execute('TRUNCATE TABLE `adodb_logsql`');
 
 $comp = isset($compress) ? YES : NO;
-if (!isset($do_gzip_compress))
+if (!isset($do_gzip_compress)) {
     $do_gzip_compress = false;
-
-$numlog = $db -> GetRow('SELECT count(*) FROM `log` WHERE `owner`='.$player -> id.' AND `unread`=\'F\'');
-$smarty -> assign ('Unreadlog', $numlog[0] ? $numlog[0] : 0);
-
-$unread = $db -> GetRow('SELECT count(*) FROM `mail` WHERE `owner`='.$player -> id.' AND `zapis`=\'N\' AND `unread`=\'F\' AND `send`=0');
-$smarty -> assign ('Unreadmail', $unread[0] ? $unread[0] : 0);
-
+}
 
 /**
 * Assign variables and show page
@@ -102,6 +133,7 @@ $smarty -> assign(array('Players' => $arrCount[0],
                         'LastID' => $last[0],
                         'LastName' => $last[1],
                         'LastPollMenu' =>  $lastPoll[0],
+                        'CPU' => $CPU,
                         'Duration' => $duration,
                         'Compress' => $comp,
                         'Sqltime' => $sqltime,
@@ -114,10 +146,9 @@ $smarty -> assign(array('Players' => $arrCount[0],
                         'Time' => $time
                         ));
 
-$smarty -> display ('footer.tpl');
+$smarty -> display('footer.tpl');
 
-if ($do_gzip_compress)
-{
+if ($do_gzip_compress) {
     //
     // Borrowed from php.net!
     //
@@ -132,4 +163,3 @@ if ($do_gzip_compress)
 }
 $db -> Close();
 session_write_close();
-?>

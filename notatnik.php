@@ -64,7 +64,7 @@ $smarty -> assign(array("Notetime" => $arrtime,
  */
 if (isset ($_GET['akcja']) && $_GET['akcja'] == 'skasuj') 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['nid'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['nid'])) 
     {
         error (ERROR);
     }
@@ -110,7 +110,7 @@ if (isset ($_GET['akcja']) && $_GET['akcja'] == 'dodaj')
  */
 if (isset($_GET['akcja']) && $_GET['akcja'] == 'edit')
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['nid'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['nid'])) 
     {
         error(ERROR);
     }

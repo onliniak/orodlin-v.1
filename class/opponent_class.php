@@ -31,40 +31,40 @@
 
 class Opponent
 {
-    var $id;
-    var $user;
-    var $level;
-    var $tribe;
-    var $credits;
-    var $location;
-    var $hp;
-    var $mana;
-    var $exp;
-    var $age;
-    var $race;
-    var $clas;
-    var $immunited;
-    var $strength;
-    var $agility;
-    var $speed;
-    var $cond;
-    var $inteli;
-    var $wisdom;
-    var $attack;
-    var $miss;
-    var $magic;
-    var $shoot;
-    var $maps;
-    var $rest;
-    var $fight;
-    var $antidote_d;
-    var $antidote_n;
-    var $antidote_i;
-    var $battlelog;
-/**
-* Class constructor - get data from database and write it to variables
-*/
-    function Opponent($intId)
+    public $id;
+    public $user;
+    public $level;
+    public $tribe;
+    public $credits;
+    public $location;
+    public $hp;
+    public $mana;
+    public $exp;
+    public $age;
+    public $race;
+    public $clas;
+    public $immunited;
+    public $strength;
+    public $agility;
+    public $speed;
+    public $cond;
+    public $inteli;
+    public $wisdom;
+    public $attack;
+    public $miss;
+    public $magic;
+    public $shoot;
+    public $maps;
+    public $rest;
+    public $fight;
+    public $antidote_d;
+    public $antidote_n;
+    public $antidote_i;
+    public $battlelog;
+    /**
+    * Class constructor - get data from database and write it to variables
+    */
+    public function __construct($intId)
     {// przygotowanie do odpalenia stats() na przeciwniku
         global $db;
         $stats = $db -> Execute('SELECT `id`, `user`, `level`, `tribe`, `credits`, `miejsce`, `hp`, `pm`, `exp`, `age`, `rasa`, `klasa`, `immu`, `strength`, `agility`, `szyb`, `wytrz`, `inteli`, `wisdom`, `atak`, `unik`, `magia`, `shoot`, `maps`, `rest`, `fight`, `antidote_d`, `antidote_n`, `antidote_i`, `battlelog` FROM `players` WHERE `id`='.$intId);
@@ -94,9 +94,9 @@ class Opponent
         $this -> maps = $stats -> fields['maps'];
         $this -> rest = $stats -> fields['rest'];
         $this -> fight = $stats -> fields['fight'];
-        $this -> antidote_d = (!empty($stats -> fields['antidote_d'])) ? $stats -> fields['antidote_d']{0} : '';
-        $this -> antidote_n = (!empty($stats -> fields['antidote_n'])) ? $stats -> fields['antidote_n']{0} : '';
-        $this -> antidote_i = (!empty($stats -> fields['antidote_i'])) ? $stats -> fields['antidote_i']{0} : '';
+        $this -> antidote_d = (!empty($stats -> fields['antidote_d'])) ? $stats -> fields['antidote_d'][0] : '';
+        $this -> antidote_n = (!empty($stats -> fields['antidote_n'])) ? $stats -> fields['antidote_n'][0] : '';
+        $this -> antidote_i = (!empty($stats -> fields['antidote_i'])) ? $stats -> fields['antidote_i'][0] : '';
         $this -> battlelog = $stats -> fields['battlelog'];
         $stats -> Close();
     }
@@ -105,11 +105,10 @@ class Opponent
      * Function return values of selected atributes in array
      * Używana tylko w walce, zeby miała sens - wcześniej musi być pobranie statów.
      */
-    function stats($stats)
+    public function stats($stats)
     {
         $arrstats = array();
-        foreach ($stats as $value)
-        {
+        foreach ($stats as $value) {
             $arrstats[$value] = $this -> $value;
         }
         return $arrstats;
@@ -118,7 +117,7 @@ class Opponent
     /**
      * Function return values of equiped items
      */
-    function equipment()
+    public function equipment()
     {
         global $db;
 
@@ -135,11 +134,9 @@ class Opponent
                           array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
         $arrEquiptype = array('W', 'B', 'H', 'A', 'L', 'S', 'R', 'T', 'C', 'I');
         $objEquip = $db -> Execute('SELECT `id`, `name`, `power`, `type`, `minlev`, `zr`, `wt`, `szyb`, `poison`, `ptype`, `maxwt` FROM `equipment` WHERE `owner`='.$this -> id.' AND status=\'E\'');
-        while (!$objEquip -> EOF)
-        {
+        while (!$objEquip -> EOF) {
             $intKey = array_search($objEquip -> fields['type'], $arrEquiptype);
-            if ($arrEquip[9][0] && $objEquip -> fields['id'] != $arrEquip[9][0] && $objEquip -> fields['type'] == 'I')
-            {
+            if ($arrEquip[9][0] && $objEquip -> fields['id'] != $arrEquip[9][0] && $objEquip -> fields['type'] == 'I') {
                 $intKey = 10;
             }
             $arrEquip[$intKey][0] = $objEquip -> fields['id'];

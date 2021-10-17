@@ -3,7 +3,7 @@
  *   File functions:
  *   Quest class - actions in quest
  *
- *   @name                 : quests_class.php                            
+ *   @name                 : quests_class.php
  *   @copyright            : (C) 2004,2005,2006 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.3
@@ -34,47 +34,42 @@
 */
 require_once("languages/".$player -> lang."/quests_class.php");
 
-class Quests 
+class Quests
 {
-    var $number;
-    var $location;
-    var $lang;
+    public $number;
+    public $location;
+    public $lang;
 
     /**
     * Class constructor - start quest and show first text, check for phishing
     */
-    function Quests($location, $number, $action) 
+    public function __construct($location, $number, $action)
     {
         global $db;
         global $smarty;
         global $player;
-        
-        if (!isset($_SERVER['HTTP_REFERER']))
-        {
+
+        if (!isset($_SERVER['HTTP_REFERER'])) {
             error(ERROR);
         }
         $arrAddress = explode("/", $_SERVER['HTTP_REFERER']);
-        if ($_SERVER['HTTP_HOST'] != $arrAddress[2])
-        {
+        if ($_SERVER['HTTP_HOST'] != $arrAddress[2]) {
             error(ERROR);
         }
-        if (!$action || $action == 'start') 
-        {
+        if (!$action || $action == 'start') {
             $text = $db -> Execute("SELECT `text` FROM `quests` WHERE `qid`=".$number." AND `location`='".$location."' AND `name`='start' AND `lang`='".$player -> lang."'");
             $smarty -> assign("Start", $text -> fields['text']);
             $text -> Close();
             $db -> Execute("UPDATE `players` SET `miejsce`='Podróż' WHERE `id`=".$player -> id);
             $test = $db -> Execute("SELECT `id` FROM `questaction` WHERE `player`=".$player -> id." AND `quest`=".$number);
-            if (empty($test -> fields['id'])) 
-            {
+            if (empty($test -> fields['id'])) {
                 $db -> Execute("INSERT INTO `questaction` (`player`, `action`, `quest`) VALUES(".$player -> id.",'start',".$number.")");
             }
             $test -> Close();
         }
-        if ($action == 'end') 
-        {
+        if ($action == 'end') {
             error(VISITED);
-        }           
+        }
         $smarty -> assign(array("Aselect" => A_SELECT,
                                 "Anext" => A_NEXT,
                                 "Addanswer" => ADD_ANSWER));
@@ -86,7 +81,7 @@ class Quests
     /**
     * Checkbox for player actions
     */
-    function Box($num) 
+    public function Box($num)
     {
         global $db;
         global $smarty;
@@ -96,21 +91,20 @@ class Quests
         $arrtext = array();
         $arroption = array();
         $i = 0;
-        while (!$box -> EOF) 
-        {
+        while (!$box -> EOF) {
             $arrtext[$i] = $box -> fields['text'];
             $arroption[$i] = $i + 1;
             $i = $i + 1;
             $box -> MoveNext();
         }
         $box -> Close();
-        $smarty -> assign( array("Box" => $arrtext, "File" => $this -> location, "Name" => $name, "Option" => $arroption));
+        $smarty -> assign(array("Box" => $arrtext, "File" => $this -> location, "Name" => $name, "Option" => $arroption));
     }
 
     /**
     * Show quest text
     */
-    function Show($num) 
+    public function Show($num)
     {
         global $db;
         global $smarty;
@@ -132,24 +126,21 @@ class Quests
     /**
     * Finish quest
     */
-function Finish($exp, $city_location, $location, $file_location)
+    public function Finish($exp, $city_location, $location, $file_location)
     {
         global $db;
         global $smarty;
         global $player;
-global $city1;
+        global $city1;
 
         $db -> Execute("UPDATE `questaction` SET `action`='end' WHERE `player`=".$player -> id." AND `quest`=".$this -> number);
         $db -> Execute("UPDATE players SET miejsce='".$city_location."' WHERE id=".$player -> id);
         $gainexp = $exp * $player -> level;
-        if ($exp > 0)
-        {
+        if ($exp > 0) {
             $text = Q_YOU_GAIN." ".$gainexp." ".Q_EXPERIENCE;
             require_once("includes/checkexp.php");
             checkexp($player -> exp, $gainexp, $player -> level, $player -> race, $player -> user, $player -> id, 0, 0, $player -> id, '', 0);
-        }
-            else
-        {
+        } else {
             $text = '';
         }
         $smarty -> assign("End", $text."<br /><br /><a href=\"".$file_location."\">".$location."</a>");
@@ -158,7 +149,7 @@ global $city1;
     /**
     * Turn fight with monsters in quest
     */
-    function Battle($adress) 
+    public function Battle($adress)
     {
         global $player;
         global $smarty;
@@ -172,107 +163,94 @@ global $city1;
 
         $fight = $db -> Execute("SELECT fight FROM players WHERE id=".$player -> id);
         $enemy1 = $db -> Execute("SELECT * FROM monsters WHERE id=".$fight -> fields['fight']);
-        $enemy = array("strength" => $enemy1 -> fields['strength'], 
-            "agility" => $enemy1 -> fields['agility'], 
-            "speed" => $enemy1 -> fields['speed'], 
-            "endurance" => $enemy1 -> fields['endurance'], 
-            "hp" => $enemy1 -> fields['hp'], 
-            "name" => $enemy1 -> fields['name'], 
-            "exp1" => $enemy1 -> fields['exp1'], 
-            "exp2" => $enemy1 -> fields['exp2'], 
+        $enemy = array("strength" => $enemy1 -> fields['strength'],
+            "agility" => $enemy1 -> fields['agility'],
+            "speed" => $enemy1 -> fields['speed'],
+            "endurance" => $enemy1 -> fields['endurance'],
+            "hp" => $enemy1 -> fields['hp'],
+            "name" => $enemy1 -> fields['name'],
+            "exp1" => $enemy1 -> fields['exp1'],
+            "exp2" => $enemy1 -> fields['exp2'],
             "level" => $enemy1 -> fields['level']);
         $span = ($enemy1 -> fields['level'] / $player -> level);
-        if ($span > 2) 
-        {
+        if ($span > 2) {
             $span = 2;
         }
         /**
         * Count gained experience
         */
-        $expgain1 = ceil(rand($enemy1 -> fields['exp1'],$enemy1 -> fields['exp2']) * $span);
+        $expgain1 = ceil(rand($enemy1 -> fields['exp1'], $enemy1 -> fields['exp2']) * $span);
         $expgain = $expgain1;
-        if (isset($_POST['razy']) && $_POST['razy'] > 1)
-        {
-            for ($k = 2; $k <= $_POST['razy']; $k++)
-            {
+        if (isset($_POST['razy']) && $_POST['razy'] > 1) {
+            for ($k = 2; $k <= $_POST['razy']; $k++) {
                 $expgain = $expgain + ceil($expgain1 / 5 * (sqrt($k) + 4.5));
             }
         }
-        $goldgain = ceil(rand($enemy1 -> fields['credits1'],$enemy1 -> fields['credits2']) * $span);
-        $enemy1 -> Close();        
-        $arrehp = array ();
-        if (!isset ($_POST['action'])) 
-        {
-            turnfight ($expgain,$goldgain,'',$adress);
-        } 
-            else 
-        {
-            turnfight ($expgain,$goldgain,$_POST['action'],$adress);
+        $goldgain = ceil(rand($enemy1 -> fields['credits1'], $enemy1 -> fields['credits2']) * $span);
+        $enemy1 -> Close();
+        $arrehp = array();
+        if (!isset($_POST['action'])) {
+            turnfight($expgain, $goldgain, '', $adress);
+        } else {
+            turnfight($expgain, $goldgain, $_POST['action'], $adress);
         }
-        if ($fight -> fields['fight'] == 0) 
-        {
+        if ($fight -> fields['fight'] == 0) {
             $player -> energy = $player -> energy - 1;
             $db -> Execute("UPDATE players SET energy=".$player -> energy." WHERE id=".$player -> id);
-       }
-       $fight -> Close();
-   }
+        }
+        $fight -> Close();
+    }
 
-   /**
-   * Gain experience in quest
-   */
-   function Gainexp($exp) 
-   {
+    /**
+    * Gain experience in quest
+    */
+    public function Gainexp($exp)
+    {
         global $db;
         global $smarty;
         global $player;
         $gainexp = $exp * $player -> level;
         $text = Q_YOU_GAIN." ".$gainexp." ".Q_EXPERIENCE;
         require_once("includes/checkexp.php");
-        checkexp($player -> exp,$gainexp,$player -> level,$player -> race,$player -> user,$player -> id,0,0,$player -> id,'',0);
-        $smarty -> assign("End", "<br /><br />".$text);        
+        checkexp($player -> exp, $gainexp, $player -> level, $player -> race, $player -> user, $player -> id, 0, 0, $player -> id, '', 0);
+        $smarty -> assign("End", "<br /><br />".$text);
     }
 
     /**
     * Answer on questions in quest
     */
-    function Answer($num,$answfalse,$repeat) 
+    public function Answer($num, $answfalse, $repeat)
     {
         global $db;
         global $player;
         global $smarty;
 
-        if (!isset($_POST['planswer'])) 
-        {
+        if (!isset($_POST['planswer'])) {
             $_POST['planswer'] = '';
         }
         $_POST['planswer'] = strip_tags($_POST['planswer']);
         $ans = $db -> Execute("SELECT * FROM quests WHERE qid=".$this -> number." AND location='".$this -> location."' AND name='".$num."' AND lang='".$this -> lang."'");
-        if ($repeat == 'Y') 
-        {
+        if ($repeat == 'Y') {
             $db -> Execute("UPDATE players SET temp=temp-1 WHERE id=".$player -> id);
         }
         $_POST['planswer'] = strtolower($_POST['planswer']);
         $ans -> fields['option'] = strtolower($ans -> fields['option']);
-        if (isset($_POST['planswer']) && $_POST['planswer'] == $ans -> fields['option']) 
-        {
+        if (isset($_POST['planswer']) && $_POST['planswer'] == $ans -> fields['option']) {
             return 1;
-        } 
-            elseif (isset($_POST['planswer']) && $_POST['planswer'] != $ans -> fields['option']) 
-        {
-            if (!empty($answfalse)) 
-            {
+        } elseif (isset($_POST['planswer']) && $_POST['planswer'] != $ans -> fields['option']) {
+            if (!empty($answfalse)) {
                 $text = $db -> Execute("SELECT text FROM quests WHERE qid=".$this -> number." AND location='".$this -> location."' AND name='".$answfalse."' AND lang='".$this -> lang."'");
                 $smarty -> assign("Link", $text -> fields['text']);
                 $text -> Close();
             }
-            return 0;               
+            return 0;
         }
     }
 
     /**
     * Resign from quest
     */
-    function Resign() 
+    public function Resign()
     {
         global $db;
         global $player;
@@ -282,4 +260,3 @@ global $city1;
         $smarty -> assign("End", "(<a href=\"grid.php\">Labirynt</a>)");
     }
 }
-?>

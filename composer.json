@@ -1,0 +1,20 @@
+{
+   "require": {
+      "adodb/adodb-php": "^5.20",
+      "smarty/smarty": "^3.1",
+      "phpmailer/phpmailer": "^6.0"
+   },
+   "suggest": {
+      "mnsami/composer-custom-directory-installer": "Automatycznie zmienia foldery z vendor/adodb-php na adodb i z vendor/phpmailer na mailer"
+   },
+   "extra": {
+      "installer-paths": {
+         "./adodb/": [
+            "adodb/adodb-php"
+         ],
+         "./mailer/": [
+            "phpmailer/phpmailer"
+         ]
+      }
+   }
+}

@@ -95,7 +95,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make')
                             'Ramount' => R_AMOUNT));
     if (isset($_GET['make']) && $_GET['make'] == 'Y')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
         {
             error(ERROR);
         }
@@ -246,7 +246,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make2')
              */
             if (isset($_GET['make']))
             {
-                if (!ereg("^[1-9][0-9]*$", $_GET['make']))
+                if (!preg_match("/^[1-9][0-9]*$/", $_GET['make']))
                 {
                     error(ERROR);
                 }
@@ -303,7 +303,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make2')
      */
     if (isset($_GET['action']) && $_GET['action'] == 'continue')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['make']) || !ereg("^[1-9][0-9]*$", $_POST['amount']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['make']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
         {
             error(ERROR);
         }
@@ -407,7 +407,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make2')
      */
     if (isset($_GET['action']) && $_GET['action'] == 'create')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['make']) || !ereg("^[1-9][0-9]*$", $_POST['amount']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['make']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
         {
             error(ERROR);
         }
@@ -662,7 +662,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make3')
      */
     if (isset($_GET['action']) && $_GET['action'] == 'continue')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['make']) || !ereg("^[0-9][0-9\.]*$", $_POST['amount']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['make']) || !preg_match("/^[0-9][0-9\.]*$/", $_POST['amount']))
         {
             error(ERROR);
         }
@@ -807,7 +807,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'make3')
      */
     if (isset($_GET['action']) && $_GET['action'] == 'create')
     {
-        if (!isset($_POST['rings']) || !ereg("^[1-9][0-9]*$", $_POST['rings']) || !ereg("^[0-9][0-9\.]*$", $_POST['amount']))
+        if (!isset($_POST['rings']) || !preg_match("/^[1-9][0-9]*$/", $_POST['rings']) || !preg_match("/^[0-9][0-9\.]*$/", $_POST['amount']))
         {
             error(ERROR);
         }

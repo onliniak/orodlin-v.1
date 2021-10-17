@@ -64,7 +64,7 @@ $arrRaceCost = array(array(.7, .7, .7, .7),
 $arrClasses = array('Wojownik', 'Mag', 'Barbarzyńca', 'Złodziej', 'Rzemieślnik');
 $arrClassCost = array(array(.9, .9), array(.5, .5), array(.7, .7), array(.7, .7), array(.7, .7));
 
-$smarty -> assign_by_ref('StatsDesc', $arrStatsDesc);
+$smarty -> assignByRef('StatsDesc', $arrStatsDesc);
 
 $intRaceKey = array_search($player -> race, $arrRaces);
 $intClassKey = array_search($player -> clas, $arrClasses);
@@ -77,10 +77,10 @@ if ($player -> race == 'Gnom')
 }
 
 unset($arrRaceCost, $arrRaces, $arrClasses, $arrClassCost, $intRaceKey, $intClassKey);
-$smarty -> assign_by_ref('PlayerCost', $arrPlayerCost);
+$smarty -> assignByRef('PlayerCost', $arrPlayerCost);
 $arrStats = array('strength', 'agility', 'szyb', 'wytrz', 'inteli', 'wisdom');
-$smarty -> assign_by_ref('StatOptions', $arrStats);
-$smarty -> assign_by_ref('TrainedStats', $arrTrainedStats);
+$smarty -> assignByRef('StatOptions', $arrStats);
+$smarty -> assignByRef('TrainedStats', $arrTrainedStats);
 
 if (isset ($_GET['action']) && $_GET['action'] == 'train') 
 {
@@ -88,7 +88,7 @@ if (isset ($_GET['action']) && $_GET['action'] == 'train')
     {
         error(HOW_MANY);
     }
-    if (!ereg("^[1-9][0-9]*$", $_POST['rep'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_POST['rep'])) 
     {
         error (ERROR);
     }
@@ -105,11 +105,11 @@ if (isset ($_GET['action']) && $_GET['action'] == 'train')
     {
         error (NO_ENERGY);
     }
-	$smarty -> assign_by_ref('Train', $_POST['train']);
-	$smarty -> assign_by_ref('Rep', $_POST['rep']);
-	$smarty -> assign_by_ref('energyCost', $repeat);
-	$smarty -> assign_by_ref('gainedStat', $gain);
-	$smarty -> assign_by_ref('gainedStatName', $arrStatsDesc[$intPlayerKey]);
+	$smarty -> assignByRef('Train', $_POST['train']);
+	$smarty -> assignByRef('Rep', $_POST['rep']);
+	$smarty -> assignByRef('energyCost', $repeat);
+	$smarty -> assignByRef('gainedStat', $gain);
+	$smarty -> assignByRef('gainedStatName', $arrStatsDesc[$intPlayerKey]);
 
     if (isset($_GET['step']) && $_GET['step'] == 'next')
     {
@@ -151,7 +151,7 @@ if (!isset($_GET['step']))
 /**
 * Assign variables to template and display page
 */
-$smarty -> assign_by_ref('Action', $_GET['action']);
+$smarty -> assignByRef('Action', $_GET['action']);
 $smarty -> display ('train.tpl');
 
 require_once('includes/foot.php');

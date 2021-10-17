@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <form method="post" action="{$Link}">
 <table>
 {if $Link == "addupdate.php?action=add"}

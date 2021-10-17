@@ -256,49 +256,49 @@ if (isset($_GET['view']) && $_GET['view'] == 'myoferts')
                 $arrTable = array(T_NAME, T_NUMBER, T_AMOUNT, T_COST);
                 while (!$objOferts -> EOF)
                 {
-                    if (ereg("^M[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^M[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("M", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2;
                         $arrValues[$i][1] = $objOferts -> fields['number'] + 1;
                     }
-                    if (ereg("^P[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^P[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("P", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 7;
                         $arrValues[$i][1] = $objOferts -> fields['number'] + 1;
                     }
-                    if (ereg("^R[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^R[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("R", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 12;
                         $arrValues[$i][1] = $objOferts -> fields['number'] + 1;
                     }
-                    if (ereg("^Y[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^Y[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("Y", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 17;
                         $arrValues[$i][1] = '-';
                     }
-                    if (ereg("^C[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^C[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("C", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 24;
                         $arrValues[$i][1] = '-';
                     }
-                    if (ereg("^O[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^O[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("O", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 29;
                         $arrValues[$i][1] = '-';
                     }
-                    if (ereg("^T[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^T[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("T", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 34;
                         $arrValues[$i][1] = '-';
                     }
-                    if (ereg("^J[0-9]", $objOferts -> fields['type']))
+                    if (preg_match("/^J[0-9]/", $objOferts -> fields['type']))
                     {
                         $intKey2 = str_replace("J", "", $objOferts -> fields['type']);
                         $intNumber = $intKey2 + 39;
@@ -370,7 +370,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'myoferts')
             {
                 $_GET['add'] = '';
             }
-            if (!ereg("^[1-9][0-9]*$", $intId))
+            if (!preg_match("/^[1-9][0-9]*$/", $intId))
             {
                 error(ERROR);
             }
@@ -409,49 +409,49 @@ if (isset($_GET['view']) && $_GET['view'] == 'myoferts')
             if ($intKey == 4)
             {
                 $arrNames = array(MAP1, MAP2, MAP3, MAP4, MAP5, MAP6, MAP7, PLAN1, PLAN2, PLAN3, PLAN4, PLAN5, RECIPE1, RECIPE2, RECIPE3, RECIPE4, RECIPE5, FORMULA1, FORMULA2, FORMULA3, FORMULA4, FORMULA5, COMP1, COMP2, COMP3, COMP4, COMP5, COMP6, COMP7, CONST1, CONST2, CONST3, CONST4, CONST5, POTION1, POTION2, POTION3, POTION4, POTION5, JEWELLERY1, JEWELLERY2, JEWELLERY3, JEWELLERY4, JEWELLERY5);
-                if (ereg("^M[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^M[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("M", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2;
                     $strName2 = $objOfert -> fields['number'] + 1;
                 }
-                if (ereg("^P[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^P[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("P", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 7;
                     $strName2 = $objOfert -> fields['number'] + 1;
                 }
-                if (ereg("^R[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^R[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("R", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 12;
                     $strName2 = $objOfert -> fields['number'] + 1;
                 }
-                if (ereg("^Y[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^Y[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("Y", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 17;
                     $strName2 = '-';
                 }
-                if (ereg("^C[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^C[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("C", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 24;
                     $strName2 = '-';
                 }
-                if (ereg("^O[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^O[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("O", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 29;
                     $strName2 = '-';
                 }
-                if (ereg("^T[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^T[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("T", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 34;
                     $strName2 = '-';
                 }
-                if (ereg("^J[0-9]", $objOfert -> fields['type']))
+                if (preg_match("/^J[0-9]/", $objOfert -> fields['type']))
                 {
                     $intKey2 = str_replace("J", "", $objOfert -> fields['type']);
                     $intNumber = $intKey2 + 39;
@@ -504,7 +504,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'myoferts')
                                         "Oname" => $strName));
                 if (isset($_GET['confirm']) && $_GET['confirm'] == 'yes')
                 {
-                    if (!isset($_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['amount']))
+                    if (!isset($_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
                     {
                         error(ERROR);
                     }
@@ -609,7 +609,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'myoferts')
                                         "Oname" => $strName));
                 if (isset($_GET['confirm']) && $_GET['confirm'] == 'yes')
                 {
-                    if (!isset($_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['amount']))
+                    if (!isset($_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
                     {
                         error(ERROR);
                     }

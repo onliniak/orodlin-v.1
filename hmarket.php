@@ -194,7 +194,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
                             "Addofert" => 0));
     if (isset ($_GET['step']) && $_GET['step'] == 'add')
     {
-        if (!isset($_POST['ilosc']) || !isset($_POST['cost']) || !ereg("^[1-9][0-9]*$", $_POST['ilosc']) || !ereg("^[1-9][0-9]*$", $_POST['cost']))
+        if (!isset($_POST['ilosc']) || !isset($_POST['cost']) || !preg_match("/^[1-9][0-9]*$/", $_POST['ilosc']) || !preg_match("/^[1-9][0-9]*$/", $_POST['cost']))
         {
             error (ERROR);
         }
@@ -224,7 +224,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'add')
                                     "Herbcost" => $_POST['cost']));
             if (isset($_POST['ofert']))
             {
-                if (!ereg("^[1-9][0-9]*$", $_POST['ofert']))
+                if (!preg_match("/^[1-9][0-9]*$/", $_POST['ofert']))
                 {
                     error(ERROR);
                 }
@@ -252,7 +252,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'del')
 */
 if (isset($_GET['buy']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy']))
     {
         error (ERROR);
     }
@@ -282,7 +282,7 @@ if (isset($_GET['buy']))
     $buy -> Close();
     if (isset($_GET['step']) && $_GET['step'] == 'buy')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']))
         {
             error (ERROR);
         }
@@ -324,7 +324,7 @@ if (isset($_GET['buy']))
 
 if (isset($_GET['wyc']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['wyc']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['wyc']))
     {
         error (ERROR);
     }

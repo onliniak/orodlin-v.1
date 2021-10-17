@@ -41,8 +41,7 @@ define('BACK_TO', 'Powrót do '.$city1.'');
 define('STAY_HERE', 'Pozostań na miejscu');
 define('NOT_NEED', 'Nie potrzebujesz wskrzeszenia!');
 
-if (isset($_GET['action']))
-{
+if (isset($_GET['action'])) {
     define('NO_MONEY_FOR', 'Nie możesz być wskrzeszony.');
     define('YOU_RES', '<br />Zostałeś wskrzeszony ale straciłeś ');
     define('LOST_EXP', ' Punktów Doświadczenia.');
@@ -52,15 +51,16 @@ if (isset($_GET['action']))
     define('T_GOLD', 'Ofiara:');
     define('GOLD_COINS', 'sztuk złota');
     define('A_WAIT', 'Zaczekaj, aż pustelnik przygotuje czar');
-    if (isset($_GET['action2']) && $_GET['action2'] == 'wait')
-    {
+    if (isset($_GET['action2']) && $_GET['action2'] == 'wait') {
         define('WAIT_INFO', 'Przed Twoimi oczami przebiegają wydarzenie z przeszłości... To wspomnienia. Czas dłuży się niesamowicie... Nagle słyszysz słowa:<br /><br /><i>Cierpliwości. Właśnie przygotowuje czar dla Ciebie. Na szczęście mam już potrzebne składniki, ale rzucenie wskrzeszającego czaru to nie taka prosta sprawa. Trzeba być ostrożnym, gdyż nie wiem jakie konsekwencje mogłaby mieć moja pomyłka.</i>');
     }
-    if (isset($_GET['action2']) && $_GET['action2'] == 'resurect')
-    {
+    if (isset($_GET['action2']) && $_GET['action2'] == 'resurect') {
         define('RES1', 'Otwierasz powoli oczy... Widzisz klęczącego nad tobą starca, a w ustach odczuwasz jeszcze słodkawy smak błogosławionej wody... Ku twemu zdziwieniu nie czujesz żadnego bólu. Po ranach, które odniosłeś nie ma śladu...');
         define('RES2', 'Tutaj są Twoje rzeczy. Ja niestety muszę iść, gdyż zapewne są inni potrzebujący pomocy. Na przyszłość postaraj się zachować nieco więcej ostrożności. Bywaj w zdrowiu...');
         define('RES3', 'Po wypowiedzeniu tych słów pustelnik oddala się. Po chwili odpoczynku podnosisz się, zbierasz swój ekwipunek i wyruszasz w drogę.');
     }
 }
-?>
+if (isset($_GET['action2']) && $_GET['action2'] == 'city') {
+    define('GO_CITY', '<p>Wracasz do domu</p>
+<p>Kliknij <a href="city.php">tutaj</a>.');
+}

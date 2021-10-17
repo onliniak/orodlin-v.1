@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {include file="head.tpl"}
 <!-- <a href="register.php?lang=pl"><img src="" title="Polski" border="0" alt="img_polish" /></a>
 <a href="register.php?lang=en"><img src="" title="English" border="0" alt="img_english" /></a><br /><br /> -->
@@ -45,6 +46,6 @@
 {/if}
     </div>
 </div>
-{include file=right.tpl}
-{include file=foot.tpl}
+{include file="right.tpl"}
+{include file="foot.tpl"}
 {/strip}

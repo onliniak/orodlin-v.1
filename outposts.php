@@ -230,7 +230,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'listing')
 	}
 	if(isset($arrOutpost))
 	{
-		$smarty -> assign_by_ref('Outposts', $arrOutpost);
+		$smarty -> assignByRef('Outposts', $arrOutpost);
 		$smarty -> assign('MinSize', round($out -> size / 2) - 1);
 	}
 }
@@ -302,7 +302,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'battle')
 		$enemyOut -> writedata(true);
 
 		$db -> Execute('INSERT INTO `log` (`owner`, `log`, `czas`) VALUES('.$_POST['oid'].','.$db -> qstr(implode($arrDefenderInfo, "")).', '.$db -> DBDate($newdate).')');
-		$smarty -> assign_by_ref('AttackerInfo', $arrAttackerInfo);
+		$smarty -> assignByRef('AttackerInfo', $arrAttackerInfo);
 	}
 }
 
@@ -365,8 +365,8 @@ if (isset ($_GET['view']) && $_GET['view'] == 'beasts')
 	$intSum = count($arrMonsters);
 	if (isset($_POST['id']))
 		$smarty -> assign('Message', $out -> addBeast(strictInt($_POST['id']), $arrMonsters, $arrCores, $names));
-	$smarty -> assign_by_ref('Monsters', $arrMonsters);
-	$smarty -> assign_by_ref('Cores', $arrCores);
+	$smarty -> assignByRef('Monsters', $arrMonsters);
+	$smarty -> assignByRef('Cores', $arrCores);
 	$smarty -> assign(array('Lairs' => $out -> lairs,
 							'Freelairs' => $out -> lairs - $intSum));
 }
@@ -407,8 +407,8 @@ if (isset ($_GET['view']) && $_GET['view'] == 'veterans')
 /// Finalize edition of selected veteran.
 			$smarty -> assign('Message', $out -> modifyVeteran($arrVeterans));
 	}
-	$smarty -> assign_by_ref('Veterans', $arrVeterans);
-	$smarty -> assign_by_ref('VetDetails', $arrVeteran);
+	$smarty -> assignByRef('Veterans', $arrVeterans);
+	$smarty -> assignByRef('VetDetails', $arrVeteran);
 	$smarty -> assign(array('Barracks' => $out -> barracks,
 							'Freebarracks' => $out -> barracks - $intSum));
 }
@@ -418,7 +418,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'veterans')
 */
 if (isset ($_GET['view']) && $_GET['view'] == 'equip' && isset($_GET['type']) && in_array($_GET['type'], array('W', 'B', 'A', 'S', 'H', 'L', 'I')))
 {
-	$smarty -> assign_by_ref('Equipment', $out -> getEquipment($_GET['type']));
+	$smarty -> assignByRef('Equipment', $out -> getEquipment($_GET['type']));
 	$arrTypes = array('W' => 'sidearm',
 					  'B' => 'bow',
 					  'A' => 'armor',

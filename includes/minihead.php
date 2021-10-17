@@ -32,29 +32,25 @@
 * GZIP compression
 */
 
-date_default_timezone_set ("Europe/Warsaw");
-$do_gzip_compress = FALSE;
-$compress = FALSE;
+date_default_timezone_set("Europe/Warsaw");
+$do_gzip_compress = false;
+$compress = false;
 $phpver = phpversion();
-$useragent = (isset($_SERVER["HTTP_USER_AGENT"]) ) ? $_SERVER["HTTP_USER_AGENT"] : $HTTP_USER_AGENT;
-if ($phpver >= '4.0.4pl1' && (strstr($useragent,'compatible') || strstr($useragent,'Gecko') || strstr ($useragent, 'Opera')))
-{
-    if (extension_loaded('zlib'))
-    {
-        $compress = TRUE;
+$useragent = (isset($_SERVER["HTTP_USER_AGENT"])) ? $_SERVER["HTTP_USER_AGENT"] : $HTTP_USER_AGENT;
+if ($phpver >= '4.0.4pl1' && (strstr($useragent, 'compatible') || strstr($useragent, 'Gecko') || strstr($useragent, 'Opera'))) {
+    if (extension_loaded('zlib')) {
+        $compress = true;
         ob_start('ob_gzhandler');
     }
-}
-    elseif ($phpver > '4.0')
-{
-    if (strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip'))
-        if (extension_loaded('zlib'))
-        {
-            $do_gzip_compress = $compress = TRUE;
+} elseif ($phpver > '4.0') {
+    if (strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+        if (extension_loaded('zlib')) {
+            $do_gzip_compress = $compress = true;
             ob_start();
             ob_implicit_flush(0);
             header('Content-Encoding: gzip');
         }
+    }
 }
 
 
@@ -68,9 +64,11 @@ $path = 'languages/';
 $dir = opendir($path);
 $arrLanguage = array();
 $i = 0;
-while ($file = readdir($dir))
-    if (!ereg("(.htm*)|(\.)$", $file))
+while ($file = readdir($dir)) {
+    if (!preg_match("/(.htm*)|(\.)$/", $file)) {
         $arrLanguage[$i++] = $file;
+    }
+}
 closedir($dir);
 
 /**
@@ -79,8 +77,8 @@ closedir($dir);
 $strTranslation = in_array($_SERVER['HTTP_ACCEPT_LANGUAGE'], $arrLanguage) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'pl';
 require_once('languages/'.$strTranslation.'/head.php');
 require_once('includes/sessions.php');
-require_once 'libs/Smarty.class.php';
-require_once ('includes/config.php');
+#require_once 'libs/Smarty.class.php';
+require_once('includes/config.php');
 require_once('class/player_class.php');
 
 $smarty = new Smarty;
@@ -104,22 +102,21 @@ function catcherror($errortype, $errorinfo, $errorfile, $errorline)
     preg_match('/([^\/]+)$/', $errorfile, $arrMatch);
     $file = addslashes($arrMatch[1]);
     $info = addslashes($errorinfo);
-    if (isset($_SERVER['HTTP_REFERER']))
-    {
+    if (isset($_SERVER['HTTP_REFERER'])) {
         preg_match('/([^\/]+)$/', $_SERVER['HTTP_REFERER'], $arrMatch);
         $referer = addslashes($arrMatch[1]);
-    }
-    else
+    } else {
         $referer = '';
+    }
     $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
     $arrTest = $db -> GetRow('SELECT `id` FROM `bugtrack` WHERE `file`=\''.$file.'\' AND `line`='.$errorline.' AND `info`=\''.$info.'\' AND `type`='.$errortype.' AND `referer`=\''.$referer.'\'');
-    if (!empty($arrTest))
+    if (!empty($arrTest)) {
         $db -> Execute('UPDATE `bugtrack` SET `amount`=`amount`+1 WHERE `id`='.$arrTest[0]);
-    else
+    } else {
         $db -> Execute('INSERT INTO `bugtrack` (`type`, `info`, `file`, `line`, `referer`) VALUES('.$errortype.', \''.$info.'\', \''.$file.'\', '.$errorline.', \''.$referer.'\')');
+    }
     $db -> SetFetchMode($oldFetchMode);
-    if ($errortype == E_USER_ERROR || $errortype == E_ERROR)
-    {
+    if ($errortype == E_USER_ERROR || $errortype == E_ERROR) {
         $smarty -> assign('Message', E_ERRORS);
         $smarty -> display('error1.tpl');
         exit;
@@ -137,10 +134,9 @@ $smarty -> assign('Charset', CHARSET);
 /**
 * End session
 */
-if (empty($_SESSION['email']) || empty($_SESSION['pass']))
-{
-    $smarty -> assign ('Error', E_SESSIONS);
-    $smarty -> display ('error.tpl');
+if (empty($_SESSION['email'])) {
+    $smarty -> assign('Error', E_SESSIONS);
+    $smarty -> display('error.tpl');
     exit;
 }
 $time = date("H:i:s");
@@ -153,34 +149,40 @@ $newdate = $data.' '.$time;
 
 $player = new Player($_SESSION['email'], strip_tags($title));
 
-$arrURI = explode('.',basename($_SERVER['REQUEST_URI']));
-if (in_array($arrURI[0], array('alchemik', 'grid', 'jeweller', 'kowal', 'lumbermill')))
+$arrURI = explode('.', basename($_SERVER['REQUEST_URI']));
+if (in_array($arrURI[0], array('alchemik', 'grid', 'jeweller', 'kowal', 'lumbermill'))) {
     $player -> artisandata();
-if (in_array($arrURI[0], array('amarket', 'armor', 'bows', 'czary', 'equip', 'jeweller', 'klasa', 'kowal', 'lumbermill', 'portal', 'rasa', 'tribes', 'wieza', 'view')))
+}
+if (in_array($arrURI[0], array('amarket', 'armor', 'bows', 'czary', 'equip', 'jeweller', 'klasa', 'kowal', 'lumbermill', 'portal', 'rasa', 'tribes', 'wieza', 'view'))) {
     $player -> thiefdata();
-if ($arrURI[0] == 'deity' || $arrURI[0]== 'temple')
+}
+if ($arrURI[0] == 'deity' || $arrURI[0]== 'temple') {
     $player -> templedata();
-if (in_array($arrURI[0], array('admin', 'city', 'court', 'forums', 'library', 'news', 'newspaper', 'polls', 'updates', 'staff')))
+}
+if (in_array($arrURI[0], array('admin', 'city', 'court', 'forums', 'library', 'news', 'newspaper', 'polls', 'updates', 'staff'))) {
     $player -> languagedata();
-if (in_array($arrURI[0], array('bank', 'core', 'explore', 'farm', 'house', 'kopalnia', 'lumberjack','market', 'maze', 'mines', 'outposts', 'pmarket', 'travel', 'warehouse', 'zloto')))
+}
+if (in_array($arrURI[0], array('bank', 'core', 'explore', 'farm', 'house', 'kopalnia', 'lumberjack','market', 'maze', 'mines', 'outposts', 'pmarket', 'travel', 'warehouse', 'zloto'))) {
     $player -> raredata();
-if ($arrURI[0] == 'ap' || $arrURI[0] == 'stats')
+}
+if ($arrURI[0] == 'ap' || $arrURI[0] == 'stats') {
     $player -> statistics();
-if ($arrURI[0] == 'battle' || $arrURI[0] == 'train')
+}
+if ($arrURI[0] == 'battle' || $arrURI[0] == 'train') {
     $player -> battledata();
-if ($arrURI[0] == 'account')
+}
+if ($arrURI[0] == 'account') {
     $player -> accountdata();
+}
 
 // Check if game isn't closed for "reset" reasons - only near every odd hour (0,2,4,6,8 etc.).
 $intTime = time() % 7200;
-if ($intTime < 60 || $intTime > 7140)
-{
+if ($intTime < 60 || $intTime > 7140) {
     $arrOpen = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'open\'');
-    if ($arrOpen['value'] == 'N' && $player -> rank != 'Admin')
-    {
+    if ($arrOpen['value'] == 'N' && $player -> rank != 'Admin') {
         $arrReason = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'close_reason\'');
-        $smarty -> assign ('Error', REASON.'<br />'.$arrReason['value']);
-        $smarty -> display ('error.tpl');
+        $smarty -> assign('Error', REASON.'<br />'.$arrReason['value']);
+        $smarty -> display('error.tpl');
         exit;
     }
 }
@@ -191,8 +193,7 @@ if ($intTime < 60 || $intTime > 7140)
 function GetLocHref()
 {
     global $player;
-    switch ($player->location)
-    {
+    switch ($player->location) {
         case 'Altara':
         case 'Ardulith':
             return 'city.php';
@@ -226,18 +227,17 @@ function error($text, $ref = '', $href = '')
     global $phptime;
     global $gamename;
 
-    if (strpos($text, '<a href') === false)
-    {
-        if ($ref == '' || $ref == RET_SELF)
+    if (strpos($text, '<a href') === false) {
+        if ($ref == '' || $ref == RET_SELF) {
             $text .= ' (<a href="'.$_SERVER['PHP_SELF'].'">'.BACK.'</a>)';
-        elseif ($ref == RET_LOC)
+        } elseif ($ref == RET_LOC) {
             $text .= ' (<a href="'.GetLocHref().'">'.BACK.'</a>)';
-            else //$ref == RET_ARG
+        } else { //$ref == RET_ARG
             $text .= ' (<a href="'.$href.'">'.BACK.'</a>)';
+        }
     }
     $smarty -> assign('Message', $text);
-    $smarty -> display ('error1.tpl');
+    $smarty -> display('error1.tpl');
     require_once('includes/minifoot.php');
     exit;
 }
-?>

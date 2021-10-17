@@ -70,7 +70,7 @@ $czaro -> Close();
 
 if (isset($_GET['deakt'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['deakt'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['deakt'])) 
     {
         error (ERROR);
     }
@@ -150,7 +150,7 @@ $czaryu -> Close();
 */
 if (isset($_GET['cast'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['cast'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['cast'])) 
     {
         error (ERROR);
     }
@@ -192,7 +192,7 @@ if (isset($_GET['cast']))
     $arritem -> Close();
     if (isset($_GET['step']) && $_GET['step'] == 'items') 
     {
-        if (!isset($_POST['item']) || !ereg("^[1-9][0-9]*$", $_POST['item'])) 
+        if (!isset($_POST['item']) || !preg_match("/^[1-9][0-9]*$/", $_POST['item'])) 
         {
             error (ERROR);
         }
@@ -441,7 +441,7 @@ if ($arrspell -> fields['nazwa'] == E_SPELL1) // increase item's durability
 */
 if (isset($_GET['naucz'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['naucz'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['naucz'])) 
     {
         error (ERROR);
     }

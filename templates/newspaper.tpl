@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Step == "" && $Read == "" && $Comments == "" && $Step3 == ""}
     {$Paperinfo} {$Gamename} {$Paperinfo2}<br />
     {$Paperinfo3}<br /><br /><br />

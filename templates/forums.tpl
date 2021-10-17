@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == "categories"}
 {if isset($Sweep) && $Sweep > 0}
         {$Fquestion}<br />

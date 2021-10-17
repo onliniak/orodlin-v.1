@@ -72,7 +72,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'bugreport')
 		$oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
 		$arrBugs = $db -> GetAll('SELECT `id`, `sender`, `title`, `type`, `location`, `programmer_id` FROM `bugreport` WHERE `resolution`=0 ORDER BY `id`');
 		$db -> SetFetchMode($oldFetchMode);
-        $smarty -> assign_by_ref('Bugs', $arrBugs);
+        $smarty -> assignByRef('Bugs', $arrBugs);
     }
     /**
      * Edit bug
@@ -96,13 +96,13 @@ if (isset($_GET['view']) && $_GET['view'] == 'bugreport')
 		$db -> SetFetchMode($oldFetchMode);
 		if (!empty($arrProgrammerName))
 		{
-			$smarty -> assign_by_ref('Programmer', $arrProgrammerName[0]);
+			$smarty -> assignByRef('Programmer', $arrProgrammerName[0]);
 		}
 		$strType = $arrBug[3] == 'text' ? BUG_TEXT : BUG_CODE;
-		$smarty -> assign_by_ref('Options', $arrOptions);
-        $smarty -> assign_by_ref('Actions', $arrActions);
-		$smarty -> assign_by_ref('Bug', $arrBug);
-		$smarty -> assign_by_ref('BugType', $strType);
+		$smarty -> assignByRef('Options', $arrOptions);
+        $smarty -> assignByRef('Actions', $arrActions);
+		$smarty -> assignByRef('Bug', $arrBug);
+		$smarty -> assignByRef('BugType', $strType);
 		$smarty -> assign('BugMessage', '');
 		if (isset($_POST['programmer']) && $_POST['programmer'] == 1)
 		{
@@ -309,9 +309,9 @@ if (isset($_GET['view']) && $_GET['view'] == 'forums')
     $i = 0;
     while ($file = readdir($dir))
     {
-        if (!ereg(".htm*$", $file))
+        if (!preg_match("/.htm*$/", $file))
         {
-            if (!ereg("\.$", $file))
+            if (!preg_match("/\.$/", $file))
             {
                 $arrLanguage[$i] = $file;
                 $i = $i + 1;
@@ -523,7 +523,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'monster2')
     }
     if (isset($_GET['step']) && $_GET['step'] == 'next')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['mid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['mid']))
         {
             error(ERROR);
         }
@@ -581,7 +581,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'jailbreak')
     }
     if (isset($_GET['step']) && $_GET['step'] == 'next')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['jid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['jid']))
         {
             error(ERROR);
         }
@@ -619,7 +619,7 @@ if (isset($_GET['view']) && $_GET['view'] == 'poll')
         {
             error(EMPTY_FIELDS);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount']) || !ereg("^[1-9][0-9]*$", $_POST['days']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_POST['days']))
         {
             error(ERROR);
         }

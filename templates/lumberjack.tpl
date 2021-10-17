@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $smarty.get.action == ""}
     {if $Health > "0"}
         <form method="post" action="lumberjack.php?action=chop">

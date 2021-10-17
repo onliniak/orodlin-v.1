@@ -39,7 +39,7 @@ $smarty -> assign(array("Takeid" => TAKE_ID,
 if (isset ($_GET['step']) && $_GET['step'] == 'takenaway') 
 {
     $_POST['verdict'] = strip_tags($_POST['verdict']);
-    if (!ereg("^[1-9][0-9]*$", $_POST['taken']) || empty($_POST['verdict']) || !ereg("^[1-9][0-9]*$", $_POST['id']) || !ereg("^[1-9][0-9]*$", $_POST['id2'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_POST['taken']) || empty($_POST['verdict']) || !preg_match("/^[1-9][0-9]*$/", $_POST['id']) || !preg_match("/^[1-9][0-9]*$/", $_POST['id2'])) 
     {
         error (ERROR);
     }

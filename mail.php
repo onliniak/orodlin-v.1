@@ -60,10 +60,10 @@ if (!isset($_GET['view']) && !isset($_GET['read']) && !isset($_GET['zapisz']) &&
     $mail -> Close();
     require_once('includes/bbcode.php');
     $arrsubject = censorship($arrsubject);
-    $smarty -> assign_by_ref ('Sender', $arrsender);
-    $smarty -> assign_by_ref ('Senderid', $arrsenderid);
-    $smarty -> assign_by_ref ('Subject', $arrsubject);
-    $smarty -> assign_by_ref ('Mailid', $arrid);
+    $smarty -> assignByRef ('Sender', $arrsender);
+    $smarty -> assignByRef ('Senderid', $arrsenderid);
+    $smarty -> assignByRef ('Subject', $arrsubject);
+    $smarty -> assignByRef ('Mailid', $arrid);
 }
 
 /**
@@ -91,11 +91,11 @@ if (isset ($_GET['view']) && $_GET['view'] == 'inbox')
     $mail -> Close();
     require_once('includes/bbcode.php');
     $arrsubject = censorship($arrsubject);
-    $smarty -> assign_by_ref ('Sender', $arrsender);
-    $smarty -> assign_by_ref ('Senderid', $arrsenderid);
-    $smarty -> assign_by_ref ('Subject', $arrsubject);
-    $smarty -> assign_by_ref ('Mailid', $arrid);
-    $smarty -> assign_by_ref ('Mread', $arrRead);
+    $smarty -> assignByRef ('Sender', $arrsender);
+    $smarty -> assignByRef ('Senderid', $arrsenderid);
+    $smarty -> assignByRef ('Subject', $arrsubject);
+    $smarty -> assignByRef ('Mailid', $arrid);
+    $smarty -> assignByRef ('Mread', $arrRead);
     if (isset ($_GET['step']) && $_GET['step'] == 'clear')
     {
         $db -> Execute('DELETE FROM `mail` WHERE `owner`='.$player -> id.' AND `zapis`=\'N\' AND `send`=0');
@@ -121,10 +121,10 @@ if (isset ($_GET['view']) && $_GET['view'] == 'zapis')
         $i++;
     }
     $mail -> Close();
-    $smarty -> assign_by_ref ('Sender', $arrsender);
-    $smarty -> assign_by_ref ('Senderid', $arrsenderid);
-    $smarty -> assign_by_ref ('Subject', $arrsubject);
-    $smarty -> assign_by_ref ('Mailid', $arrid);
+    $smarty -> assignByRef ('Sender', $arrsender);
+    $smarty -> assignByRef ('Senderid', $arrsenderid);
+    $smarty -> assignByRef ('Subject', $arrsubject);
+    $smarty -> assignByRef ('Mailid', $arrid);
     if (isset ($_GET['step']) && $_GET['step'] == 'clear')
     {
         $db -> Execute('DELETE FROM `mail` WHERE `owner`='.$player -> id.' AND zapis=\'Y\'');
@@ -148,9 +148,9 @@ if (isset ($_GET['view']) && $_GET['view'] == 'send')
         $i++;
     }
     $mail -> Close();
-    $smarty -> assign_by_ref ('Send1', $arrsend);
-    $smarty -> assign_by_ref ('Subject', $arrsubject);
-    $smarty -> assign_by_ref ('Mailid', $arrid);
+    $smarty -> assignByRef ('Send1', $arrsend);
+    $smarty -> assignByRef ('Subject', $arrsubject);
+    $smarty -> assignByRef ('Mailid', $arrid);
     if (isset ($_GET['step']) && $_GET['step'] == 'clear')
     {
         $db -> Execute('DELETE FROM `mail` WHERE `send`!=0 AND `owner`='.$player -> id);
@@ -180,7 +180,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'write')
     $body = '';
     if (!empty ($_GET['id']))
     {
-        if (!ereg("^[1-9][0-9]*$", $_GET['id']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['id']))
         {
             error (ERROR);
         }
@@ -194,9 +194,9 @@ if (isset ($_GET['view']) && $_GET['view'] == 'write')
         $body = PLAYER.' '.$mail -> fields['sender'].' '.WROTE.' [quote]'.$postbody.'[/quote]';
         $mail -> Close();
     }
-    $smarty -> assign_by_ref ('To', $_GET['to']);
-    $smarty -> assign_by_ref ('Reply', $_GET['re']);
-    $smarty -> assign_by_ref ('Body', $body);
+    $smarty -> assignByRef ('To', $_GET['to']);
+    $smarty -> assignByRef ('Reply', $_GET['re']);
+    $smarty -> assignByRef ('Body', $body);
     if (isset ($_GET['step']) && $_GET['step'] == 'send')
     {
         if (empty ($_POST['to']) || empty ($_POST['body']))
@@ -207,7 +207,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'write')
         {
             $_POST['subject'] = 'Brak';
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['to']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['to']))
         {
             error (ERROR.'1');
         }
@@ -243,7 +243,7 @@ if (isset ($_GET['view']) && $_GET['view'] == 'write')
 
 if (isset ($_GET['read']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['read']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['read']))
     {
         error (ERROR);
     }
@@ -270,19 +270,19 @@ if (isset ($_GET['read']))
     }
     $db -> Execute('UPDATE `mail` SET `unread`=\'T\' WHERE id='.$mail -> fields['id']);
     $strDay = ($mail -> fields['date']) ? T_DAY.$mail -> fields['date'] : '';
-    $smarty -> assign_by_ref ('Sender', $mail -> fields['sender']);
-    $smarty -> assign_by_ref ('Body', $mail -> fields['body']);
-    $smarty -> assign_by_ref ('Mailid', $mail -> fields['id']);
-    $smarty -> assign_by_ref ('Senderid', $mail -> fields['senderid']);
-    $smarty -> assign_by_ref ('Subject', $mail -> fields['subject']);
-    $smarty -> assign_by_ref ('AddReplyPrefix', $addreprefix);
-    $smarty -> assign_by_ref ('Tday', $strDay);
+    $smarty -> assignByRef ('Sender', $mail -> fields['sender']);
+    $smarty -> assignByRef ('Body', $mail -> fields['body']);
+    $smarty -> assignByRef ('Mailid', $mail -> fields['id']);
+    $smarty -> assignByRef ('Senderid', $mail -> fields['senderid']);
+    $smarty -> assignByRef ('Subject', $mail -> fields['subject']);
+    $smarty -> assignByRef ('AddReplyPrefix', $addreprefix);
+    $smarty -> assignByRef ('Tday', $strDay);
     $mail -> Close();
 }
 
 if (isset ($_GET['zapisz']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['zapisz']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['zapisz']))
     {
         error (ERROR);
     }
@@ -301,7 +301,7 @@ if (isset ($_GET['zapisz']))
 
 if (isset ($_GET['kasuj']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['kasuj']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['kasuj']))
     {
         error (ERROR);
     }
@@ -335,16 +335,16 @@ if (isset ($_GET['send']))
         $i++;
     }
     $sid -> Close();
-    $smarty -> assign_by_ref ('Send', $_GET['send']);
-    $smarty -> assign_by_ref ('Staffid', $arrid);
-    $smarty -> assign_by_ref ('Name', $arrname);
+    $smarty -> assignByRef ('Send', $_GET['send']);
+    $smarty -> assignByRef ('Staffid', $arrid);
+    $smarty -> assignByRef ('Name', $arrname);
     if (isset ($_GET['step']) && $_GET['step'] == 'send')
     {
-        if (!ereg("^[1-9][0-9]*$", $_POST['staff']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['staff']))
         {
             error (ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['mid']))
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['mid']))
         {
             error (ERROR);
         }
@@ -511,7 +511,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'deleteold')
  */
 if (isset($_GET['block']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['block']))
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['block']))
     {
         error(ERROR);
     }
@@ -553,8 +553,8 @@ if (isset($_GET['view']) && $_GET['view'] == 'blocks')
         $i ++;
     }
     $objBlocked -> Close();
-    $smarty -> assign_by_ref('Blockid', $arrId);
-    $smarty -> assign_by_ref('Blockname', $arrName);
+    $smarty -> assignByRef('Blockid', $arrId);
+    $smarty -> assignByRef('Blockname', $arrName);
     if (isset($_GET['step']) && $_GET['step'] == 'unblock')
     {
         foreach ($arrId as $bid)

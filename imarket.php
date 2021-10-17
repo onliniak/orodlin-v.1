@@ -383,7 +383,7 @@ if (isset($_GET['buy']))
         {
             error(ERROR);
         }
-        if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error (ERROR);
         }
@@ -435,7 +435,7 @@ if (isset($_GET['buy']))
 */
 if (isset($_GET['view']) && $_GET['view'] == 'all') 
 {
-    if (!ereg("^[0-9]*$", $_GET['limit'])) 
+    if (!preg_match("/^[0-9]*$/", $_GET['limit'])) 
     {
         error(ERROR);
     }

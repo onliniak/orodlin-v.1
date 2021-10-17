@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == ""}
     <p>{$Awelcome}</p>
 {* Display main menu.*}
@@ -84,7 +85,7 @@
         <b>{$smarty.const.BUG_TYPE}:</b> {$BugType}<br />
         <b>{$smarty.const.BUG_LOC}:</b> {$Bug[4]}<br />
         <b>{$smarty.const.BUG_DESC}:</b> {$Bug[5]}<br />
-        <form method="post" action="admin.php?view=bugreport&amp;step={$smarty.get.step}"  onsubmit="if (this.bugcomment.value=='') {literal}{{/literal} return confirm('{$smarty.const.EMPTY_COMMENT}') } else {literal}{{/literal} return true; }">
+        <form method="post" action="admin.php?view=bugreport&amp;step={$smarty.get.step}"  onsubmit="if (this.bugcomment.value=='') { return confirm('{$smarty.const.EMPTY_COMMENT}') } else { return true; }">
             <b>{$smarty.const.BUG_ACTIONS}:</b> <select name="actions">
                 {section name=k loop=$Options}
                     <option value="{$Actions[k]}">{$Options[k]}</option>

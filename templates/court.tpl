@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Step2 == "" && $Modify == ""}
     {$Cinfo}<br /><br />
     <table width="100%">

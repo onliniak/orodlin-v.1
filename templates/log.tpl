@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <p>{$Loginfo}</p>
 
 {if $Send != ""}

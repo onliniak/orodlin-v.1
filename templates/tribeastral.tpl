@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {include file="tribemenu.tpl"}
 
 {if $Action == ""}

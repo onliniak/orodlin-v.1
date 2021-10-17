@@ -2,7 +2,7 @@
 /**
  *   File functions:
  *
- *   @name                 : showerr.php                            
+ *   @name                 : showerr.php
  *   @copyright            : (C) 2008-2009 Orodlin Team
  *   @author               : Jakub Stasiak <kuba.stasiak at gmail.com>
  *   @version              : 1.0
@@ -25,34 +25,32 @@
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-require 'libs/Smarty.class.php';
-require_once ('includes/config.php');
+#require 'libs/Smarty.class.php';
+require_once('includes/config.php');
 
 
 $smarty = new Smarty;
 $smarty -> compile_check = true;
 
 $strPage = "showerr.php";
-include ('includes/getlang.php');
-GetLang ();
+include('includes/getlang.php');
+GetLang();
 //GetLoc ('mainpage');
-GetLoc ('showerr');
+GetLoc('showerr');
 
 switch ($_GET['code']) {
-	case '404':
-		$msg = MSG_404;
-		break;
-	case '403':
-		$msg = MSG_403;
-		break;
-	case 'unknown':
-	default:
-		$msg = UNKNOWN;
-		break;
+    case '404':
+        $msg = MSG_404;
+        break;
+    case '403':
+        $msg = MSG_403;
+        break;
+    case 'unknown':
+    default:
+        $msg = UNKNOWN;
+        break;
 }
 
 $msg .= ' <a href="./">'.BACK.'</a>';
-$smarty->assign ('Error', $msg);
+$smarty->assign('Error', $msg);
 $smarty -> display('error.tpl');
-
-?>

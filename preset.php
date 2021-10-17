@@ -3,7 +3,7 @@
  *   File functions:
  *   Reset account by player
  *
- *   @name                 : preset.php                            
+ *   @name                 : preset.php
  *   @copyright            : (C) 2004,2005,2006 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.2
@@ -29,8 +29,8 @@
 //
 // $Id: preset.php 566 2006-09-13 09:31:08Z thindil $
 
-require 'libs/Smarty.class.php';
-require_once ('includes/config.php');
+#require 'libs/Smarty.class.php';
+require_once('includes/config.php');
 
 $smarty = new Smarty;
 
@@ -38,17 +38,14 @@ $smarty -> compile_check = true;
 
 /**
 * Check avaible languages
-*/    
+*/
 $path = 'languages/';
 $dir = opendir($path);
 $arrLanguage = array();
 $i = 0;
-while ($file = readdir($dir))
-{
-    if (!ereg(".htm*$", $file))
-    {
-        if (!ereg("\.$", $file))
-        {
+while ($file = readdir($dir)) {
+    if (!preg_match("/.htm*$/", $file)) {
+        if (!preg_match("/\.$/", $file)) {
             $arrLanguage[$i] = $file;
             $i = $i + 1;
         }
@@ -60,48 +57,38 @@ closedir($dir);
 * Get the localization for game
 */
 $strLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-foreach ($arrLanguage as $strTrans)
-{
-    $strSearch = "^".$strTrans;
-    if (eregi($strSearch, $strLanguage))
-    {
+foreach ($arrLanguage as $strTrans) {
+    #$strSearch = "^".$strTrans;
+    if (strpos($strTrans, $strLanguage)) {
         $strTranslation = $strTrans;
         break;
     }
 }
-if (!isset($strTranslation))
-{
+if (!isset($strTranslation)) {
     $strTranslation = 'pl';
 }
 require_once("languages/".$strTranslation."/preset.php");
 
-if (isset ($_GET['id'])) 
-{
-    if (!ereg("^[1-9][0-9]*$", $_GET['id'])) 
-    {
-        $smarty -> assign ("Error", ERROR);
-        $smarty -> display ('error.tpl');
+if (isset($_GET['id'])) {
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['id'])) {
+        $smarty -> assign("Error", ERROR);
+        $smarty -> display('error.tpl');
         exit;
     }
-    if (!isset ($_GET['code'])) 
-    {
+    if (!isset($_GET['code'])) {
         $db -> Execute("DELETE FROM reset WHERE player=".$_GET['id']);
-        $smarty -> assign ("Error", R_CANCEL);
-        $smarty -> display ('error.tpl');
-    } 
-        else 
-    {
-        if (!ereg("^[1-9][0-9]*$", $_GET['code'])) 
-        {
-            $smarty -> assign ("Error", ERROR);
-            $smarty -> display ('error.tpl');
+        $smarty -> assign("Error", R_CANCEL);
+        $smarty -> display('error.tpl');
+    } else {
+        if (!preg_match("/^[1-9][0-9]*$/", $_GET['code'])) {
+            $smarty -> assign("Error", ERROR);
+            $smarty -> display('error.tpl');
             exit;
         }
         $reset = $db -> Execute("SELECT `id` FROM `reset` WHERE `player`=".$_GET['id']." AND `code`=".$_GET['code']);
-        if (!$reset -> fields['id']) 
-        {
-            $smarty -> assign ("Error", NO_RESET);
-            $smarty -> display ('error.tpl');
+        if (!$reset -> fields['id']) {
+            $smarty -> assign("Error", NO_RESET);
+            $smarty -> display('error.tpl');
             exit;
         }
         $reset -> Close();
@@ -125,12 +112,9 @@ if (isset ($_GET['id']))
         $db -> Execute("DELETE FROM `farms` WHERE `owner`=".$_GET['id']);
         $db -> Execute("DELETE FROM `farm` WHERE `owner`=".$_GET['id']);
         $objHouse = $db -> Execute("SELECT `locator` FROM `houses` WHERE `owner`=".$_GET['id']);
-        if ($objHouse -> fields['locator'])
-        {
+        if ($objHouse -> fields['locator']) {
             $db -> Execute("UPDATE `houses` SET `owner`=".$objHouse -> fields['locator'].", `locator`=0 WHERE `owner`=".$_GET['id']) or $db -> ErrorMsg();
-        }
-            else
-        {
+        } else {
             $db -> Execute("DELETE FROM `houses` WHERE `owner`=".$_GET['id']);
         }
         $objHouse -> Close();
@@ -148,9 +132,7 @@ if (isset ($_GET['id']))
         $db -> Execute("DELETE FROM `fight_logs` WHERE `owner`=".$_GET['id']);
         $db -> Execute("DELETE FROM `vault` WHERE `owner`=".$_GET['id']);
         $db -> Execute("DELETE FROM `jail` WHERE `prisoner`=".$_GET['id']);
-        $smarty -> assign ("Error", R_MAKED);
-        $smarty -> display ('error.tpl');
+        $smarty -> assign("Error", R_MAKED);
+        $smarty -> display('error.tpl');
     }
 }
-
-?>

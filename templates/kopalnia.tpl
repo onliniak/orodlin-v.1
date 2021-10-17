@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $smarty.get.action == "dig"}
     {$Youfind}<br /><br />
 {/if}

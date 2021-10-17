@@ -3,7 +3,7 @@
  *   File functions:
  *   Polish language for site footer
  *
- *   @name                 : foot.php                            
+ *   @name                 : foot.php
  *   @copyright            : (C) 2004-2005 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.0 rc1
@@ -27,7 +27,7 @@
 //   along with this program; if not, write to the Free Software
 //   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// 
+//
 
 define('LAWYER', 'Prawnik');
 define('JOKER', 'Błazen');
@@ -40,6 +40,7 @@ define('LOADING_TIME', 'Czas ładowania strony');
 define('GZIP_COMP', 'Kompresja GZIP');
 define('PM_TIME', 'Czas');
 define('QUERIES', 'Liczba zapytań');
+define('CPU', 'Obciążenie procesora');
 define('SOURCE', 'Źródło strony');
 define('RECORD', 'Rekord');
 define('LAST_REGISTERED_PRE', 'Ostatnio zarejestrował(a) się:');
@@ -64,4 +65,3 @@ define('OVERLIB_STATUS_A', 'Żywy');
 
 define('NEWMAIL', 'nowych wiadomości w skrzynce.');
 define('NEWLOG', 'nowych wpisów w dzienniku.');
-?>

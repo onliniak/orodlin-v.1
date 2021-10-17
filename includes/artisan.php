@@ -135,7 +135,7 @@ function buyplan ($strTable, $intId, $intPlayerId, $intPlayerCash, $strPlayerCla
     global $db;
     global $smarty;
 
-    if (!ereg("^[1-9][0-9]*$", $intId) || ($strTable != 'mill' && $strTable != 'smith' && $strTable != 'jeweller' && $strTable != 'alchemy_mill'))
+    if (!preg_match("/^[1-9][0-9]*$/", $intId) || ($strTable != 'mill' && $strTable != 'smith' && $strTable != 'jeweller' && $strTable != 'alchemy_mill'))
     {
         error (ERROR);
     }
@@ -203,7 +203,7 @@ function makeastral1($strSkill ='', $planId = 0)
                        array(10000, 5000, 600, 20000, 10000, 7000, 3000, 11000, 6000, 5000, 2500, 1500, 30000, 8000, 150));
     $arrNames = array(CONST1, CONST2, CONST3, CONST4, CONST5);
 
-    if(!ereg("^[1-5]*$", $planId))
+    if(!preg_match("/^[1-5]*$/", $planId))
     {
         astralshow('P', $player -> id, $arrResources, $arrAmount, $arrNames);
     }
@@ -229,7 +229,7 @@ function makeastral2($planId = 0)
                        array(9000, 4500, 6500, 2500, 125),
                        array(12000, 6000, 8000, 3000, 150));
     $arrNames = array(POTION1, POTION2, POTION3, POTION4, POTION5);
-    if(!ereg("^[1-5]*$", $planId))
+    if(!preg_match("/^[1-5]*$/", $planId))
     {
         astralshow('R', $player -> id, $arrHerbs, $arrAmount, $arrNames);
     }
@@ -256,7 +256,7 @@ function makeastral3($planId = 0)
                        array(20000, 10000, 2000, 15000, 10000, 7500, 4000, 2000, 30000, 8000, 150));
     $arrNames = array(JEWELLERY1, JEWELLERY2, JEWELLERY3, JEWELLERY4, JEWELLERY5);
 
-    if(!ereg("^[1-5]*$", $planId))
+    if(!preg_match("/^[1-5]*$/", $planId))
     {
         astralshow('Y', $player -> id, $arrResources, $arrAmount, $arrNames);
     }

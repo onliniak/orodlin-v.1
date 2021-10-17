@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {include file="tribemenu.tpl"}
 
 {if $Step == "" && $Step2 == "" && $Give == "" && $Step3 == ""}

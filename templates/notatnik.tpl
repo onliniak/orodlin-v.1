@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Action == ""}
     {$Notesinfo}<br /><br />
     {section name=notes loop=$Noteid}

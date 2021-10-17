@@ -82,9 +82,9 @@ if (!isset($_GET['step']))
     }
     $intTextIn = $arrTales[0] + $arrPoetry[0];
     $smarty -> assign('TextNot', $arrTextNot[0].' '.polishgrammar($arrTextNot[0]));
-    $smarty -> assign_by_ref ('TextIn', $intTextIn);
-    $smarty -> assign_by_ref ('AmountTales', $arrTales[0]);
-    $smarty -> assign_by_ref ('AmountPoetry', $arrPoetry[0]);
+    $smarty -> assignByRef ('TextIn', $intTextIn);
+    $smarty -> assignByRef ('AmountTales', $arrTales[0]);
+    $smarty -> assignByRef ('AmountPoetry', $arrPoetry[0]);
     $smarty -> assign('Welcome3', polishgrammar($intTextIn).', '.WELCOME3.' '.$strWait);
     $smarty -> assign('Tales_Text', polishgrammar($arrTales[0]));
     $smarty -> assign('Poetry_Text', polishgrammar($arrPoetry[0]));
@@ -107,7 +107,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'add')
     }
     closedir($dir);
     $arrType = array(T_TYPE1, T_TYPE2);
-    $smarty -> assign_by_ref ('Llang', $arrLanguage);
+    $smarty -> assignByRef ('Llang', $arrLanguage);
 
     if (isset($_GET['step2']))
     {
@@ -143,7 +143,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'addtext')
     $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
     $arrText = $db -> GetAll('SELECT `id`, `title`, `author`, `author_id` FROM `library` WHERE added=\'N\' AND '.$strQuery);
     $db -> SetFetchMode($oldFetchMode);
-    $smarty -> assign_by_ref ('TextList', $arrText);
+    $smarty -> assignByRef ('TextList', $arrText);
     unset($arrText);
     /**
     * Modify text
@@ -159,7 +159,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'addtext')
         $db -> SetFetchMode($oldFetchMode);
         require_once('includes/bbcode.php');
         $arrText[2] = htmltobbcode($arrText[2]);
-        $smarty -> assign_by_ref ('TextToModify', $arrText);
+        $smarty -> assignByRef ('TextToModify', $arrText);
         if (isset($_POST['tid']))
         {
             if (!preg_match("/^[1-9][0-9]*$/", $_POST['tid']))
@@ -223,8 +223,8 @@ if (isset($_GET['step']) && ($_GET['step'] == 'tales' || $_GET['step'] == 'poetr
     $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
     $arrAmount = $db -> GetRow('SELECT count(id) FROM `library` WHERE `type`=\''.$strType.'\' AND `added`=\'Y\' AND '.$strQuery);
     $db -> SetFetchMode($oldFetchMode);
-    $smarty -> assign_by_ref ('TextAmount', $arrAmount[0]);
-    $smarty -> assign_by_ref ('TextType', $strInfo);
+    $smarty -> assignByRef ('TextAmount', $arrAmount[0]);
+    $smarty -> assignByRef ('TextType', $strInfo);
     unset($arrAmount);
     /**
     * Display sorted texts
@@ -244,8 +244,8 @@ if (isset($_GET['step']) && ($_GET['step'] == 'tales' || $_GET['step'] == 'poetr
             $arrComments[] = $arrCommentAmount[0];
         }
         $db -> SetFetchMode($oldFetchMode);
-        $smarty -> assign_by_ref ('TextList', $arrList);
-        $smarty -> assign_by_ref ('Comments', $arrComments);
+        $smarty -> assignByRef ('TextList', $arrList);
+        $smarty -> assignByRef ('Comments', $arrComments);
         unset($arrList, $arrComments);
     }
     /**
@@ -256,7 +256,7 @@ if (isset($_GET['step']) && ($_GET['step'] == 'tales' || $_GET['step'] == 'poetr
         $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);
         $arrAuthor = $db -> GetAll('SELECT DISTINCT `author`, `author_id`, count(id) FROM `library` WHERE `added`=\'Y\' AND `type`=\''.$strType.'\' AND '.$strQuery.' GROUP BY `author_id`') or error($db -> ErrorMsg());
         $db -> SetFetchMode($oldFetchMode);
-        $smarty -> assign_by_ref ('Tauthor', $arrAuthor);
+        $smarty -> assignByRef ('Tauthor', $arrAuthor);
         unset($arrAuthor);
     }
     /**
@@ -279,9 +279,9 @@ if (isset($_GET['step']) && ($_GET['step'] == 'tales' || $_GET['step'] == 'poetr
             }
         }
         $db -> SetFetchMode($oldFetchMode);
-        $smarty -> assign_by_ref ('AuthorList', $arrAuthor);
-        $smarty -> assign_by_ref ('TextsList', $arrTexts);
-        $smarty -> assign_by_ref ('CommentsAmount', $arrComments);
+        $smarty -> assignByRef ('AuthorList', $arrAuthor);
+        $smarty -> assignByRef ('TextsList', $arrTexts);
+        $smarty -> assignByRef ('CommentsAmount', $arrComments);
         unset($arrAuthors, $arrTexts, $arrComments);
     }
     /**
@@ -300,7 +300,7 @@ if (isset($_GET['step']) && ($_GET['step'] == 'tales' || $_GET['step'] == 'poetr
         {
             error(NO_TEXT);
         }
-        $smarty -> assign_by_ref ('TextData', $arrText);
+        $smarty -> assignByRef ('TextData', $arrText);
         unset($arrText);
     }
 }
@@ -372,12 +372,12 @@ if (!isset($_POST['sort']))
 /**
 * Assign variables to template and display page
 */
-$smarty -> assign_by_ref ('Rank', $player -> rank);
-$smarty -> assign_by_ref ('Step', $_GET['step']);
-$smarty -> assign_by_ref ('Action', $_GET['action']);
-$smarty -> assign_by_ref ('Text', $_GET['text']);
-$smarty -> assign_by_ref ('Author', $_GET['author']);
-$smarty -> assign_by_ref ('Sort', $_POST['sort']);
+$smarty -> assignByRef ('Rank', $player -> rank);
+$smarty -> assignByRef ('Step', $_GET['step']);
+$smarty -> assignByRef ('Action', $_GET['action']);
+$smarty -> assignByRef ('Text', $_GET['text']);
+$smarty -> assignByRef ('Author', $_GET['author']);
+$smarty -> assignByRef ('Sort', $_POST['sort']);
 $smarty -> display ('library.tpl');
 
 require_once('includes/foot.php');

@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Akcja == ""}
         <br /><br />
         {$Description}

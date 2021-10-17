@@ -3,7 +3,7 @@
  *   File functions:
  *   Logout from game
  *
- *   @name                 : logout.php                            
+ *   @name                 : logout.php
  *   @copyright            : (C) 2004,2005,2006 Vallheru Team based on Gamers-Fusion ver 2.5
  *   @author               : thindil <thindil@users.sourceforge.net>
  *   @version              : 1.2
@@ -29,9 +29,9 @@
 //
 // $Id: logout.php 546 2006-07-29 10:42:45Z thindil $
 
-require_once('includes/sessions.php'); 
-require_once('libs/Smarty.class.php');
-require_once ('includes/config.php');
+require_once('includes/sessions.php');
+require_once('vendor/smarty/smarty/libs/Smarty.class.php');
+require_once('includes/config.php');
 
 $smarty = new Smarty;
 
@@ -39,17 +39,14 @@ $smarty -> compile_check = true;
 
 /**
 * Check avaible languages
-*/    
+*/
 $path = 'languages/';
 $dir = opendir($path);
 $arrLanguage = array();
 $i = 0;
-while ($file = readdir($dir))
-{
-    if (!ereg(".htm*$", $file))
-    {
-        if (!ereg("\.$", $file))
-        {
+while ($file = readdir($dir)) {
+    if (!preg_match("/.htm*$/", $file)) {
+        if (!preg_match("/\.$/", $file)) {
             $arrLanguage[$i] = $file;
             $i = $i + 1;
         }
@@ -61,50 +58,43 @@ closedir($dir);
 * Get the localization for game
 */
 $strLanguage = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-foreach ($arrLanguage as $strTrans)
-{
+foreach ($arrLanguage as $strTrans) {
     $strSearch = "^".$strTrans;
-    if (eregi($strSearch, $strLanguage))
-    {
+    if (preg_match($strSearch, $strLanguage)) {
         $strTranslation = $strTrans;
         break;
     }
 }
-if (!isset($strTranslation))
-{
+if (!isset($strTranslation)) {
     $strTranslation = 'pl';
 }
 require_once("languages/".$strTranslation."/logout.php");
 
-if (!ereg("^[1-9][0-9]*$", $_GET['did'])) 
-{
-    $smarty -> assign ("Error", ERROR);
-    $smarty -> display ('error.tpl');
+if (!preg_match("/^[1-9][0-9]*$/", $_GET['did'])) {
+    $smarty -> assign("Error", ERROR);
+    $smarty -> display('error.tpl');
     exit;
 }
 
 $pass = MD5($_SESSION['pass']);
 $stat = $db -> Execute("SELECT id FROM players WHERE email='".$_SESSION['email']."'");
-if ($stat -> fields['id'] != $_GET['did']) 
-{
-    $smarty -> assign ("Error", ERROR);
-    $smarty -> display ('error.tpl');
+if ($stat -> fields['id'] != $_GET['did']) {
+    $smarty -> assign("Error", ERROR);
+    $smarty -> display('error.tpl');
     exit;
 }
 
 $stat -> Close();
-if (isset($_GET['rest']) && $_GET['rest'] == 'Y') 
-{
+if (isset($_GET['rest']) && $_GET['rest'] == 'Y') {
     $test = $db -> Execute("SELECT id FROM houses WHERE owner=".$_GET['did']);
     $test1 = $db -> Execute("SELECT id FROM houses WHERE locator=".$_GET['did']);
-    if (!$test -> fields['id'] && !$test1 -> fields['id']) 
-    {
-        $smarty -> assign ("Error", NOT_SLEEP);
-        $smarty -> display ('error.tpl');
+    if (!$test -> fields['id'] && !$test1 -> fields['id']) {
+        $smarty -> assign("Error", NOT_SLEEP);
+        $smarty -> display('error.tpl');
         exit;
     }
     $test -> Close();
-    $test1 -> Close();    
+    $test1 -> Close();
     $db -> Execute("UPDATE players SET rest='Y' WHERE id=".$_GET['did']);
 }
 $db -> Execute("UPDATE players SET lpv=lpv-180 WHERE id=".$_GET['did']);
@@ -114,6 +104,4 @@ $smarty -> assign(array("Gamename" => $gamename,
     "Youare" => YOU_ARE,
     "Ahere" => A_HERE,
     "Charset" => CHARSET));
-$smarty -> display ('logout.tpl');
-
-?>
+$smarty -> display('logout.tpl');

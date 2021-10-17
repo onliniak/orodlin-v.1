@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $Step == ""}
     <p>{$smarty.const.WELCOME}</p>
     <p>{$smarty.const.WELCOME1}</p>

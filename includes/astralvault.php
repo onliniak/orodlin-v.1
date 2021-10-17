@@ -310,7 +310,7 @@ function mergeplans($strLocation, $intOwner)
     {
         error(ERROR);
     }
-    if (!ereg("^[0-9]*$", $_GET['number']))
+    if (!preg_match("/^[0-9]*$/", $_GET['number']))
     {
         error (ERROR);
     }

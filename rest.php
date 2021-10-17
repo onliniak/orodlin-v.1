@@ -98,7 +98,7 @@ if (isset($_GET['akcja']) && $_GET['akcja'] == 'all')
     {
         error(HOW_MANY);
     }
-    if (!ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
     {
         error (ERROR);
     }

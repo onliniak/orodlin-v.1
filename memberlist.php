@@ -118,8 +118,8 @@ if (!empty($arrData))
     for ($i = 0, $max = count($arrData);$i < $max; ++$i)
         $arrData[$i][2] = selectrank($arrData[$i][2], $arrData[$i][5]);
 
-    $smarty -> assign_by_ref('Data', $arrData);
-    $smarty -> assign_by_ref('Pagelinks', $arrLinks);
+    $smarty -> assignByRef('Data', $arrData);
+    $smarty -> assignByRef('Pagelinks', $arrLinks);
     $smarty -> assign(array('TopLink' => $strBaseTopLink,
                             'Current' => isset($_GET['start']) && $_GET['start'] % LIMIT == 0 ? $_GET['start'] / LIMIT + 1: 1));
 }

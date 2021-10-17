@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {if $View == "topics"}
     <form method="post" action="tforums.php?action=search">
         <input type="submit" value="{$Asearch}" /> {$Tword}: <input type="text" name="search" />

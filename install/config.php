@@ -1,22 +1,27 @@
 <?php
 require_once('adodb/adodb.inc.php');
-$db = NewADOConnection('mysqlt');
-//podajemy namiary na bazê danych: adres, user, haslo, nazwa
-$db -> Connect("adres_bazy", "user_gry", "haslo", "nazwa_bazy_danych");
+
+$driver = 'mysqli';
+$host = 'adres_bazy';
+$user = 'user_gry';
+$password = 'haslo';
+$database = 'nazwa_bazy_danych';
+$db = NewADOConnection($driver);
+//podajemy namiary na bazï¿½ danych: adres, user, haslo, nazwa
+$db -> Connect($host, $user, $password, $database);
 $db -> Execute("SET NAMES utf8");
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $ADODB_CACHE_DIR = 'cache';
 $gamename= "Nazwa_gry";
 $gamemail = "mejl_gry";
-//tutaj musimy konicznie podaæ adres pod którym dostêpna bêdzie gra
-//bez pocz¹tkowego http:// i koñcowego /
-//zazwyczaj bêdzie to "localhost" lub "localhost/orodlin"
-$gameadress = "sciezka do plikow";
+//tutaj musimy konicznie podaï¿½ adres pod ktï¿½rym dostï¿½pna bï¿½dzie gra
+//bez poczï¿½tkowego http:// i koï¿½cowego /
+//zazwyczaj bï¿½dzie to "localhost" lub "localhost/orodlin"
+$gameadress = "localhost/orodlin";
 $adminname = "";
 $adminmail = "";
-$city1 = "";
-$city1a = "";
-$city1b = "";
-$city2 = "";
+$city1 = "123";
+$city1a = "123";
+$city1b = "123";
+$city2 = "321";
 $pllimit = 50;
-?>

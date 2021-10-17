@@ -1,20 +1,20 @@
 -- phpMyAdmin SQL Dump
 -- version 2.9.0.2
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
 -- Czas wygenerowania: 21 Wrz 2007, 23:17
 -- Wersja serwera: 4.0.27
 -- Wersja PHP: 4.4.2
--- 
+--
 -- Baza danych: `dellas_orodlin`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `adodb_logsql`
--- 
+--
 
 CREATE TABLE `adodb_logsql` (
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -23,18 +23,18 @@ CREATE TABLE `adodb_logsql` (
   `params` text NOT NULL,
   `tracer` text NOT NULL,
   `timer` decimal(16,6) NOT NULL default '0.000000'
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `adodb_logsql`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `aktywacja`
--- 
+--
 
 CREATE TABLE `aktywacja` (
   `id` int(11) NOT NULL auto_increment,
@@ -47,14 +47,14 @@ CREATE TABLE `aktywacja` (
   `lang` char(3) NOT NULL default 'pl',
   PRIMARY KEY  (`id`),
   KEY `user` (`user`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=2000 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=2000 ;
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `alchemy_mill`
--- 
+--
 
 CREATE TABLE `alchemy_mill` (
   `id` int(11) NOT NULL auto_increment,
@@ -69,20 +69,20 @@ CREATE TABLE `alchemy_mill` (
   `dynallca` int(11) NOT NULL default '0',
   `lang` char(3) NOT NULL default 'pl',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=30 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=30 ;
 
--- 
+--
 -- Zrzut danych tabeli `alchemy_mill`
--- 
+--
 
 INSERT INTO `alchemy_mill` VALUES (1, 'mikstura illani', 0, 1, 0, 0, 2000, 1, 'S', 0, 'pl');
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `amarket`
--- 
+--
 
 CREATE TABLE `amarket` (
   `id` int(11) NOT NULL auto_increment,
@@ -96,18 +96,18 @@ CREATE TABLE `amarket` (
   KEY `cost` (`cost`),
   KEY `id` (`id`),
   KEY `seller` (`seller`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `amarket`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `astral`
--- 
+--
 
 CREATE TABLE `astral` (
   `owner` int(11) NOT NULL default '0',
@@ -119,17 +119,17 @@ CREATE TABLE `astral` (
   KEY `type` (`type`),
   KEY `location` (`location`),
   KEY `number` (`number`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `astral`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `astral_bank`
--- 
+--
 
 CREATE TABLE `astral_bank` (
   `owner` int(11) NOT NULL default '0',
@@ -137,17 +137,17 @@ CREATE TABLE `astral_bank` (
   `location` char(1) NOT NULL default 'V',
   KEY `owner` (`owner`),
   KEY `location` (`location`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `astral_bank`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `astral_machine`
--- 
+--
 
 CREATE TABLE `astral_machine` (
   `owner` int(11) NOT NULL default '0',
@@ -155,17 +155,17 @@ CREATE TABLE `astral_machine` (
   `directed` int(11) NOT NULL default '0',
   `aviable` char(1) NOT NULL default 'N',
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `astral_machine`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `astral_plans`
--- 
+--
 
 CREATE TABLE `astral_plans` (
   `owner` int(11) NOT NULL default '0',
@@ -174,65 +174,65 @@ CREATE TABLE `astral_plans` (
   `location` char(1) NOT NULL default 'V',
   KEY `owner` (`owner`),
   KEY `location` (`location`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `astral_plans`
--- 
+--
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `bad_words`
--- 
+--
 
 CREATE TABLE `bad_words` (
   `bword` varchar(255) NOT NULL default '',
   KEY `bword` (`bword`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `bad_words`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `ban`
--- 
+--
 
 CREATE TABLE `ban` (
   `type` varchar(10) NOT NULL default '',
   `amount` varchar(50) NOT NULL default '',
   KEY `type` (`type`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `ban`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `ban_mail`
--- 
+--
 
 CREATE TABLE `ban_mail` (
   `id` int(11) NOT NULL default '0',
   `owner` int(11) NOT NULL default '0',
   KEY `owner` (`owner`),
   KEY `id` (`id`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `ban_mail`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `bows`
--- 
+--
 
 CREATE TABLE `bows` (
   `id` int(11) NOT NULL auto_increment,
@@ -248,11 +248,11 @@ CREATE TABLE `bows` (
   `repair` int(11) NOT NULL default '10',
   KEY `type` (`type`),
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=31 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=31 ;
 
--- 
+--
 -- Zrzut danych tabeli `bows`
--- 
+--
 
 INSERT INTO `bows` VALUES (1, 'Łuk ćwiczebny z leszczyny', 0, 'B', 100, 1, 0, 1, 40, 'pl', 2);
 INSERT INTO `bows` VALUES (16, 'Strzały ćwiczebne', 1, 'R', 50, 1, 0, 0, 20, 'pl', 0);
@@ -260,9 +260,9 @@ INSERT INTO `bows` VALUES (16, 'Strzały ćwiczebne', 1, 'R', 50, 1, 0, 0, 20, '
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `bridge`
--- 
+--
 
 CREATE TABLE `bridge` (
   `id` int(11) NOT NULL auto_increment,
@@ -270,19 +270,19 @@ CREATE TABLE `bridge` (
   `answer` text NOT NULL,
   `lang` char(3) NOT NULL default 'pl',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=17 ;
+) Engine=MyISAM AUTO_INCREMENT=17 ;
 
--- 
+--
 -- Zrzut danych tabeli `bridge`
--- 
+--
 
 INSERT INTO `bridge` VALUES (1, 'Stolica Abanasyni', 'Łubu-dubu', 'pl');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `bugreport`
--- 
+--
 
 CREATE TABLE `bugreport` (
   `id` int(11) NOT NULL auto_increment,
@@ -293,17 +293,17 @@ CREATE TABLE `bugreport` (
   `desc` text NOT NULL,
   `resolution` tinyint(2) NOT NULL default '0',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `bugreport`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `bugtrack`
--- 
+--
 
 CREATE TABLE `bugtrack` (
   `id` int(11) NOT NULL auto_increment,
@@ -314,18 +314,18 @@ CREATE TABLE `bugtrack` (
   `line` int(11) NOT NULL default '0',
   `referer` varchar(255) NOT NULL default '',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `bugtrack`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `categories`
--- 
+--
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL auto_increment,
@@ -335,17 +335,17 @@ CREATE TABLE `categories` (
   `perm_write` varchar(255) NOT NULL default 'All;',
   `perm_visit` varchar(255) NOT NULL default 'All;',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `categories`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `changelog`
--- 
+--
 
 CREATE TABLE `changelog` (
   `id` int(11) NOT NULL auto_increment,
@@ -355,18 +355,18 @@ CREATE TABLE `changelog` (
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
   `lang` char(2) NOT NULL default '',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `changelog`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `chat`
--- 
+--
 
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL auto_increment,
@@ -378,18 +378,18 @@ CREATE TABLE `chat` (
   `time` double(22,6) NOT NULL default '0.000000',
   `room` varchar(10) NOT NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `chat`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `chat_config`
--- 
+--
 
 CREATE TABLE `chat_config` (
   `id` int(11) NOT NULL auto_increment,
@@ -399,36 +399,36 @@ CREATE TABLE `chat_config` (
   `room` varchar(30) NOT NULL,
   UNIQUE KEY `gracz` (`gracz`),
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `chat_config`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `chat_users`
--- 
+--
 
 CREATE TABLE `chat_users` (
   `userid` int(11) NOT NULL default '0',
   `time` double(22,6) NOT NULL default '0.000000',
   `room` varchar(10) NOT NULL,
   PRIMARY KEY  (`userid`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `chat_users`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `coresbase`
--- 
+--
 
 CREATE TABLE `coresbase` (
   `id` int(11) NOT NULL auto_increment,
@@ -446,20 +446,20 @@ CREATE TABLE `coresbase` (
   `hp` int(11) default NULL,
   `arena` char(1) default NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=31 ;
+) Engine=MyISAM AUTO_INCREMENT=31 ;
 
--- 
+--
 -- Zrzut danych tabeli `coresbase`
--- 
+--
 
 INSERT INTO `coresbase` VALUES (1, 1, 'lasica', '1.jpg', 1, 0, 0, 1, 1, 10.000, 10.000, 120.000, 20, 'Z');
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `coresplayers`
--- 
+--
 
 CREATE TABLE `coresplayers` (
   `id` int(11) NOT NULL auto_increment,
@@ -480,18 +480,18 @@ CREATE TABLE `coresplayers` (
   `max_hp` double(11,3) default NULL,
   `hp` double(11,3) default NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `coresplayers`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `court`
--- 
+--
 
 CREATE TABLE `court` (
   `id` int(11) NOT NULL auto_increment,
@@ -501,17 +501,17 @@ CREATE TABLE `court` (
   `type` varchar(20) NOT NULL default 'case',
   `date` date NOT NULL default '0000-00-00',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `court`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `court_cases`
--- 
+--
 
 CREATE TABLE `court_cases` (
   `id` int(11) NOT NULL auto_increment,
@@ -519,18 +519,18 @@ CREATE TABLE `court_cases` (
   `author` varchar(40) NOT NULL default '',
   `body` text NOT NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `court_cases`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `czary`
--- 
+--
 
 CREATE TABLE `czary` (
   `id` int(11) NOT NULL auto_increment,
@@ -543,36 +543,36 @@ CREATE TABLE `czary` (
   `status` char(1) NOT NULL default 'S',
   `lang` char(3) NOT NULL default 'pl',
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=120 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=120 ;
 
--- 
+--
 -- Zrzut danych tabeli `czary`
--- 
+--
 
 INSERT INTO `czary` VALUES (1, 'Piekielne płomienie', 0, 2500000, 65, 'B', 1.65, 'S', 'pl');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `donators`
--- 
+--
 
 CREATE TABLE `donators` (
   `name` varchar(30) NOT NULL default '',
   KEY `name` (`name`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `donators`
--- 
+--
 
 INSERT INTO `donators` VALUES ('Dobroczyńca');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `equipment`
--- 
+--
 
 CREATE TABLE `equipment` (
   `id` int(11) NOT NULL auto_increment,
@@ -600,35 +600,35 @@ CREATE TABLE `equipment` (
   KEY `type` (`type`),
   KEY `owner` (`owner`),
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `equipment`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `events`
--- 
+--
 
 CREATE TABLE `events` (
   `id` int(11) NOT NULL auto_increment,
   `text` text NOT NULL,
   `lang` char(3) NOT NULL default 'pl',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `events`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `farm`
--- 
+--
 
 CREATE TABLE `farm` (
   `id` int(11) NOT NULL auto_increment,
@@ -639,18 +639,18 @@ CREATE TABLE `farm` (
   `place` varchar(16) NOT NULL default '',
   KEY `owner` (`owner`),
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `farm`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `farms`
--- 
+--
 
 CREATE TABLE `farms` (
   `id` int(11) NOT NULL auto_increment,
@@ -662,35 +662,35 @@ CREATE TABLE `farms` (
   `place` varchar(16) NOT NULL default '',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `farms`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `fight_logs`
--- 
+--
 
 CREATE TABLE `fight_logs` (
   `owner` int(11) NOT NULL default '0',
   `logs` text NOT NULL,
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `fight_logs`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `halloffame`
--- 
+--
 
 CREATE TABLE `halloffame` (
   `id` int(11) NOT NULL auto_increment,
@@ -699,18 +699,18 @@ CREATE TABLE `halloffame` (
   `herorace` varchar(100) NOT NULL default '',
   `newid` int(11) NOT NULL default '0',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `halloffame`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `herbs`
--- 
+--
 
 CREATE TABLE `herbs` (
   `id` int(11) NOT NULL auto_increment,
@@ -725,18 +725,18 @@ CREATE TABLE `herbs` (
   `dynallca_seeds` int(11) NOT NULL default '0',
   PRIMARY KEY  (`gracz`),
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `herbs`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `hmarket`
--- 
+--
 
 CREATE TABLE `hmarket` (
   `id` int(11) NOT NULL auto_increment,
@@ -746,18 +746,18 @@ CREATE TABLE `hmarket` (
   `nazwa` varchar(30) NOT NULL default '',
   `lang` char(3) NOT NULL default 'pl',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `hmarket`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `houses`
--- 
+--
 
 CREATE TABLE `houses` (
   `id` int(11) NOT NULL auto_increment,
@@ -776,18 +776,18 @@ CREATE TABLE `houses` (
   `location` varchar(20) NOT NULL default 'Altara',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `houses`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `jail`
--- 
+--
 
 CREATE TABLE `jail` (
   `id` int(11) NOT NULL auto_increment,
@@ -797,18 +797,18 @@ CREATE TABLE `jail` (
   `verdict` text NOT NULL,
   `cost` int(11) unsigned NOT NULL default '0',
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `jail`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `jeweller`
--- 
+--
 
 CREATE TABLE `jeweller` (
   `id` int(11) NOT NULL auto_increment,
@@ -822,20 +822,20 @@ CREATE TABLE `jeweller` (
   KEY `id` (`id`),
   KEY `owner` (`owner`),
   KEY `name` (`name`)
-) TYPE=MyISAM AUTO_INCREMENT=16 ;
+) Engine=MyISAM AUTO_INCREMENT=16 ;
 
--- 
+--
 -- Zrzut danych tabeli `jeweller`
--- 
+--
 
 INSERT INTO `jeweller` VALUES (1, 0, 'pierścień', 'I', 50, 1, 0, 'pl');
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `jeweller_work`
--- 
+--
 
 CREATE TABLE `jeweller_work` (
   `id` int(11) NOT NULL auto_increment,
@@ -847,18 +847,18 @@ CREATE TABLE `jeweller_work` (
   `type` char(1) NOT NULL default '',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `jeweller_work`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `lib_comments`
--- 
+--
 
 CREATE TABLE `lib_comments` (
   `id` int(11) NOT NULL auto_increment,
@@ -867,17 +867,17 @@ CREATE TABLE `lib_comments` (
   `body` text NOT NULL,
   `time` date default NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) Engine=MyISAM AUTO_INCREMENT=2 ;
 
--- 
+--
 -- Zrzut danych tabeli `lib_comments`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `library`
--- 
+--
 
 CREATE TABLE `library` (
   `id` int(11) NOT NULL auto_increment,
@@ -889,17 +889,17 @@ CREATE TABLE `library` (
   `author` varchar(50) NOT NULL default '',
   `author_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `library`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `links`
--- 
+--
 
 CREATE TABLE `links` (
   `id` int(11) NOT NULL auto_increment,
@@ -908,18 +908,18 @@ CREATE TABLE `links` (
   `text` varchar(100) NOT NULL default '',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `links`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `log`
--- 
+--
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL auto_increment,
@@ -929,35 +929,35 @@ CREATE TABLE `log` (
   `czas` datetime NOT NULL default '0000-00-00 00:00:00',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `log`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `logs`
--- 
+--
 
 CREATE TABLE `logs` (
   `owner` int(11) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',
   `czas` date NOT NULL default '0000-00-00'
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `logs`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `lost_pass`
--- 
+--
 
 CREATE TABLE `lost_pass` (
   `number` varchar(32) NOT NULL default '',
@@ -968,34 +968,34 @@ CREATE TABLE `lost_pass` (
   KEY `number` (`number`),
   KEY `email` (`email`),
   KEY `id` (`id`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `lost_pass`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `lumberjack`
--- 
+--
 
 CREATE TABLE `lumberjack` (
   `owner` int(11) NOT NULL default '0',
   `level` tinyint(2) NOT NULL default '0',
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `lumberjack`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mage_items`
--- 
+--
 
 CREATE TABLE `mage_items` (
   `id` int(11) NOT NULL auto_increment,
@@ -1007,20 +1007,20 @@ CREATE TABLE `mage_items` (
   `lang` char(3) NOT NULL default 'pl',
   PRIMARY KEY  (`id`),
   KEY `type` (`type`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=13 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=13 ;
 
--- 
+--
 -- Zrzut danych tabeli `mage_items`
--- 
+--
 
 INSERT INTO `mage_items` VALUES (1, 'elfia różdżka', 6, 'T', 1000, 1, 'pl');
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mail`
--- 
+--
 
 CREATE TABLE `mail` (
   `id` int(11) NOT NULL auto_increment,
@@ -1038,17 +1038,17 @@ CREATE TABLE `mail` (
   KEY `unread` (`unread`),
   KEY `zapis` (`zapis`),
   KEY `send` (`send`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `mail`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mill`
--- 
+--
 
 CREATE TABLE `mill` (
   `id` int(11) NOT NULL auto_increment,
@@ -1062,20 +1062,20 @@ CREATE TABLE `mill` (
   `twohand` char(1) NOT NULL default 'N',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=31 ;
+) Engine=MyISAM AUTO_INCREMENT=31 ;
 
--- 
+--
 -- Zrzut danych tabeli `mill`
--- 
+--
 
 INSERT INTO `mill` VALUES (1, 0, 'Łuk ćwiczebny', 'B', 500, 2, 1, 'pl', 'Y');
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mill_work`
--- 
+--
 
 CREATE TABLE `mill_work` (
   `id` int(11) NOT NULL auto_increment,
@@ -1085,18 +1085,18 @@ CREATE TABLE `mill_work` (
   `u_energy` smallint(4) NOT NULL default '0',
   `mineral` char(1) NOT NULL default '',
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `mill_work`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `minerals`
--- 
+--
 
 CREATE TABLE `minerals` (
   `owner` int(11) NOT NULL default '0',
@@ -1118,18 +1118,18 @@ CREATE TABLE `minerals` (
   `adamantium` int(11) NOT NULL default '0',
   `meteor` int(11) NOT NULL default '0',
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `minerals`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mines`
--- 
+--
 
 CREATE TABLE `mines` (
   `owner` int(11) NOT NULL default '0',
@@ -1139,17 +1139,17 @@ CREATE TABLE `mines` (
   `iron` int(11) NOT NULL default '0',
   `coal` int(11) NOT NULL default '0',
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `mines`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `mines_search`
--- 
+--
 
 CREATE TABLE `mines_search` (
   `player` int(11) NOT NULL default '0',
@@ -1157,18 +1157,18 @@ CREATE TABLE `mines_search` (
   `mineral` varchar(30) NOT NULL default '',
   `searchdays` tinyint(2) NOT NULL default '0',
   KEY `player` (`player`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `mines_search`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `monsters`
--- 
+--
 
 CREATE TABLE `monsters` (
   `id` int(11) NOT NULL auto_increment,
@@ -1190,19 +1190,19 @@ CREATE TABLE `monsters` (
   KEY `id` (`id`),
   KEY `level` (`level`),
   KEY `location` (`location`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=129 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=129 ;
 
--- 
+--
 -- Zrzut danych tabeli `monsters`
--- 
+--
 
 INSERT INTO `monsters` VALUES (1, 'Potwór', 1, 15, 5.00, 5.00, 5.00, 5.00, 1, 2, 1, 2, 'opis potwora', 'default.jpg', 'pl', 'Altara');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `news`
--- 
+--
 
 CREATE TABLE `news` (
   `id` int(11) NOT NULL auto_increment,
@@ -1213,17 +1213,17 @@ CREATE TABLE `news` (
   `added` char(1) NOT NULL default 'Y',
   `show` char(1) NOT NULL default 'Y',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `news`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `news_comments`
--- 
+--
 
 CREATE TABLE `news_comments` (
   `id` int(11) NOT NULL auto_increment,
@@ -1232,18 +1232,18 @@ CREATE TABLE `news_comments` (
   `body` text NOT NULL,
   `time` date default NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `news_comments`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `newspaper`
--- 
+--
 
 CREATE TABLE `newspaper` (
   `id` int(11) NOT NULL auto_increment,
@@ -1255,18 +1255,18 @@ CREATE TABLE `newspaper` (
   `author` varchar(50) NOT NULL default '',
   `type` char(1) NOT NULL default '',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `newspaper`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `newspaper_comments`
--- 
+--
 
 CREATE TABLE `newspaper_comments` (
   `id` int(11) NOT NULL auto_increment,
@@ -1275,17 +1275,17 @@ CREATE TABLE `newspaper_comments` (
   `body` text NOT NULL,
   `time` date default NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `newspaper_comments`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `notatnik`
--- 
+--
 
 CREATE TABLE `notatnik` (
   `id` int(11) NOT NULL auto_increment,
@@ -1293,15 +1293,15 @@ CREATE TABLE `notatnik` (
   `tekst` text NOT NULL,
   `czas` datetime NOT NULL default '0000-00-00 00:00:00',
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `notatnik`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `ogloszenia`
 --
 
@@ -1315,9 +1315,9 @@ CREATE TABLE `ogloszenia` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `outpost_monsters`
--- 
+--
 
 CREATE TABLE `outpost_monsters` (
   `id` int(11) NOT NULL auto_increment,
@@ -1329,18 +1329,18 @@ CREATE TABLE `outpost_monsters` (
   PRIMARY KEY  (`id`),
   KEY `id` (`id`),
   KEY `outpost` (`outpost`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `outpost_monsters`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `outpost_veterans`
--- 
+--
 
 CREATE TABLE `outpost_veterans` (
   `id` int(11) NOT NULL auto_increment,
@@ -1364,18 +1364,18 @@ CREATE TABLE `outpost_veterans` (
   `r2power` int(5) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `outpost` (`outpost`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `outpost_veterans`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `outposts`
--- 
+--
 
 CREATE TABLE `outposts` (
   `id` int(11) NOT NULL auto_increment,
@@ -1399,24 +1399,24 @@ CREATE TABLE `outposts` (
   `attacks` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `outposts`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `players`
--- 
+--
 
 CREATE TABLE `players` (
   `id` int(11) NOT NULL auto_increment,
   `user` varchar(15) NOT NULL default '',
   `email` varchar(60) NOT NULL default '',
-  `pass` varchar(32) NOT NULL default '',
+  `pass` varchar(255) NOT NULL default '',
   `rank` varchar(20) NOT NULL default 'Member',
   `level` int(11) NOT NULL default '1',
   `exp` int(11) NOT NULL default '0',
@@ -1514,18 +1514,19 @@ CREATE TABLE `players` (
   KEY `page` (`page`),
   KEY `refs` (`refs`),
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `players`
--- 
-INSERT INTO `players` (`user`, `email`, `pass`, `lang`, `ip`, `profile`, `rank`) VALUES ("Administrator", "admin@xxx.pl", "e10adc3949ba59abbe56e057f20f883e", "pl", "00.00.00.00", "profil", "Admin");
+--
+INSERT INTO `players` (`user`, `email`, `pass`, `lang`, `ip`, `profile`, `rank`) VALUES ("Administrator", "admin@xxx.pl", "$1$OFcDihl.$l0d.0e32TUCYDQxfA/lHk0", "pl", "00.00.00.00", "profil", "Admin");
+INSERT INTO `players` (`user`, `email`, `pass`, `lang`, `ip`, `profile`, `rank`) VALUES ("Tajemniczy Tester", "kozot@mailsoul.com", "$2y$10$J1Fb68mGrwpjgFRXf2AGheT.uI74smcNTsMLXS2uKyM1GZyxDksd.", "pl", "00.00.00.00", "profil", "Admin");
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `pmarket`
--- 
+--
 
 CREATE TABLE `pmarket` (
   `id` int(11) NOT NULL auto_increment,
@@ -1535,17 +1536,17 @@ CREATE TABLE `pmarket` (
   `nazwa` varchar(20) NOT NULL default 'mithril',
   `lang` char(3) NOT NULL default 'pl',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `pmarket`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `polls`
--- 
+--
 
 CREATE TABLE `polls` (
   `id` int(11) NOT NULL default '0',
@@ -1555,17 +1556,17 @@ CREATE TABLE `polls` (
   `days` smallint(3) NOT NULL default '7',
   `members` int(11) NOT NULL default '0',
   KEY `id` (`id`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `polls`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `polls_comments`
--- 
+--
 
 CREATE TABLE `polls_comments` (
   `id` int(11) NOT NULL auto_increment,
@@ -1574,18 +1575,18 @@ CREATE TABLE `polls_comments` (
   `body` text NOT NULL,
   `time` date default NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `polls_comments`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `potions`
--- 
+--
 
 CREATE TABLE `potions` (
   `id` int(11) NOT NULL auto_increment,
@@ -1599,20 +1600,20 @@ CREATE TABLE `potions` (
   `lang` char(3) NOT NULL default 'pl',
   `cost` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=30 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=30 ;
 
--- 
+--
 -- Zrzut danych tabeli `potions`
--- 
+--
 
 INSERT INTO `potions` VALUES (1, 0, 'mikstura', 'M', 'działanie miktury', 'A', 500, 2400, 'pl', 0);
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `questaction`
--- 
+--
 
 CREATE TABLE `questaction` (
   `id` int(11) NOT NULL auto_increment,
@@ -1621,18 +1622,18 @@ CREATE TABLE `questaction` (
   `action` varchar(20) NOT NULL default '',
   KEY `id` (`id`),
   KEY `player` (`player`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `questaction`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `quests`
--- 
+--
 
 CREATE TABLE `quests` (
   `id` int(11) NOT NULL auto_increment,
@@ -1646,11 +1647,11 @@ CREATE TABLE `quests` (
   KEY `qid` (`qid`),
   KEY `location` (`location`),
   KEY `name` (`name`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=173 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=173 ;
 
--- 
+--
 -- Zrzut danych tabeli `quests`
--- 
+--
 
 INSERT INTO `quests` VALUES (1, 1, 'grid.php', 'start', '0', 'Podążasz ostrożnie ciemnym, wąskim korytarzem. Co chwila opadają na ciebie strzępy pajęczyn, które strzepujesz z siebie z wielkim obrzydzeniem. Twoje kroki dźwięczą głucho niepokojąc twoje zmysły. \r\n- <i>Jeśli ja słysze to pewnie słyszy to także każde inne stworzenie w okolicy</i> - wzdrygasz się na samą myśł o spotkaniu z potworem. Jednak wiesz, że musisz iść dalej. Trzymasz broń w pogotowiu na wypadek zasadzki i dalej ruszasz powoli w mrok korytarza. Twoja pochodnia rozświetla pobliskie ściany, na których gdzie nigdzie widać kawałki nisternie zdobionego tynku. Masz wrażenie, że korytasz ciągnie się kilometrami... ', 'pl');
 INSERT INTO `quests` VALUES (2, 1, 'grid.php', '1', '0', ' ', 'pl');
@@ -1658,9 +1659,9 @@ INSERT INTO `quests` VALUES (3, 1, 'grid.php', '2', '0', 'Po kilku godzinach bł
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `replies`
--- 
+--
 
 CREATE TABLE `replies` (
   `id` int(11) NOT NULL auto_increment,
@@ -1671,18 +1672,18 @@ CREATE TABLE `replies` (
   `lang` char(3) NOT NULL default 'pl',
   `w_time` bigint(20) NOT NULL default '0',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `replies`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `reputation`
--- 
+--
 
 CREATE TABLE `reputation` (
   `id` int(11) NOT NULL auto_increment,
@@ -1692,36 +1693,36 @@ CREATE TABLE `reputation` (
   `date` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `player_id` (`player_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `reputation`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `reset`
--- 
+--
 
 CREATE TABLE `reset` (
   `id` int(11) NOT NULL auto_increment,
   `player` int(11) NOT NULL default '0',
   `code` int(11) NOT NULL default '0',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `reset`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `rings`
--- 
+--
 
 CREATE TABLE `rings` (
   `id` int(11) NOT NULL auto_increment,
@@ -1729,11 +1730,11 @@ CREATE TABLE `rings` (
   `amount` int(11) NOT NULL default '0',
   `lang` char(2) NOT NULL default 'pl',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=7 ;
+) Engine=MyISAM AUTO_INCREMENT=7 ;
 
--- 
+--
 -- Zrzut danych tabeli `rings`
--- 
+--
 
 INSERT INTO `rings` VALUES (1, 'pierścień nowicjusza siły', 28, 'pl');
 INSERT INTO `rings` VALUES (2, 'pierścień nowicjusza zręczności', 28, 'pl');
@@ -1742,43 +1743,22 @@ INSERT INTO `rings` VALUES (4, 'pierścień nowicjusza siły woli', 28, 'pl');
 INSERT INTO `rings` VALUES (5, 'pierścień nowicjusza szybkości', 28, 'pl');
 INSERT INTO `rings` VALUES (6, 'pierścień nowicjusza wytrzymałości', 28, 'pl');
 
-
 -- --------------------------------------------------------
 
--- 
--- Struktura tabeli dla  `sessions`
--- 
-
-CREATE TABLE `sessions` (
-  `sesskey` varchar(32) binary NOT NULL default '',
-  `expiry` int(11) unsigned NOT NULL default '0',
-  `expireref` varchar(64) default NULL,
-  `data` longtext,
-  PRIMARY KEY  (`sesskey`),
-  KEY `expiry` (`expiry`)
-) TYPE=MyISAM;
-
--- 
--- Zrzut danych tabeli `sessions`
--- 
-
-
--- --------------------------------------------------------
-
--- 
+--
 -- Struktura tabeli dla  `settings`
--- 
+--
 
 CREATE TABLE `settings` (
   `setting` varchar(255) NOT NULL default '',
   `value` varchar(255) default NULL,
   KEY `setting` (`setting`),
   KEY `value` (`value`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `settings`
--- 
+--
 
 INSERT INTO `settings` VALUES ('maps', '20');
 INSERT INTO `settings` VALUES ('item', NULL);
@@ -1824,26 +1804,26 @@ INSERT INTO `settings` VALUES ('tribe', NULL);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `smelter`
--- 
+--
 
 CREATE TABLE `smelter` (
   `owner` int(11) NOT NULL default '0',
   `level` tinyint(2) NOT NULL default '0',
   KEY `owner` (`owner`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `smelter`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `smith`
--- 
+--
 
 CREATE TABLE `smith` (
   `id` int(11) NOT NULL auto_increment,
@@ -1857,11 +1837,11 @@ CREATE TABLE `smith` (
   `twohand` char(1) NOT NULL default 'N',
   KEY `id` (`id`),
   KEY `owner` (`owner`)
-) TYPE=MyISAM AUTO_INCREMENT=78 ;
+) Engine=MyISAM AUTO_INCREMENT=78 ;
 
--- 
+--
 -- Zrzut danych tabeli `smith`
--- 
+--
 
 INSERT INTO `smith` VALUES (2, 0, 'Zbroja', 'A', 4000, 8, 3, 'pl', 'N');
 INSERT INTO `smith` VALUES (18, 0, 'Tarcza', 'S', 500, 1, 1, 'pl', 'N');
@@ -1871,9 +1851,9 @@ INSERT INTO `smith` VALUES (63, 0, 'Miecz', 'W', 500, 1, 1, 'pl', 'N');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `smith_work`
--- 
+--
 
 CREATE TABLE `smith_work` (
   `id` int(11) NOT NULL auto_increment,
@@ -1883,18 +1863,18 @@ CREATE TABLE `smith_work` (
   `u_energy` smallint(4) NOT NULL default '0',
   `mineral` varchar(10) NOT NULL default '',
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `smith_work`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `team`
--- 
+--
 
 CREATE TABLE `team` (
   `tid` int(11) NOT NULL auto_increment,
@@ -1905,18 +1885,18 @@ CREATE TABLE `team` (
   `contact` varchar(70) NOT NULL default '',
   `type` enum('gfx','php','head','generic help') COLLATE utf8_polish_ci NOT NULL,
   KEY `tid` (`tid`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `team`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `topics`
--- 
+--
 
 CREATE TABLE `topics` (
   `id` int(11) NOT NULL auto_increment,
@@ -1929,18 +1909,18 @@ CREATE TABLE `topics` (
   `w_time` bigint(20) NOT NULL default '0',
   `sticky` char(1) NOT NULL default 'N',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `topics`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `trained_stats`
--- 
+--
 
 CREATE TABLE `trained_stats` (
   `id` int(11) NOT NULL default '0',
@@ -1951,18 +1931,18 @@ CREATE TABLE `trained_stats` (
   `wytrz` double(11,3) NOT NULL default '0.000',
   `wisdom` double(11,3) NOT NULL default '0.000',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `trained_stats`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_mag`
--- 
+--
 
 CREATE TABLE `tribe_mag` (
   `id` int(11) NOT NULL auto_increment,
@@ -1976,18 +1956,18 @@ CREATE TABLE `tribe_mag` (
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`),
   KEY `klan` (`owner`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_mag`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_oczek`
--- 
+--
 
 CREATE TABLE `tribe_oczek` (
   `id` int(11) NOT NULL auto_increment,
@@ -1995,18 +1975,18 @@ CREATE TABLE `tribe_oczek` (
   `klan` int(11) NOT NULL default '0',
   PRIMARY KEY  (`gracz`),
   KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_oczek`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_perm`
--- 
+--
 
 CREATE TABLE `tribe_perm` (
   `id` int(11) NOT NULL auto_increment,
@@ -2028,18 +2008,18 @@ CREATE TABLE `tribe_perm` (
   `info` smallint(2) NOT NULL default '0',
   `astralvault` smallint(2) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_perm`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_rank`
--- 
+--
 
 CREATE TABLE `tribe_rank` (
   `id` int(11) NOT NULL auto_increment,
@@ -2067,18 +2047,18 @@ CREATE TABLE `tribe_rank` (
   `tag_prefix_10` varchar(4) NOT NULL default '',
   UNIQUE KEY `tribe_id` (`tribe_id`),
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_rank`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_replies`
--- 
+--
 
 CREATE TABLE `tribe_replies` (
   `id` int(11) NOT NULL auto_increment,
@@ -2089,18 +2069,18 @@ CREATE TABLE `tribe_replies` (
   `pid` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`),
   KEY `topic_id` (`topic_id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_replies`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_topics`
--- 
+--
 
 CREATE TABLE `tribe_topics` (
   `id` int(11) NOT NULL auto_increment,
@@ -2112,18 +2092,18 @@ CREATE TABLE `tribe_topics` (
   `sticky` char(1) NOT NULL default 'N',
   `pid` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_topics`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribe_zbroj`
--- 
+--
 
 CREATE TABLE `tribe_zbroj` (
   `id` int(11) NOT NULL auto_increment,
@@ -2146,18 +2126,18 @@ CREATE TABLE `tribe_zbroj` (
   UNIQUE KEY `id` (`id`),
   KEY `id_2` (`id`),
   KEY `klan` (`klan`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribe_zbroj`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `tribes`
--- 
+--
 
 CREATE TABLE `tribes` (
   `id` int(11) NOT NULL auto_increment,
@@ -2201,18 +2181,18 @@ CREATE TABLE `tribes` (
   `adamantium` int(11) NOT NULL default '0',
   `meteor` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `tribes`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `upd_comments`
--- 
+--
 
 CREATE TABLE `upd_comments` (
   `id` int(11) NOT NULL auto_increment,
@@ -2221,18 +2201,18 @@ CREATE TABLE `upd_comments` (
   `body` text NOT NULL,
   `time` date default NULL,
   KEY `id` (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `upd_comments`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `updates`
--- 
+--
 
 CREATE TABLE `updates` (
   `id` int(11) NOT NULL auto_increment,
@@ -2242,17 +2222,17 @@ CREATE TABLE `updates` (
   `time` date default NULL,
   `lang` char(3) NOT NULL default 'pl',
   UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) Engine=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `updates`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `vault`
--- 
+--
 
 CREATE TABLE `vault` (
   `id` int(11) NOT NULL auto_increment,
@@ -2261,18 +2241,18 @@ CREATE TABLE `vault` (
   `time` tinyint(2) NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) Engine=MyISAM AUTO_INCREMENT=1 ;
 
--- 
+--
 -- Zrzut danych tabeli `vault`
--- 
+--
 
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Struktura tabeli dla  `warehouse`
--- 
+--
 
 CREATE TABLE `warehouse` (
   `reset` smallint(3) NOT NULL default '0',
@@ -2283,11 +2263,11 @@ CREATE TABLE `warehouse` (
   `amount` bigint(22) NOT NULL default '0',
   KEY `reset` (`reset`),
   KEY `mineral` (`mineral`)
-) TYPE=MyISAM;
+) Engine=MyISAM;
 
--- 
+--
 -- Zrzut danych tabeli `warehouse`
--- 
+--
 
 INSERT INTO `warehouse` VALUES (9, 'illani_seeds', 0, 0, 6212335749318.900, 125);
 INSERT INTO `warehouse` VALUES (1, 'zincore', 0, 0, 49152.000, 0);
@@ -2549,3 +2529,21 @@ INSERT INTO `warehouse` VALUES (1, 'illani_seeds', 0, 0, 5264779971073.500, 126)
 INSERT INTO `warehouse` VALUES (10, 'illanias_seeds', 0, 0, 22702187116.507, 10);
 INSERT INTO `warehouse` VALUES (1, 'dynallca_seeds', 0, 0, 4398493827867.000, 65320);
 INSERT INTO `warehouse` VALUES (8, 'dynallca_seeds', 0, 0, 4398255411366.300, 65320);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla  `sessions2`
+--
+
+CREATE TABLE sessions2(
+  sesskey VARCHAR( 64 ) NOT NULL DEFAULT '',
+  expiry DATETIME NOT NULL ,
+  expireref VARCHAR( 250 ) DEFAULT '',
+  created DATETIME NOT NULL ,
+  modified DATETIME NOT NULL ,
+  sessdata LONGTEXT,
+  PRIMARY KEY ( sesskey ) ,
+  INDEX sess2_expiry( expiry ),
+  INDEX sess2_expireref( expireref )
+)

@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 <br /><br /><center>
 (<a href="tribes.php?view=my">{$Amain}</a>)
 (<a href="tribes.php?view=my&amp;step=donate">{$Adonate}</a>)

@@ -92,7 +92,7 @@ if (!isset($_GET['buy']))
 
 if (isset($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error(ERROR);
     }
@@ -105,7 +105,7 @@ if (isset($_GET['buy']))
     if (isset ($_GET['step']) && $_GET['step'] == 'buy')
     {
         $objPotions = $db -> Execute("SELECT * FROM `potions` WHERE `id`=".$_GET['buy']);
-        if (!isset($_POST['amount']) || !ereg("^[1-9][0-9]*$", $_GET['buy']) || !ereg("^[1-9][0-9]*$", $_POST['amount'])) 
+        if (!isset($_POST['amount']) || !preg_match("/^[1-9][0-9]*$/", $_GET['buy']) || !preg_match("/^[1-9][0-9]*$/", $_POST['amount'])) 
         {
             error(ERROR);
         }

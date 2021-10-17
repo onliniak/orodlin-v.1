@@ -147,7 +147,7 @@ if ($player -> location == 'Lochy')
 */
 if (isset($_GET['prisoner'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['prisoner'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['prisoner'])) 
     {
         error (ERROR);
     }

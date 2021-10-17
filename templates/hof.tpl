@@ -1,4 +1,5 @@
 {strip}
+<div class="six columns">
 {$Hofinfo}<br /><br />
 {$Message}
 {section name=hof loop=$Hero}

@@ -115,7 +115,7 @@ if (!isset ($_GET['buy']) && !isset($_GET['step']))
 */
 if (isset ($_GET['buy'])) 
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['buy'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['buy'])) 
     {
         error (ERROR);
     }
@@ -156,7 +156,7 @@ if (isset ($_GET['buy']))
 */
 if (isset($_GET['arrows']))
 {
-    if (!ereg("^[1-9][0-9]*$", $_GET['arrows'])) 
+    if (!preg_match("/^[1-9][0-9]*$/", $_GET['arrows'])) 
     {
         error (ERROR);
     }
@@ -184,7 +184,7 @@ if (isset($_GET['arrows']))
         }
         if (isset($_POST['arrows1']) && $_POST['arrows1'] > 0)
         {
-            if (!ereg("^[1-9][0-9]*$", $_POST['arrows1'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['arrows1'])) 
             {
                 error (ERROR);
             }
@@ -197,7 +197,7 @@ if (isset($_GET['arrows']))
         }
         if (isset($_POST['arrows2']) && $_POST['arrows2'] > 0)
         {
-            if (!ereg("^[1-9][0-9]*$", $_POST['arrows2'])) 
+            if (!preg_match("/^[1-9][0-9]*$/", $_POST['arrows2'])) 
             {
                 error (ERROR);
             }

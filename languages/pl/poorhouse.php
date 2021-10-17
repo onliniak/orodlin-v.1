@@ -16,11 +16,13 @@
 
 define('PH_DESCRIPTION1', 'Schronisko...Nocleg bedzie kosztować...');
 define('PH_DESCRIPTION2', 'sztuk złota. Z góry. Wtedy bedziesz mógł wejść i spocząć.<br /><br />Jeżeli zapłacisz zostaniesz wylogowany z gry. Nikt nie będzie mogł cię zaatakować ani okraść.');
+define('PH_DESCRIPTION3', '[Pomysł by Rahknav] Nasz miłościwy władca opłaca jeden posiłek dziennie, dla każdego wędrowca. Przywróci to ');
+define('PH_DESCRIPTION4', 'punktów energii.');
 define('A_REST', 'Odpocznij');
+define('A_FOOD', 'Zjedz coś');
 define('ERROR', 'Zapomnij o tym!');
-if (!defined('E_SESSIONS'))
-{
-define('E_SESSIONS', 'Sesja zakończona. Wróć do <a href="index.php">strony głównej</a>.');
+if (!defined('E_SESSIONS')) {
+    define('E_SESSIONS', 'Sesja zakończona. Wróć do <a href="index.php">strony głównej</a>.');
 }
 define('NO_CASH', 'Nie masz tyle pieniędzy!');
-?>
+define('ONLY_ONCE', 'Nie wyłudzać mi tu zupy!');

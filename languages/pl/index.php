@@ -39,7 +39,6 @@ if (!isset($_GET['step']))
     define('WHAT_IS', '<p>Co to jest');
     define('DESCRIPTION', 'Krótki opis gry.</p>');
     define('CODEX2', '(aby nie obce były Ci zasady panujące w grze). Życzę dobrej zabawy.</p>');
-    define('DAY', 'dnia');
     define('WRITE_BY', 'napisana przez');
 }
 
