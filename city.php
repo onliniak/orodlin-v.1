@@ -25,86 +25,41 @@ require_once('includes/head.php');
 
 require_once('languages/'.$player -> lang.'/city.php');
 
-// if ($player -> location != 'Altara' && $player -> location != 'Ardulith') {
-//     error(NO_CITY, RET_LOC);
-// }
+if ($player -> location != 'Altara' && $player -> location != 'Ardulith') {
+    error(NO_CITY, RET_LOC);
+}
 
 function city()
 {
     global $db, $player, $smarty, $arrTitles, $arrNames;
-        $objPoll = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'poll\'');
-        if ($player -> location == 'Altara') {
+    $objPoll = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'poll\'');
+    if ($player -> location == 'Altara') {
         if ($objPoll['value'] == 'Y' && $player -> poll == 'N') {
             $arrNames[5][3] = '<b>N</b> '.$arrNames[5][3];
-        }}
-    // $namespaceCity = str_replace('{', '', "\City\{$currentCity}");
-    // $namespaceCity = str_replace('}', '', $namespaceCity);
-    // $arr1Files = new $namespaceCity;
-    // $arrFiles = $arr1Files -> city();
-
-    $arrFiles = cityList($player -> location);
-
+        }
+        $arrFiles = array(array('grid.php', 'news.php', 'chat.php', 'poorhouse.php', 'landfill.php'),
+        array('house.php', 'tribes.php','newspaper.php', 'wieza.php', 'alchemik.php', 'temple.php'),
+        array('battle.php', 'train.php', 'jail.php', 'warehouse.php'),
+        array('monuments.php', 'memberlist.php', 'hof.php','tower.php', 'reputation.php'),
+        array('weapons.php','armor.php', 'bows.php', 'msklep.php', 'jewellershop.php', 'market.php'),
+        array('updates.php', 'library.php', 'court.php', 'polls.php', 'stafflist.php'),
+        array('travel.php', '?step=las'),
+        array('outposts.php', 'farm.php', 'core.php', 'lumbermill.php'));
+    } elseif ($player -> location == 'Ardulith') {
+        $arrFiles = array(array('smelter.php', 'kowal.php', 'mines.php', 'maze.php', 'jeweller.php', 'landfill.php'),
+        array('house.php', 'tribes.php', 'poorhouse.php', 'news.php', 'chat.php'),
+        array('market.php', 'warehouse.php', 'armor.php', 'weapons.php', 'msklep.php', 'skarbiec.php', 'bows.php'),
+        array('updates.php','temple.php', 'newspaper.php', 'library.php', 'court.php', 'monuments.php', 'memberlist.php', 'tower.php', 'polls.php', 'stafflist.php'),
+        array('battle.php', 'jail.php', 'train.php', 'core.php'),
+        array('outposts.php', 'farm.php', 'travel.php'));
+    }
     $arrNews = $db -> GetRow('SELECT `id`, `autor`, `tytul`, `tresc` FROM `ogloszenia` ORDER BY `id` DESC LIMIT 1');
     $smarty -> assignByRef('News', $arrNews);
+
     $smarty -> assign(array('Titles' => $arrTitles,
     'Files' => $arrFiles,
     'Names' => $arrNames));
 }
-
-function cityList(String $currentCity) : array {
-    chdir("city/${currentCity}"); 
-    $arr1Titles = array_filter(glob('*'), 'is_dir');
-
-    $arrFiles = array();
-  foreach($arr1Titles as $dzielnica){
-      $dzoe = array();
-      // array_push($arrFiles, scandir($dzielnica));
-
-      if ($handle = opendir($dzielnica)) {
-          while (false !== ($entry = readdir($handle))) {
-              if ($entry != "." && $entry != "..") {
-                $contents = file_get_contents("${dzielnica}/${entry}");
-                array_push($dzoe, $contents);
-              }
-          }
-          closedir($handle);
-      }
-      array_push($arrFiles, $dzoe);
-  }
-  return $arrFiles;
- }
-
-// function city()
-// {
-//     global $db, $player, $smarty, $arrTitles, $arrNames;
-//     $objPoll = $db -> GetRow('SELECT `value` FROM `settings` WHERE `setting`=\'poll\'');
-//     if ($player -> location == 'Altara') {
-//         if ($objPoll['value'] == 'Y' && $player -> poll == 'N') {
-//             $arrNames[5][3] = '<b>N</b> '.$arrNames[5][3];
-//         }
-//         $arrFiles = array(array('grid.php', 'news.php', 'chat.php', 'poorhouse.php', 'landfill.php'),
-//         array('house.php', 'tribes.php','newspaper.php', 'wieza.php', 'alchemik.php', 'temple.php'),
-//         array('battle.php', 'train.php', 'jail.php', 'warehouse.php'),
-//         array('monuments.php', 'memberlist.php', 'hof.php','tower.php', 'reputation.php'),
-//         array('weapons.php','armor.php', 'bows.php', 'msklep.php', 'jewellershop.php', 'market.php'),
-//         array('updates.php', 'library.php', 'court.php', 'polls.php', 'stafflist.php'),
-//         array('travel.php', '?step=las'),
-//         array('outposts.php', 'farm.php', 'core.php', 'lumbermill.php'));
-//     } elseif ($player -> location == 'Ardulith') {
-//         $arrFiles = array(array('smelter.php', 'kowal.php', 'mines.php', 'maze.php', 'jeweller.php', 'landfill.php'),
-//         array('house.php', 'tribes.php', 'poorhouse.php', 'news.php', 'chat.php'),
-//         array('market.php', 'warehouse.php', 'armor.php', 'weapons.php', 'msklep.php', 'skarbiec.php', 'bows.php'),
-//         array('updates.php','temple.php', 'newspaper.php', 'library.php', 'court.php', 'monuments.php', 'memberlist.php', 'tower.php', 'polls.php', 'stafflist.php'),
-//         array('battle.php', 'jail.php', 'train.php', 'core.php'),
-//         array('outposts.php', 'farm.php', 'travel.php'));
-//     }
-//     $arrNews = $db -> GetRow('SELECT `id`, `autor`, `tytul`, `tresc` FROM `ogloszenia` ORDER BY `id` DESC LIMIT 1');
-//     $smarty -> assignByRef('News', $arrNews);
-
-//     $smarty -> assign(array('Titles' => $arrTitles,
-//     'Files' => $arrFiles,
-//     'Names' => $arrNames));
-// }
 
 function nubiaquest()
 {

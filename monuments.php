@@ -49,7 +49,7 @@ $smarty -> caching = 2;
 $smarty -> cache_lifetime = 3600;   // Monuments will be refreshed after 1 hour from first viewing.
 // End of Smarty setup.
 
-if (!$smarty -> is_cached('monuments.tpl'))
+if (!$smarty -> isCached('monuments.tpl'))
 {
     // Store old fetch mode (probably ADODB_FETCH_ASSOC, defined in includes/config.php) and set new, a bit faster.
     $oldFetchMode = $db -> SetFetchMode(ADODB_FETCH_NUM);

@@ -88,7 +88,7 @@ if (!isset($_GET['action']) || $_GET['action']=='history')
 */
 if (!isset($_GET['action']))
 {
-    if (!$smarty -> is_cached('warehouse.tpl', $player -> location))
+    if (!$smarty -> isCached('warehouse.tpl', $player -> location))
     {
         for($i = 0, $arrItems=array(); $i < 26; ++$i)
             $arrItems[] = getWarehouseData($i);
@@ -170,11 +170,11 @@ if (isset($_GET['action']) && ($_GET['action'] == 'sell' || $_GET['action'] == '
         $smarty -> assign('Message', ($_GET['action'] == 'sell' ? YOU_SELL : YOU_BUY).$_POST['amount'].AMOUNT.$arrItemNames[$_GET['item']].FOR_A.$intGold.GOLD_COINS);
         // Clear cache of main page and corresponding mineral history.
 		$smarty -> caching = true;
-		if ($smarty -> is_cached('warehouse.tpl', 'Altara'))
+		if ($smarty -> isCached('warehouse.tpl', 'Altara'))
 			$smarty -> clear_cache('warehouse.tpl', 'Altara');
-		if ($smarty -> is_cached('warehouse.tpl', 'Ardulith'))
+		if ($smarty -> isCached('warehouse.tpl', 'Ardulith'))
         	$smarty -> clear_cache('warehouse.tpl', 'Ardulith');
-		if ($smarty -> is_cached('warehouse.tpl', 'h|'.$_GET['item']))
+		if ($smarty -> isCached('warehouse.tpl', 'h|'.$_GET['item']))
         	$smarty -> clear_cache('warehouse.tpl', 'h|'.$_GET['item']);
 		$smarty -> caching = false;
     }
@@ -193,7 +193,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'history' && isset($_GET['item'
     strictInt($_GET['item']);
     if($_GET['item'] > 25)
         error(ERROR);
-    if (!$smarty -> is_cached('warehouse.tpl', 'h|'.$_GET['item']))
+    if (!$smarty -> isCached('warehouse.tpl', 'h|'.$_GET['item']))
     {
         // Get biggest value of buys/sales, so all other can be scaled appropriately (percentages, fit to selected height).
         $arrMaximums = $db -> GetRow('SELECT MAX(`buy`), MAX(`sell`) FROM `warehouse` WHERE `mineral`=\''.$arrSQLNames[$_GET['item']].'\'');

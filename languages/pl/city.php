@@ -49,46 +49,18 @@ define('PERMISSION', 'Nie masz do tego prawa!');
 define('NO_ANN', 'Nie zaznaczono ogłoszenia do usunięcia!');
 define('DELETED', 'Ogłoszenie zostało usunięte.');
 
-// $currentCity = $player -> location;
-// $namespaceCity = str_replace('{', '', "\City\{$currentCity}");
-// $namespaceCity = str_replace('}', '', $namespaceCity);
-// $arr1Files = new $namespaceCity;
-// $arrFiles = $arr1Files -> pl();
-
-
 if ($player -> location == 'Altara') {
-    // $arrTitles = array('DZIELNICA PORTOWA', 'DZIELNICA MIESZKALNA', 'TWIERDZA', 'CENTRUM', 'PCHLI TARG', 'PAŁAC', 'BRAMY MIASTA', 'PODGRODZIE');
-    chdir("city/Altara"); 
-    $arr1Titles = array_filter(glob('*'), 'is_dir');
-    $arrTitles = array_flip($arr1Titles);
-    $arrTitles = array_change_key_case($arrTitles, CASE_UPPER);
-    $arrTitles = array_flip($arrTitles);
+    $arrTitles = array('DZIELNICA PORTOWA', 'DZIELNICA MIESZKALNA', 'TWIERDZA', 'CENTRUM', 'PCHLI TARG', 'PAŁAC', 'BRAMY MIASTA', 'PODGRODZIE');
 
-    $arr1Names = array();
-    foreach($arr1Titles as $dzielnica){
-        $dzoe = array();
-        // array_push($arr1Names, scandir($dzielnica));
-
-        if ($handle = opendir($dzielnica)) {
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != "..") {
-                    array_push($dzoe, $entry);
-                }
-            }
-            closedir($handle);
-        }
-        array_push($arr1Names, $dzoe);
-    }
-    $arrNames = $arr1Names;
-    // $arrNames = array(array('Port', 'Plotki', 'Tawerna', 'Przytułek', 'Oczyszczanie miasta'),
-    // array('Domy', 'Klany', 'Gazeta', 'Magiczna Wieża', 'Pracownia alchemiczna', 'Świątynia'),
-    // array('Arena Walk', 'Trening', 'Lochy', 'Królewski Skład'),
-    // array('Posągi', 'Spis mieszkańców', 'Galeria Bohaterów', 'Zegar słoneczny', 'Aleja Zasłużonych'),
-    // array('Zbrojmistrz', 'Płatnerz', 'Fleczer', 'Apteka', 'Jubiler', 'Targowisko'),
-    // array('Wieści', 'Biblioteka', 'Gmach Sądu', 'Hala zgromadzeń', 'Sala audiencyjna'),
-    // array('Przystań', 'Podróż do lasu'),
-    // array('Strażnica', 'Farma', 'Polana Chowańców', 'Tartak')
-    // );
+    $arrNames = array(array('Port', 'Plotki', 'Tawerna', 'Przytułek', 'Oczyszczanie miasta'),
+    array('Domy', 'Klany', 'Gazeta', 'Magiczna Wieża', 'Pracownia alchemiczna', 'Świątynia'),
+    array('Arena Walk', 'Trening', 'Lochy', 'Królewski Skład'),
+    array('Posągi', 'Spis mieszkańców', 'Galeria Bohaterów', 'Zegar słoneczny', 'Aleja Zasłużonych'),
+    array('Zbrojmistrz', 'Płatnerz', 'Fleczer', 'Apteka', 'Jubiler', 'Targowisko'),
+    array('Wieści', 'Biblioteka', 'Gmach Sądu', 'Hala zgromadzeń', 'Sala audiencyjna'),
+    array('Przystań', 'Podróż do lasu'),
+    array('Strażnica', 'Farma', 'Polana Chowańców', 'Tartak')
+    );
     define('CITY_INFO', '<p>Opis Miasta '.$city1a.'</p>');
     define('STAFF_QUEST', 'Idąc ulicami '.$city1b.' czujesz się tak, jakbyś po raz pierwszy oglądał jej mury. Wydawała się promienieć pięknem... Zaśmiałeś się w duchu-po tych upiornych labiryntach wszystko byłoby wspaniałe. Wdychane świeże, poranne powietrze przyjemnie łaskotało płuca wywiewając z nich resztki zatęchłego odoru ziemi i wilgoci. Tak... Właśnie tak czuje się Bohater!<br /><br />Co dalej, Bohaterze?<br />');
     define('SQ_BOX1', 'kierujesz się do wieży Nubii, by oddać jej różdżkę');
